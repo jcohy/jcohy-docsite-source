@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="cci" />
+	<meta name="description" content="cci" />
+	<!-- 网页标签标题 -->
+	<title>cci</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html" target="_self">HOME</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/docs/quick-start.html" target="_self">DOCS</a></li><li class="menu-item menu-item-normal"><a href="/en-us/blog/index.html" target="_self">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/open/index.html" target="_self">OPEN RESOURCE</a></li><li class="menu-item menu-item-normal"><a href="/en-us/resource/index.html" target="_self">RESOURCE</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community/index.html" target="_self">COMMUNITY</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>Documentation</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Overview</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/en-us/docs/Overview.html" target="_self">Overview</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Spring Framework</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/en-us/docs/springframework/demo.html" target="_self">Spring Framework</a></li></ul></li><li class="menu-item menu-item-level-1"><span>SpringBoot</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/en-us/docs/springboot/demo.html" target="_self">SpringBoot</a></li></ul></li><li class="menu-item menu-item-level-1"><span>nginx</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/en-us/docs/nginx/demo.html" target="_self">nginx</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Microservices</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/en-us/docs/microservices/demo.html" target="_self">Microservices</a></li></ul></li></ul></div><div class="doc-content markdown-body"><p><a id="cci"></a></p>
+<h2><a href="#cci"></a>5. JCA CCI</h2>
+<p>JJava EE提供了一个规范， 用于对企业信息系统(EIS)标准化的访问： JCA(Java EE Connector Architecture：Java EE连接框架)。该规范分为两个不同的部分：</p>
+<ul>
+<li>
+<p>连接器提供程序必须实现的SPI(服务提供程序接口)。这些接口构成了可部署在Java EE应用程序服务器上的资源适配器。在这种情况下， 服务器管理连接池、事务和安全 (托管模式)。应用程序服务器还负责管理在客户端应用程序之外进行的配置。连接器也可以在没有应用服务器的情况下使用。在这种情况下， 应用程序必须直接配置它(非托管模式)。</p>
+</li>
+<li>
+<p>CCI (通用客户端接口) 供应用来使用来连接和通讯和EIS。还提供了用于本地事务划分的API。</p>
+</li>
+</ul>
+<p>Spring CCI支持的目的是使用Spring Framework的一般资源和事务管理工具提供以典型Spring方式访问CCI连接器的类。</p>
+<p>连接器的客户端并不是总要使用CCI。 某些连接器公开自己的API， 只提供JCA资源适配器来使用Java EE Container的系统协定(连接池，全局事务和安全性）。 Spring不为这种特定于连接器的API提供特殊支持。</p>
+<p><a id="cci-config"></a></p>
+<h3><a href="#cci-config"></a>5.1. 配置 CCI</h3>
+<p>本节介绍如何配置通用客户端接口（CCI）。 它包括以下主题：</p>
+<ul>
+<li>
+<p><a href="#cci-config-connector">连接器配置</a></p>
+</li>
+<li>
+<p><a href="#cci-config-connectionfactory">Spring中的<code>ConnectionFactory</code>配置</a></p>
+</li>
+<li>
+<p><a href="#cci-config-cci-connections">配置 CCI 连接</a></p>
+</li>
+<li>
+<p><a href="#cci-config-single-connection">使用单独的CCI连接</a></p>
+</li>
+</ul>
+<p><a id="cci-config-connector"></a></p>
+<h4><a href="#cci-config-connector"></a>5.1.1. 连接器配置</h4>
+<p>使用JCA CCI的基本资源是<code>ConnectionFactory</code> 接口。 您使用的连接器必须提供此接口的实现。</p>
+<p>若要使用连接器，可以将其部署到应用程序服务器上，并从服务器的JNDI环境(托管模式)中获取<code>ConnectionFactory</code>。连接器必须打包为RAR文件(资源适配器存档)， 并包含 <code>ra.xml</code>文件来描述其部署特性。资源的实际名称在部署时指定。要在Spring中访问它，只需使用Spring的<code>JndiObjectFactoryBean</code>/<code>&lt;jee:jndi-lookup&gt;</code>以其JNDI名称获取工厂。</p>
+<p>使用连接器的另一种方法是将其嵌入到应用程序(非托管模式)中，而不是使用应用程序服务器部署和配置它。Spring提供了通过提供的<code>FactoryBean</code>(<code>LocalConnectionFactoryBean</code>)将连接器配置为bean的可能性。以这种方式，您只需要类路径中的连接器库(无RAR文件，且不需要<code>ra.xml</code>描述符)。如果需要，必须从连接器的RAR文件中提取该库。</p>
+<p>一旦你获得了你的<code>ConnectionFactory</code>实例， 你就可以将它注入你的组件中。这些组件可以是针对普通的 API， 或者利用Spring的支持类来访问CCI(例如<code>CciTemplate</code>)。</p>
+<p>在非托管模式下使用连接器时， 不能使用全局事务， 因为在当前线程的当前全局事务中从未登记或摘出资源。该资源根本不知道可能正在运行的任何全局Java EE事务。</p>
+<p><a id="cci-config-connectionfactory"></a></p>
+<h4><a href="#cci-config-connectionfactory"></a>5.1.2. 在Spring中配置<code>ConnectionFactory</code></h4>
+<p>为了与EIS建立连接，如果您处于托管模式，则需要从应用服务器获取<code>ConnectionFactory</code>。如果你处于非托管模式，则可以直接从Spring中获取。</p>
+<p>在托管模式中，你通过JNDI来访问<code>ConnectionFactory</code>，它的属性将在应用服务器中配置。以下示例说明了如何执行此操作：</p>
+<pre><code>&lt;jee:jndi-lookup id=&quot;eciConnectionFactory&quot; jndi-name=&quot;eis/cicseci&quot;/&gt;
+</code></pre>
+<p>在非托管模式下，您必须将要在Spring配置中使用的<code>ConnectionFactory</code>配置为JavaBean。<code>LocalConnectionFactoryBean</code>类提供这种设置样式，传递连接器的<code>ManagedConnectionFactory</code>实现，公开应用程序级的CCI <code>ConnectionFactory</code>。以下示例说明了如何执行此操作：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciManagedConnectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.ibm.connector2.cics.ECIManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"serverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"TXSERIES"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"tcp://localhost/"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"portNumber"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"2006"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciConnectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"eciManagedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>你不能直接实例化特定的<code>ConnectionFactory</code>，您需要为连接器的<code>ManagedConnectionFactory</code> 接口执行相应的实现。此接口是JCA SPI规范的一部分。</p>
+<p><a id="cci-config-cci-connections"></a></p>
+<h4><a href="#cci-config-cci-connections"></a>5.1.3. 配置CCI连接</h4>
+<p>JCA CCI 允许开发者使用连接器的<code>ConnectionSpec</code>实现来配置到EIS的连接。为了配置其属性，您需要用专用的适配器(<code>ConnectionSpecConnectionFactoryAdapter</code>)包装目标连接工厂。因此，，专用的<code>ConnectionSpec</code>可以配置为<code>connectionSpec</code>属性(作为一个内部bean)。</p>
+<p>此属性不是必需的，因为CCI <code>ConnectionFactory</code>接口定义了两种不同的方法来获取一个与之关联的CCI连接。某些<code>ConnectionSpec</code>属性通常可以在应用程序服务器(在托管模式下)或相应的本地<code>ManagedConnectionFactory</code>实现中进行配置。以下清单显示了<code>ConnectionFactory</code>接口定义的相关部分：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ConnectionFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span>, <span class="hljs-title">Referenceable</span> </span>{
+    ...
+    <span class="hljs-function">Connection <span class="hljs-title">getConnection</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ResourceException</span>;
+    <span class="hljs-function">Connection <span class="hljs-title">getConnection</span><span class="hljs-params">(ConnectionSpec connectionSpec)</span> <span class="hljs-keyword">throws</span> ResourceException</span>;
+    ...
+}
+</code></pre>
+<p>Spring提供了一个<code>ConnectionSpecConnectionFactoryAdapter</code>，它允许指定一个<code>ConnectionSpec</code>实例来用于给定工厂的所有操作。如果指定了适配器的<code>connectionSpec</code>属性， 那么适配器将使用带有<code>ConnectionSpec</code>参数的<code>getConnection</code>变量，否则该变量不带参数。以下示例显示如何配置<code>ConnectionSpecConnectionFactoryAdapter</code>:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"managedConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"com.sun.connector.cciblackbox.CciLocalTxManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"jdbc:hsqldb:hsql://localhost:9001"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"driverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"org.hsqldb.jdbcDriver"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"targetConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"managedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.connection.ConnectionSpecConnectionFactoryAdapter"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"targetConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"targetConnectionFactory"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionSpec"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.sun.connector.cciblackbox.CciConnectionSpec"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"sa"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><a id="cci-config-single-connection"></a></p>
+<h4><a href="#cci-config-single-connection"></a>5.1.4. 使用单独的CCI连接</h4>
+<p>如果您想使用单独的CCI连接，Spring提供了一个进一步的<code>ConnectionFactory</code>适配器来管理这个。<code>SingleConnectionFactory</code>适配器类将会延迟打开一个连接，并在应用程序关闭时关闭此bean。此类将公开相应行为的特殊<code>Connection</code>代理，所有共享相同的底层物理连接。以下示例显示如何使用<code>SingleConnectionFactory</code>适配器类：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciManagedConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"com.ibm.connector2.cics.ECIManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"serverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"TEST"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"tcp://localhost/"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"portNumber"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"2006"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"targetEciConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"eciManagedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.connection.SingleConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"targetConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"targetEciConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>无法直接使用<code>ConnectionSpec</code>配置此<code>ConnectionFactory</code>适配器。如果您需要一个特定<code>ConnectionSpec</code>的单独连接，请使用<code>SingleConnectionFactory</code>对话的中介<code>ConnectionSpecConnectionFactoryAdapter</code>。</p>
+<p><a id="cci-using"></a></p>
+<h3><a href="#cci-using"></a>5.2. 使用Spring的CCI访问支持</h3>
+<p>本节介绍如何使用Spring对CCI的支持来实现各种目的。 它包括以下主题：</p>
+<ul>
+<li>
+<p><a href="#cci-record-creator">记录转换</a></p>
+</li>
+<li>
+<p><a href="#cci-using-template">使用 <code>CciTemplate</code></a></p>
+</li>
+<li>
+<p><a href="#cci-using-dao">DAO支持</a></p>
+</li>
+<li>
+<p><a href="#automatic-output-generation">自动输出记录生成</a></p>
+</li>
+<li>
+<p><a href="#template-summary"><code>CciTemplate</code> <code>Interaction</code> 总结</a></p>
+</li>
+<li>
+<p><a href="#cci-straight">直接使用CCI连接和交互</a></p>
+</li>
+<li>
+<p><a href="#cci-template-example"><code>CciTemplate</code>用法示例</a></p>
+</li>
+</ul>
+<p><a id="cci-record-creator"></a></p>
+<h4><a href="#cci-record-creator"></a>5.2.1. 记录转换</h4>
+<p>JCA CCI支持的目标之一是提供方便的设置来操作CCI记录。开发人员可以指定创建记录和从记录中提取数据的策略，在使用Spring的<code>CciTemplate</code>时。如果您不想在应用程序中直接处理记录，以下接口将配置策略以使用输入和输出记录。</p>
+<p>为了创建输入记录， 开发人员可以使用 <code>RecordCreator</code>接口的专用实现。以下清单显示了<code>RecordCreator</code> 接口定义:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">RecordCreator</span> </span>{
+
+    <span class="hljs-function">Record <span class="hljs-title">createRecord</span><span class="hljs-params">(RecordFactory recordFactory)</span> <span class="hljs-keyword">throws</span> ResourceException, DataAccessException</span>;
+
+}
+</code></pre>
+<p><code>createRecord(..)</code>方法接收一个<code>RecordFactory</code>实例作为参数，它对应于<code>ConnectionFactory</code>所使用的<code>RecordFactory</code> 。此引用可用于创建 <code>IndexedRecord</code>或<code>MappedRecord</code>实例。下面的示例演示如何使用<code>RecordCreator</code>接口和索引/映射记录：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyRecordCreator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">RecordCreator</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">createRecord</span><span class="hljs-params">(RecordFactory recordFactory)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+        IndexedRecord input = recordFactory.createIndexedRecord(<span class="hljs-string">"input"</span>);
+        input.add(<span class="hljs-keyword">new</span> Integer(id));
+        <span class="hljs-keyword">return</span> input;
+    }
+
+}
+</code></pre>
+<p>输出记录可用于从EIS接收数据。因此，可以将<code>RecordExtractor</code>接口的特定实现传递到Spring的<code>CciTemplate</code>， 以便从输出记录中提取数据。以下清单显示了<code>RecordExtractor</code>接口定义：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">RecordExtractor</span> </span>{
+
+    <span class="hljs-function">Object <span class="hljs-title">extractData</span><span class="hljs-params">(Record record)</span> <span class="hljs-keyword">throws</span> ResourceException, SQLException, DataAccessException</span>;
+
+}
+</code></pre>
+<p>以下示例显示如何使用：<code>RecordExtractor</code>接口:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyRecordExtractor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">RecordExtractor</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">extractData</span><span class="hljs-params">(Record record)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+        CommAreaRecord commAreaRecord = (CommAreaRecord) record;
+        String str = <span class="hljs-keyword">new</span> String(commAreaRecord.toByteArray());
+        String field1 = string.substring(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>);
+        String field2 = string.substring(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OutputObject(Long.parseLong(field1), field2);
+    }
+
+}
+</code></pre>
+<p><a id="cci-using-template"></a></p>
+<h4><a href="#cci-using-template"></a>5.2.2. 使用 <code>CciTemplate</code></h4>
+<p><code>CciTemplate</code>是核心的CCI支持包(<code>org.springframework.jca.cci.core</code>)的中心类。它简化了对管理的使用，因为它处理资源的创建和释放。这有助于避免常见的错误，如忘记总是需要的关闭连接。它关心连接和交互对象的生命周期，让应用程序代码专注于从应用程序数据生成输入记录，并从输出记录中提取应用程序数据。</p>
+<p>JCA的CCI规范定义了两种不同的方法来调用EIS上的操作。CCI的 <code>Interaction</code>接口提供了两个execute方法：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">javax</span>.<span class="hljs-title">resource</span>.<span class="hljs-title">cci</span>.<span class="hljs-title">Interaction</span> </span>{
+
+    ...
+
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, Record input, Record output)</span> <span class="hljs-keyword">throws</span> ResourceException</span>;
+
+    <span class="hljs-function">Record <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, Record input)</span> <span class="hljs-keyword">throws</span> ResourceException</span>;
+
+    ...
+
+}
+</code></pre>
+<p>根据调用的模板方法，<code>CciTemplate</code>知道在交互时调用哪个执行方法。 无论如何，正确初始化的 <code>InteractionSpec</code>实例是必需的。</p>
+<p>您可以通过两种方式使用<code>CciTemplate.execute(..)</code> :</p>
+<ul>
+<li>
+<p>直接记录参数。在这种情况下，您只需要在CCI输入中传递记录， 返回的对象就是相应的CCI输出记录。</p>
+</li>
+<li>
+<p>与应用程序对象一起使用记录映射。在这种情况下， 您需要提供相应的<code>RecordCreator</code> 和 <code>RecordExtractor</code>实例。</p>
+</li>
+</ul>
+<p>采用第一种方法，将使以下模板方法，这些方法直接对应于<code>Interaction</code>接口上的那些:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CciTemplate</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CciOperations</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, Record inputRecord)</span>
+            <span class="hljs-keyword">throws</span> DataAccessException </span>{ ... }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, Record inputRecord, Record outputRecord)</span>
+            <span class="hljs-keyword">throws</span> DataAccessException </span>{ ... }
+
+}
+</code></pre>
+<p>对于第二种方式，你需要指定记录创建和记录获取策略作为参数。使用的接口是在<a href="#cci-record-creator">上一节中描述的记录转换</a>。相应的<code>CciTemplate</code>方法如下:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CciTemplate</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CciOperations</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec,
+            RecordCreator inputCreator)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, Record inputRecord,
+            RecordExtractor outputExtractor)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">execute</span><span class="hljs-params">(InteractionSpec spec, RecordCreator creator,
+            RecordExtractor extractor)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+}
+</code></pre>
+<p>除非在模板上设置了<code>outputRecordCreator</code>属性(请参见下一节）， 负责每一个方法都将调用带有两个参数的CCI <code>Interaction</code>方法<code>InteractionSpec</code> 和input <code>Record</code>，接收输出记录作为返回值。</p>
+<p><code>CciTemplate</code>还提供了在<code>RecordCreator</code>实现之外创建<code>IndexRecord</code>和<code>MappedRecord</code>的方法，是通过其<code>createIndexRecord(..)</code>和<code>createMappedRecord(..)</code>方法。这可以在DAO实现中使用，以创建要传递到相应<code>CciTemplate.execute(..)</code>方法。以下清单显示了<code>CciTemplate</code>接口定义:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CciTemplate</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CciOperations</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> IndexedRecord <span class="hljs-title">createIndexedRecord</span><span class="hljs-params">(String name)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{ ... }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> MappedRecord <span class="hljs-title">createMappedRecord</span><span class="hljs-params">(String name)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{ ... }
+
+}
+</code></pre>
+<p><a id="cci-using-dao"></a></p>
+<h4><a href="#cci-using-dao"></a>5.2.3. DAO支持</h4>
+<p>Spring的CCI支持为DAO提供了一个抽象类，支持支持<code>ConnectionFactory</code>或<code>CciTemplate</code>实例的注入。该类的名称为<code>CciDaoSupport</code>：它提供了简单的<code>setConnectionFactory</code>和<code>setCciTemplate</code>方法。在内部， 此类将为传入的<code>ConnectionFactory</code>创建一个<code>CciTemplate</code>实例，并将其公开给子类中的具体数据访问实现。以下示例显示如何使用<code>CciDaoSupport</code>：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CciDaoSupport</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setConnectionFactory</span><span class="hljs-params">(ConnectionFactory connectionFactory)</span> </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ConnectionFactory <span class="hljs-title">getConnectionFactory</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setCciTemplate</span><span class="hljs-params">(CciTemplate cciTemplate)</span> </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> CciTemplate <span class="hljs-title">getCciTemplate</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+}
+</code></pre>
+<p><a id="automatic-output-generation"></a></p>
+<h4><a href="#automatic-output-generation"></a>5.2.4. 自动输出记录生成</h4>
+<p>如果连接器只支持使用输入和输出记录的<code>Interaction.execute(..)</code>方法作为参数（即它需要传递所需的输出记录，而不是返回适当的输出记录)，您可以设置<code>CciTemplate</code> 的<code>outputRecordCreator</code>属性，以便在收到响应时自动生成由JCA连接器填充的输出记录。此记录将被返回到模板的调用方。</p>
+<p>此属性仅包含用于此目的的<a href="#cci-record-creator"><code>RecordCreator</code></a>接口的实现， 您必须直接在<code>CciTemplate</code>上指定<code>outputRecordCreator</code>属性。 以下示例显示了如何执行此操作：</p>
+<pre><code>cciTemplate.setOutputRecordCreator(new EciOutputRecordCreator());
+</code></pre>
+<p>或者（我们建议使用此方法），在Spring配置中，如果将<code>CciTemplate</code> 配置为专用bean实例，则可以按以下方式定义bean:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciOutputRecordCreator"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eci.EciOutputRecordCreator"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"cciTemplate"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.core.CciTemplate"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"eciConnectionFactory"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"outputRecordCreator"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"eciOutputRecordCreator"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>由于<code>CciTemplate</code>类是线程安全的，因此通常将其配置为共享实例。</p>
+<p><a id="template-summary"></a></p>
+<h4><a href="#template-summary"></a>5.2.5. <code>CciTemplate</code> <code>Interaction</code> 总结</h4>
+<p>下表总结了<code>CciTemplate</code> 类的机制以及在CCI <code>Interaction</code>接口上调用的相应方法:</p>
+<p>Table 9. 操作execute方法的使用</p>
+<table>
+<thead>
+<tr>
+<th><code>CciTemplate</code> 调用方法签名</th>
+<th><code>CciTemplate</code> <code>outputRecordCreator</code> 属性</th>
+<th><code>execute</code> 方法调用对CCI的操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+<td>Not set</td>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+<td>Set</td>
+<td><code>boolean execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+<tr>
+<td>void execute(InteractionSpec, Record, Record)</td>
+<td>Not set</td>
+<td>void execute(InteractionSpec, Record, Record)</td>
+</tr>
+<tr>
+<td><code>void execute(InteractionSpec, Record, Record)</code></td>
+<td>Set</td>
+<td><code>void execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, RecordCreator)</code></td>
+<td>Not set</td>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, RecordCreator)</code></td>
+<td>Set</td>
+<td><code>void execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, Record, RecordExtractor)</code></td>
+<td>Not set</td>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, Record, RecordExtractor)</code></td>
+<td>Set</td>
+<td><code>void execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, RecordCreator, RecordExtractor)</code></td>
+<td>Not set</td>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+</tr>
+<tr>
+<td><code>Record execute(InteractionSpec, RecordCreator, RecordExtractor)</code></td>
+<td>Set</td>
+<td><code>void execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+</tbody>
+</table>
+<p><a id="cci-straight"></a></p>
+<h4><a href="#cci-straight"></a>5.2.6. 直接使用CCI连接和交互</h4>
+<p><code>CciTemplate</code> 也提供了与<code>JdbcTemplate</code> 和 <code>JmsTemplate</code>相同的方式直接使用CCI连接和交互。 例如，当您想要在CCI连接或交互上执行多个操作时，这非常有用。</p>
+<p><code>ConnectionCallback</code>接口提供了CCI <code>Connection</code>作为参数，用于执行自定义的操作，加到CCI <code>ConnectionFactory</code>的<code>Connection</code>创建。。 后者可用于获取关联的<code>RecordFactory</code>实例并创建索引/映射记录，以下清单显示了<code>ConnectionCallback</code>接口定义:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ConnectionCallback</span> </span>{
+
+    <span class="hljs-function">Object <span class="hljs-title">doInConnection</span><span class="hljs-params">(Connection connection, ConnectionFactory connectionFactory)</span>
+            <span class="hljs-keyword">throws</span> ResourceException, SQLException, DataAccessException</span>;
+
+}
+</code></pre>
+<p>接口<code>InteractionCallback</code>提供了CCI <code>Interaction</code>，是为了对其执行自定义操作，添加到相应的<code>ConnectionFactory</code>。以下清单显示了<code>InteractionCallback</code>接口定义：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">InteractionCallback</span> </span>{
+
+    <span class="hljs-function">Object <span class="hljs-title">doInInteraction</span><span class="hljs-params">(Interaction interaction, ConnectionFactory connectionFactory)</span>
+        <span class="hljs-keyword">throws</span> ResourceException, SQLException, DataAccessException</span>;
+
+}
+</code></pre>
+<p><code>InteractionSpec</code>对象可以在多个模板调用之间共享，或者在每个回调方法中新创建。这完全由DAO实现来完成。</p>
+<p><a id="cci-template-example"></a></p>
+<h4><a href="#cci-template-example"></a>5.2.7. <code>CciTemplate</code> 用法示例</h4>
+<p>在本节中，<code>CciTemplate</code>的使用将被显示为访问到具有ECI模式的CICS，使用IBM CICS ECI连接器。</p>
+<p>首先, 必须对CCI <code>InteractionSpec</code>进行一些初始化，以指定要访问的CICS程序以及如何与之交互:</p>
+<pre><code>ECIInteractionSpec interactionSpec = new ECIInteractionSpec();
+interactionSpec.setFunctionName(&quot;MYPROG&quot;);
+interactionSpec.setInteractionVerb(ECIInteractionSpec.SYNC_SEND_RECEIVE);
+</code></pre>
+<p>然后，程序可以通过Spring模板使用CCI， 指定自定义对象和记录之间的映射。如下:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDaoImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CciDaoSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyDao</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> OutputObject <span class="hljs-title">getData</span><span class="hljs-params">(InputObject input)</span> </span>{
+        ECIInteractionSpec interactionSpec = ...;
+
+    OutputObject output = (ObjectOutput) getCciTemplate().execute(interactionSpec,
+        <span class="hljs-keyword">new</span> RecordCreator() {
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">createRecord</span><span class="hljs-params">(RecordFactory recordFactory)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> CommAreaRecord(input.toString().getBytes());
+            }
+        },
+        <span class="hljs-keyword">new</span> RecordExtractor() {
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">extractData</span><span class="hljs-params">(Record record)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+                CommAreaRecord commAreaRecord = (CommAreaRecord)record;
+                String str = <span class="hljs-keyword">new</span> String(commAreaRecord.toByteArray());
+                String field1 = string.substring(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>);
+                String field2 = string.substring(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OutputObject(Long.parseLong(field1), field2);
+            }
+        });
+
+        <span class="hljs-keyword">return</span> output;
+    }
+}
+</code></pre>
+<p>如前所述，您可以使用回调直接处理CCI连接或交互。 以下示例显示了如何执行此操作：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDaoImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CciDaoSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyDao</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> OutputObject <span class="hljs-title">getData</span><span class="hljs-params">(InputObject input)</span> </span>{
+        ObjectOutput output = (ObjectOutput) getCciTemplate().execute(
+            <span class="hljs-keyword">new</span> ConnectionCallback() {
+                <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">doInConnection</span><span class="hljs-params">(Connection connection,
+                        ConnectionFactory factory)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+
+                    <span class="hljs-comment">// do something...</span>
+
+                }
+            });
+        }
+        <span class="hljs-keyword">return</span> output;
+    }
+
+}
+</code></pre>
+<p>使用<code>ConnectionCallback</code>时，所使用的<code>Connection</code>由<code>CciTemplate</code>管理和关闭，但回调实现必须管理在连接上创建的任何交互。</p>
+<p>对于更具体的回调，您可以实现<code>InteractionCallback</code>。 如果这样做，传入的<code>Interaction</code> 将由<code>CciTemplate</code>管理和关闭。 以下示例显示了如何执行此操作:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDaoImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CciDaoSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyDao</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getData</span><span class="hljs-params">(String input)</span> </span>{
+        ECIInteractionSpec interactionSpec = ...;
+        String output = (String) getCciTemplate().execute(interactionSpec,
+            <span class="hljs-keyword">new</span> InteractionCallback() {
+                <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">doInInteraction</span><span class="hljs-params">(Interaction interaction,
+                        ConnectionFactory factory)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+                    Record input = <span class="hljs-keyword">new</span> CommAreaRecord(inputString.getBytes());
+                    Record output = <span class="hljs-keyword">new</span> CommAreaRecord();
+                    interaction.execute(holder.getInteractionSpec(), input, output);
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> String(output.toByteArray());
+                }
+            });
+        <span class="hljs-keyword">return</span> output;
+    }
+
+}
+</code></pre>
+<p>对于前面的示例，所涉及的Spring bean的相应配置可能类似于非托管模式中的以下示例：:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.ibm.connector2.cics.ECIManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"serverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"TXSERIES"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"local:"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"userName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"CICSUSER"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"CICS"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"managedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mypackage.MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>在托管模式下（即在Java EE环境中），配置可能类似于以下示例：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">jee:jndi-lookup</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">jndi-name</span>=<span class="hljs-string">"eis/cicseci"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><a id="cci-object"></a></p>
+<h3><a href="#cci-object"></a>5.3. 将CCI访问建模为操作对象</h3>
+<p><code>org.springframework.jca.cci.object</code>包中包含的支持类允许你以另一种风格访问EIS：通过可重用的操作对象，类似于Spring的JDBC操作对象（参见<a href="data-access.html#jdbc">数据访问章节中的JDBC</a>)。它通常都封装了CCI的API，将应用级的输入对象传入到操作对象，从而它能创建输入record然后转换接收到的record数据到一个应用级输出对象并返回它。</p>
+<p>这种方法内在地基于<code>CciTemplate</code>类和<code>RecordCreator</code>/<code>RecordExtractor</code>接口，重用了Spring核心CCI支持的机制。</p>
+<p><a id="cci-object-mapping-record"></a></p>
+<h4><a href="#cci-object-mapping-record"></a>5.3.1. 使用 <code>MappingRecordOperation</code></h4>
+<p><code>MappingRecordOperation</code>本质上与<code>CciTemplate</code>做的事情是一样的，但是它表达了一个明确的、预配置（pre-configured）的操作作为对象。它提供了两个模板方法来指明如何将一个输入对象转换为输入记录，以及如何将一个输出记录转换为输出对象（记录映射）。:</p>
+<ul>
+<li>
+<p><code>createInputRecord(..)</code>: 指定了如何将一个输入对象转换为输入<code>Record</code>。</p>
+</li>
+<li>
+<p><code>extractOutputData(..)</code>:指定了如何从输出<code>Record</code>中提取输出对象。</p>
+</li>
+</ul>
+<p>以下清单显示了这些方法的签名：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MappingRecordOperation</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">EisOperation</span> </span>{
+
+    ...
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> Record <span class="hljs-title">createInputRecord</span><span class="hljs-params">(RecordFactory recordFactory,
+            Object inputObject)</span> <span class="hljs-keyword">throws</span> ResourceException, DataAccessException </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> Object <span class="hljs-title">extractOutputData</span><span class="hljs-params">(Record outputRecord)</span>
+            <span class="hljs-keyword">throws</span> ResourceException, SQLException, DataAccessException </span>{
+        <span class="hljs-comment">// ...</span>
+    }
+
+    ...
+
+}
+</code></pre>
+<p>此后，为了执行一个EIS操作，你需要使用一个单独的<code>execute</code>方法，传递一个应用级（application-level）输入对象，并接收一个应用级输出对象作为结果。如下所示：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MappingRecordOperation</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">EisOperation</span> </span>{
+
+    ...
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">execute</span><span class="hljs-params">(Object inputObject)</span> <span class="hljs-keyword">throws</span> DataAccessException </span>{
+    }
+
+    ...
+}
+</code></pre>
+<p>与<code>CciTemplate</code> 类相反，此<code>execute(..)</code>方法没有<code>InteractionSpec</code>作为参数。 相反，<code>InteractionSpec</code> 对于操作是全局的。 必须使用以下构造函数来实例化具有特定<code>InteractionSpec</code>的操作对象。 以下示例显示了如何执行此操作:</p>
+<pre><code class="language-java">InteractionSpec spec = ...;
+MyMappingRecordOperation eisOperation = <span class="hljs-keyword">new</span> MyMappingRecordOperation(getConnectionFactory(), spec);
+...
+</code></pre>
+<p><a id="cci-object-mapping-comm-area"></a></p>
+<h4><a href="#cci-object-mapping-comm-area"></a>5.3.2. 使用 <code>MappingCommAreaOperation</code></h4>
+<p>一些连接器使用了基于COMMAREA的记录，该记录包含了发送给EIS的参数和返回数据的字节数组。Spring提供了一个专门的操作类用于直接操作COMMAREA而不是操作记录。 <code>MappingCommAreaOperation</code>类扩展了<code>MappingRecordOperation</code>类以提供这种专门的COMMAREA支持。它隐含地使用了<code>CommAreaRecord</code>类作为输入和输出record类型，并提供了两个新的方法来转换输入对象到输入COMMAREA，以及转换输出COMMAREA到输出对象。以下清单显示了相关的方法签名：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MappingCommAreaOperation</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">MappingRecordOperation</span> </span>{
+
+    ...
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">byte</span>[] objectToBytes(Object inObject)
+            <span class="hljs-keyword">throws</span> IOException, DataAccessException;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> Object <span class="hljs-title">bytesToObject</span><span class="hljs-params">(<span class="hljs-keyword">byte</span>[] bytes)</span>
+        <span class="hljs-keyword">throws</span> IOException, DataAccessException</span>;
+
+    ...
+
+}
+</code></pre>
+<p><a id="cci-automatic-record-gen"></a></p>
+<h4><a href="#cci-automatic-record-gen"></a>5.3.3. 自动的输出记录生成</h4>
+<p>由于每个<code>MappingRecordOperation</code>子类的内部都是基于<code>CciTemplate</code>的，所以用CciTemplate以相同的方式自动生成输出record都是有效的。每个操作对象提供一个相应的<code>setOutputRecordCreator(..)</code>方法，有关详细信息，请参阅<a href="#automatic-output-generation">自动输出记录生成</a>。</p>
+<p><a id="cci-object-summary"></a></p>
+<h4><a href="#cci-object-summary"></a>5.3.4. 总结</h4>
+<p>操作对象方法使用了跟<code>CciTemplate</code>相同的方式来使用记录。</p>
+<p>Table 10. Interaction的execute方法的使用</p>
+<table>
+<thead>
+<tr>
+<th><code>MappingRecordOperation</code> 方法签名</th>
+<th><code>MappingRecordOperation</code> <code>outputRecordCreator</code> 属性</th>
+<th>在CCI Interaction上调用的 <code>execute</code> 方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Object execute(Object)</code></td>
+<td>Not set</td>
+<td><code>Record execute(InteractionSpec, Record)</code></td>
+</tr>
+<tr>
+<td><code>Object execute(Object)</code></td>
+<td>Set</td>
+<td><code>boolean execute(InteractionSpec, Record, Record)</code></td>
+</tr>
+</tbody>
+</table>
+<p><a id="cci-objects-mappring-record-example"></a></p>
+<h4><a href="#cci-objects-mappring-record-example"></a>5.3.5. <code>MappingRecordOperation</code> 使用例子</h4>
+<p>在本节中，我们将展示如何使用<code>MappingRecordOperation</code> 访问具有Blackbox CCI连接器的数据库。</p>
+<p>此连接器的原始版本由Java EE SDK（版本1.3）提供，可从Oracle获得。</p>
+<p>首先，必须对CCI <code>InteractionSpec</code>进行一些初始化，在下面的示例中，我们直接定义将请求的参数转换为CCI记录的方式以及将CCI结果记录转换为<code>Person</code>类的实例的方法：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonMappingOperation</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">MappingRecordOperation</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PersonMappingOperation</span><span class="hljs-params">(ConnectionFactory connectionFactory)</span> </span>{
+        setConnectionFactory(connectionFactory);
+        CciInteractionSpec interactionSpec = <span class="hljs-keyword">new</span> CciConnectionSpec();
+        interactionSpec.setSql(<span class="hljs-string">"select * from person where person_id=?"</span>);
+        setInteractionSpec(interactionSpec);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> Record <span class="hljs-title">createInputRecord</span><span class="hljs-params">(RecordFactory recordFactory,
+            Object inputObject)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+        Integer id = (Integer) inputObject;
+        IndexedRecord input = recordFactory.createIndexedRecord(<span class="hljs-string">"input"</span>);
+        input.add(<span class="hljs-keyword">new</span> Integer(id));
+        <span class="hljs-keyword">return</span> input;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> Object <span class="hljs-title">extractOutputData</span><span class="hljs-params">(Record outputRecord)</span>
+            <span class="hljs-keyword">throws</span> ResourceException, SQLException </span>{
+        ResultSet rs = (ResultSet) outputRecord;
+        Person person = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">if</span> (rs.next()) {
+            Person person = <span class="hljs-keyword">new</span> Person();
+            person.setId(rs.getInt(<span class="hljs-string">"person_id"</span>));
+            person.setLastName(rs.getString(<span class="hljs-string">"person_last_name"</span>));
+            person.setFirstName(rs.getString(<span class="hljs-string">"person_first_name"</span>));
+        }
+        <span class="hljs-keyword">return</span> person;
+    }
+}
+</code></pre>
+<p>然后应用程序会以person标识符作为参数来得到操作对象。注意，操作对象可以被设为共享实例，因为它是线程安全的。 以下以person标识符作为参数执行操作对象:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDaoImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CciDaoSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyDao</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">getPerson</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>{
+        PersonMappingOperation query = <span class="hljs-keyword">new</span> PersonMappingOperation(getConnectionFactory());
+        Person person = (Person) query.execute(<span class="hljs-keyword">new</span> Integer(id));
+        <span class="hljs-keyword">return</span> person;
+    }
+}
+</code></pre>
+<p>在非托管模式下，Spring bean的相应配置如下：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"managedConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"com.sun.connector.cciblackbox.CciLocalTxManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"jdbc:hsqldb:hsql://localhost:9001"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"driverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"org.hsqldb.jdbcDriver"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"targetConnectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"managedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.connection.ConnectionSpecConnectionFactoryAdapter"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"targetConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"targetConnectionFactory"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionSpec"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.sun.connector.cciblackbox.CciConnectionSpec"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"sa"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>在托管模式下（即在Java EE环境中），配置可能如下所示：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">jee:jndi-lookup</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"targetConnectionFactory"</span> <span class="hljs-attr">jndi-name</span>=<span class="hljs-string">"eis/blackbox"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.connection.ConnectionSpecConnectionFactoryAdapter"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"targetConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"targetConnectionFactory"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionSpec"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.sun.connector.cciblackbox.CciConnectionSpec"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"sa"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><a id="cci-objects-mapping-comm-area-example"></a></p>
+<h4><a href="#cci-objects-mapping-comm-area-example"></a>5.3.6. <code>MappingCommAreaOperation</code> 的使用例子</h4>
+<p>在本节中，我们将展示如何使用<code>MappingCommAreaOperation</code>来使用IBM CICS ECI连接器访问具有ECI模式的CICS。</p>
+<p>首先，我们需要初始化CCI <code>InteractionSpec</code>以指定要访问的CICS程序以及如何与之交互，如以下示例所示：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EciMappingOperation</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">MappingCommAreaOperation</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EciMappingOperation</span><span class="hljs-params">(ConnectionFactory connectionFactory, String programName)</span> </span>{
+        setConnectionFactory(connectionFactory);
+        ECIInteractionSpec interactionSpec = <span class="hljs-keyword">new</span> ECIInteractionSpec(),
+        interactionSpec.setFunctionName(programName);
+        interactionSpec.setInteractionVerb(ECIInteractionSpec.SYNC_SEND_RECEIVE);
+        interactionSpec.setCommareaLength(<span class="hljs-number">30</span>);
+        setInteractionSpec(interactionSpec);
+        setOutputRecordCreator(<span class="hljs-keyword">new</span> EciOutputRecordCreator());
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EciOutputRecordCreator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">RecordCreator</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">createRecord</span><span class="hljs-params">(RecordFactory recordFactory)</span> <span class="hljs-keyword">throws</span> ResourceException </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> CommAreaRecord();
+        }
+    }
+
+}
+</code></pre>
+<p>然后我们可以将抽象的 <code>EciMappingOperation</code>类子类化为指定自定义对象和Records之间的映射，如下例所示:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDaoImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CciDaoSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyDao</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> OutputObject <span class="hljs-title">getData</span><span class="hljs-params">(Integer id)</span> </span>{
+        EciMappingOperation query = <span class="hljs-keyword">new</span> EciMappingOperation(getConnectionFactory(), <span class="hljs-string">"MYPROG"</span>) {
+
+            <span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">byte</span>[] objectToBytes(Object inObject) <span class="hljs-keyword">throws</span> IOException {
+                Integer id = (Integer) inObject;
+                <span class="hljs-keyword">return</span> String.valueOf(id);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> Object <span class="hljs-title">bytesToObject</span><span class="hljs-params">(<span class="hljs-keyword">byte</span>[] bytes)</span> <span class="hljs-keyword">throws</span> IOException</span>;
+                String str = <span class="hljs-keyword">new</span> String(bytes);
+                String field1 = str.substring(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>);
+                String field2 = str.substring(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>);
+                String field3 = str.substring(<span class="hljs-number">7</span>,<span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OutputObject(field1, field2, field3);
+            }
+        });
+
+        <span class="hljs-keyword">return</span> (OutputObject) query.execute(<span class="hljs-keyword">new</span> Integer(id));
+    }
+
+}
+</code></pre>
+<p>在非托管模式下，Spring bean的相应配置如下：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.ibm.connector2.cics.ECIManagedConnectionFactory"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"serverName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"TXSERIES"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionURL"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"local:"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"userName"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"CICSUSER"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"CICS"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.support.LocalConnectionFactoryBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"managedConnectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"managedConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>在托管模式下（即在Java EE环境中），配置可能如下所示：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">jee:jndi-lookup</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">jndi-name</span>=<span class="hljs-string">"eis/cicseci"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"component"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"MyDaoImpl"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"connectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><a id="cci-tx"></a></p>
+<h3><a href="#cci-tx"></a>5.4. 事务</h3>
+<p>JCA为资源适配器（resource adapters)指定了几个级别的事务支持。你可以在<code>ra.xml</code>文件中指定你的资源适配器支持的事务类型。它本质上有三个选项：none（例如，使用CICS EPI连接器），本地事务（例如，使用CICS ECI连接器）和全局事务（例如，使用IMS连接器）。 以下示例配置全局选项：:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">connector</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">resourceadapter</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- &lt;transaction-support&gt;NoTransaction&lt;/transaction-support&gt; --&gt;</span>
+        <span class="hljs-comment">&lt;!-- &lt;transaction-support&gt;LocalTransaction&lt;/transaction-support&gt; --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">transaction-support</span>&gt;</span>XATransaction<span class="hljs-tag">&lt;/<span class="hljs-name">transaction-support</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">resourceadapter</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">connector</span>&gt;</span>
+</code></pre>
+<p>对于全局事务，您可以使用Spring的通用事务基础结构来划分事务，使用<code>JtaTransactionManager</code>作为后端（委托给下面的Java EE服务器的分布式事务协调器）。</p>
+<p>对于单个CCI <code>ConnectionFactory</code>上的本地事务，Spring为CCI提供了特定的事务管理策略，类似于JDBC的<code>DataSourceTransactionManager</code>。CCI API定义了本地事务对象和相应的本地事务划分方法。 Spring的<code>CciLocalTransactionManager</code>执行这样的本地CCI事务，完全依照Spring中常见的<code>PlatformTransactionManager</code>抽象。以下示例配置 <code>CciLocalTransactionManager</code>：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">jee:jndi-lookup</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciConnectionFactory"</span> <span class="hljs-attr">jndi-name</span>=<span class="hljs-string">"eis/cicseci"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"eciTransactionManager"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.jca.cci.connection.CciLocalTransactionManager"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"connectionFactory"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"eciConnectionFactory"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>您可以将这两种事务策略与Spring的任何事务划分工具一起使用，无论是声明性的还是编程式的。这是Spring通用的<code>PlatformTransactionManager</code>抽象的结果，它解耦了实际运行策略中的事务划分。你可以保持现在的事务划分，只需要在<code>JtaTransactionManager</code>和<code>CciLocalTransactionManager</code>之间转换即可。</p>
+<p>有关Spring的事务处理机制的更多信息，请参阅<a href="data-access.html#transaction">事务管理</a>。</p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/springframework/demo.html" target="_self">Spring Framework</a></dd><dd><a href="/en-us/docs/springboot/demo.html" target="_self">SpringBoot</a></dd><dd><a href="/en-us/docs/dir/nginx/demo.html" target="_self">Nginx</a></dd><dd><a href="/en-us/docs/microservices/demo.html" target="_self">Microservices</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/zh-cn/blog/index.html" target="_self">Blog</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">Community</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>
