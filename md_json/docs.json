@@ -1,0 +1,92 @@
+{
+  "en-us": [
+    {
+      "filename": "demo.md",
+      "link": "\\en-us\\docs\\microservices\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\en-us\\docs\\nginx\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "\\en-us\\docs\\quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\en-us\\docs\\springboot\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\en-us\\docs\\springframework\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "demo.md",
+      "link": "\\zh-cn\\docs\\microservices\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\zh-cn\\docs\\nginx\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "\\zh-cn\\docs\\quick-start.html",
+      "meta": {
+        "title": "快速启动",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\zh-cn\\docs\\springboot\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    },
+    {
+      "filename": "demo.md",
+      "link": "\\zh-cn\\docs\\springframework\\demo.html",
+      "meta": {
+        "title": "demo",
+        "keywords": "XML configuration, Consumer, Provider",
+        "description": "使用 XML 配置方式快速上手 Dubbo"
+      }
+    }
+  ]
+}
