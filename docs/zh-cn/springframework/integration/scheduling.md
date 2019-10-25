@@ -1,6 +1,6 @@
 <a id="scheduling"></a>
 
-[](#scheduling)7\. 执行任务和任务计划
+[](#scheduling)7\. 执行任务和计划任务
 ----------------------------
 
 Spring框架分别为异步执行、`TaskExecutor`的任务调度和`TaskScheduler`接口提供了抽象。Spring还具有支持线程池或委派到应用程序服务器环境CommonJ的接口实现。最终， 在Java SE 5、Java SE 6和Java EE有差异的环境都实现了一套公共的抽象接口。

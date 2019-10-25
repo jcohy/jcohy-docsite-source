@@ -3,7 +3,7 @@
 # Spring Framework 概述
 
 **Spring 使创建 Java 企业应用程序变得更加容易。它提供了在企业环境中接受 Java 语言所需的一切,，并支持 Groovy 和 Kotlin 作为 JVM 上的替代语言，并可根据应用程序的需要灵活地创建多种体系结构。
-从 Spring Framework 5.0 开始，Spring 需要 JDK 8(Java SE 8+)，并且已经为 JDK 9 提供了现成的支持。**
+从 Spring Framework 5.1 开始，Spring 需要 JDK 8(Java SE 8+)，并且已经为 JDK 11 提供了现成的支持。另外，Java SE 8更新了60个提议作为Java 8的最低release版本，但通常建议使用最新的release版本。**
 
 Spring支持各种应用场景， 在大型企业中, 应用程序通常需要运行很长时间，而且必须运行在 jdk 和应用服务器上，这种场景开发人员无法控制其升级周期。 其他可能作为一个单独的jar嵌入到服务器去运行，也有可能在云环境中。还有一些可能是不需要服务器的独立应用程序(如批处理或集成的工作任务)。
 
@@ -17,7 +17,7 @@ Spring在不同的背景下有这不同的含义。它可以指 Spring Framework
 
 整个Spring框架被分成多个模块，应用程序可以选择需要的部分。core是核心容器的模块，包括模块配置和依赖注入机制 。Spring框架还为不同的应用程序体系结构提供了基础支持，包括消息传递，事务数据和持久化以及Web，还包括基于Servlet的Spring MVC Web框架 ，以及Spring WebFlux响应式Web框架。
 
-关于模块的说明: Spring Framework 的jar包允许部署到JDK 9的模块路径("Jigsaw")。为了在支持Jigsaw的应用程序中使用， Spring Framework  5的jar带有 "Automatic-Module-Name" 清单条目，它定义了稳定的语言级模块名称(例如"spring.code","spring.context"等)独立于jar部件名称(jar遵循相同的命名模式使用"-"号代替"."， 例如"spring-core" 和 "spring-context")。当然，Spring Framework 的jar包在JDK 8和9的类路径上都能保持正常工作。
+关于模块的说明: Spring Framework 的jar包允许部署到JDK 9的模块路径("Jigsaw")。为了在支持Jigsaw的应用程序中使用， Spring Framework  5的jar带有 "Automatic-Module-Name" 清单条目，它定义了稳定的语言级模块名称(例如"spring.code","spring.context"等)独立于jar部件名称(jar遵循相同的命名模式使用"-"号代替"."， 例如"spring-core" 和 "spring-context")。当然，Spring Framework 的jar包在JDK 8和9+的类路径上都能保持正常工作。
 
 <a id="overview-history"></a>
 
@@ -72,7 +72,7 @@ Spring还在继续创新和发展，如今，除了Spring框架以外，还加�
 
 ## 4、反馈和贡献
 
-对于操作方法问题或诊断或调试问题，我们建议使用 Stackoverflow。Spring 在此网站上有一个专用的页面[questions page](https://spring.io/questions) ，列出了建议使用的标记。 如果你相当确定 Spring 框架存在问题，或者想建议添加功能等等，可以使用 [JIRA 的问题追踪](https://jira.spring.io/browse/spr)。
+对于操作方法问题或诊断或调试问题，我们建议使用 Stackoverflow。Spring 在此网站上有一个专用的页面[questions page](https://spring.io/questions) ，列出了建议使用的标记。 如果你相当确定 Spring 框架存在问题，或者想建议添加功能等等，可以使用 [GitHub Issues](https://github.com/spring-projects/spring-framework/issues)。
 
 如果你想到了某问题的解决方案或者想建议，你可以在 [Github](https://github.com/spring-projects/spring-framework) 上提交请求。但是， 我们希望在此之前,你可以在问题跟踪页面先提交一波，在那里可以进行讨论并留下记录以作参考。
 

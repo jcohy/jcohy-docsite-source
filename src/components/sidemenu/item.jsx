@@ -35,20 +35,45 @@ class Item extends React.Component {
   }
 
   renderSubMenu(data) {
+    const { item } = data;
+    const hasChildren = item.children && item.children.length;
+    const { opened } = this.state;
+    const cls = classnames({
+      'menu-item': true,
+      'menu-item-level-2': true,
+      'menu-item-selected': getLink(item.link) === window.location.pathname,
+    });
+    const style = {
+      height: opened ? 36 * (item.children.length + 1) : 36,
+      overflow: 'hidden',
+    };
+    if (hasChildren) {
+      return (
+          <li style={style} className={cls} onClick={this.toggle}>
+            {
+              <span>
+            {item.title}
+                <img style={{ transform: `rotate(${opened ? 0 : -90}deg)` }} className="menu-toggle" src={getLink('/img/system/arrow_down.png')} />
+          </span>
+            }
+            {this.renderSubMenu(item.children)}
+          </li>
+      );
+    }
     return (
       <ul>
       {
-        data.map((item, index) => (
+        data.map((suitem, index) => (
           <li
             className={classnames({
               'menu-item': true,
               'menu-item-level-3': true,
-              'menu-item-selected': getLink(item.link) === window.location.pathname,
+              'menu-item-selected': getLink(suitem.link) === window.location.pathname,
             })}
             key={index}
             onClick={this.onItemClick}
           >
-            <a href={getLink(item.link)} target={item.target || '_self'}>{item.title}</a>
+            <a href={getLink(suitem.link)} target={suitem.target || '_self'}>{suitem.title}</a>
           </li>
         ))
       }

@@ -69,7 +69,7 @@ Spring配置至少一个（通常不止一个）由容器来管理。基于XML�
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="..." class="...">  (1) (2)
         <!-- collaborators and configuration for this bean go here -->
@@ -100,7 +100,16 @@ Spring配置至少一个（通常不止一个）由容器来管理。基于XML�
 
 提供给ApplicationContext构造函数的路径就是实际的资源字符串，使容器能从各种外部资源(如本地文件系统、Java类路径等)装载元数据配置。
 
+java:
+
+```java
     ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
+```
+kotlin:
+
+```kotlin
+    val context = ClassPathXmlApplicationContext("services.xml", "daos.xml");
+```
 
 当你了解Spring IoC容器，你可能想知道更多关于Spring的抽象资源（详细描述[资源](#resources)）它提供了一种方便的，由URI语法定义的位置读取InputStream描述的方式 ，资源路径被用于构建应用程序上下文[应用环境和资源路径](#resources-app-ctx)
 
@@ -111,7 +120,7 @@ Spring配置至少一个（通常不止一个）由容器来管理。基于XML�
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- services -->
 
@@ -133,7 +142,7 @@ Spring配置至少一个（通常不止一个）由容器来管理。基于XML�
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="accountDao"
         class="org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao">
@@ -213,6 +222,8 @@ beans {
 
 `ApplicationContext`可以读取bean定义并访问它们 如下 :
 
+java:
+
 ```java
 // create and configure beans
 ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
@@ -224,18 +235,51 @@ PetStoreService service = context.getBean("petStore", PetStoreService.class);
 List<String> userList = service.getUsernameList();
 ```
 
+kotlin:
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+// create and configure beans
+val context = ClassPathXmlApplicationContext("services.xml", "daos.xml")
+
+// retrieve configured instance
+val service = context.getBean<PetStoreService>("petStore")
+
+// use configured instance
+var userList = service.getUsernameList()
+```
+
 使用Groovy配置引导看起来非常相似，只是用到不同的上下文实现类：它是Groovy感知的（但也需理解XML bean定义） 如下:
+
+java:
 
 ```groovy
 ApplicationContext context = new GenericGroovyApplicationContext("services.groovy", "daos.groovy");
 ```
 
+kotlin:
+
+```kotlin
+val context = GenericGroovyApplicationContext("services.groovy", "daos.groovy")
+```
+
 最灵活的变体是`GenericApplicationContext`，例如读取XML文件的`XmlBeanDefinitionReader`。如下面的示例所示:
+
+java:
 
 ```java
 GenericApplicationContext context = new GenericApplicationContext();
 new XmlBeanDefinitionReader(context).loadBeanDefinitions("services.xml", "daos.xml");
 context.refresh();
+```
+
+kotlin:
+
+```kotlin
+val context = GenericApplicationContext()
+GroovyBeanDefinitionReader(context).loadBeanDefinitions("services.groovy", "daos.groovy")
+context.refresh()
 ```
 
 您还可以为Groovy文件使用`GroovyBeanDefinitionReader`，如下面的示例所示:
@@ -387,6 +431,8 @@ Spring IoC容器几乎可以管理您希望它管理的任何类。它不仅限�
 
 以下示例显示了一个可以使用前面的bean定义的类:
 
+java:
+
 ```java
 public class ClientService {
     private static ClientService clientService = new ClientService();
@@ -394,6 +440,17 @@ public class ClientService {
 
     public static ClientService createInstance() {
         return clientService;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+class ClientService private constructor() {
+    companion object {
+        private val clientService = ClientService()
+        fun createInstance() = clientService
     }
 }
 ```
@@ -431,6 +488,19 @@ public class DefaultServiceLocator {
 }
 ```
 
+kotlin:
+
+```kotlin
+class DefaultServiceLocator {
+    companion object {
+        private val clientService = ClientServiceImpl()
+    }
+    fun createClientServiceInstance(): ClientService {
+        return clientService
+    }
+}
+```
+
 一个工厂类也可以包含多个工厂方法，如以下示例所示:
 
 ```xml
@@ -464,6 +534,25 @@ public class DefaultServiceLocator {
         return accountService;
     }
 }
+```
+
+kotlin:
+
+```kotlin
+class DefaultServiceLocator {
+    companion object {
+        private val clientService = ClientServiceImpl()
+        private val accountService = AccountServiceImpl()
+    }
+
+    fun createClientServiceInstance(): ClientService {
+        return clientService
+    }
+
+    fun createAccountServiceInstance(): AccountService {
+        return accountService
+    }
+}	
 ```
 
 这种方法表明可以通过依赖注入（DI）来管理和配置工厂bean本身。请参阅详细信息中的[依赖和配置详解](#beans-factory-properties-detailed)。
@@ -507,6 +596,15 @@ public class SimpleMovieLister {
 }
 ```
 
+kotlin:
+
+```kotlin
+// a constructor so that the Spring container can inject a MovieFinder
+class SimpleMovieLister(private val movieFinder: MovieFinder) {
+    // business logic that actually uses the injected MovieFinder is omitted...
+}
+```
+
 请注意，这个类没有什么特别之处。 它是一个POJO，它不依赖于容器特定的接口，基类或注解。
 
 <a id="beans-factory-ctor-arguments-resolution"></a>
@@ -526,18 +624,26 @@ public class ThingOne {
 }
 ```
 
+kotlin:
+
+```kotlin
+package x.y
+
+class ThingOne(thingTwo: ThingTwo, thingThree: ThingThree)
+```
+
 假设`ThingTwo`和`ThingThree`类与继承无关，也没有什么歧义。下面的配置完全可以工作正常。开发者无需再到`<constructor-arg/>`元素中指定构造函数参数的index或type
 
 ```xml
 <beans>
-    <bean id="thingOne" class="x.y.ThingOne">
+    <bean id="beanOne" class="x.y.ThingOne">
         <constructor-arg ref="thingTwo"/>
         <constructor-arg ref="thingThree"/>
     </bean>
 
-    <bean id="thingTwo" class="x.y.ThingTwo"/>
+    <bean id="beanTwo" class="x.y.ThingTwo"/>
 
-    <bean id="thingThree" class="x.y.ThingThree"/>
+    <bean id="beanThree" class="x.y.ThingThree"/>
 </beans>
 ```
 
@@ -559,6 +665,17 @@ public class ExampleBean {
         this.ultimateAnswer = ultimateAnswer;
     }
 }
+```
+
+kotlin:
+
+```kotlin
+package examples
+
+class ExampleBean(
+    private val years: Int, // Number of years to calculate the Ultimate Answer
+    private val ultimateAnswer: String// The Answer to Life, the Universe, and Everything
+)
 ```
 
 构造函数参数类型匹配
@@ -615,6 +732,16 @@ public class ExampleBean {
 }
 ```
 
+kotlin:
+
+```kotlin
+package examples
+
+class ExampleBean
+@ConstructorProperties("years", "ultimateAnswer")
+constructor(val years: Int, val ultimateAnswer: String)
+```
+
 <a id="beans-setter-injection"></a>
 
 ##### [](#beans-setter-injection)基于setter方法的依赖注入
@@ -638,11 +765,23 @@ public class SimpleMovieLister {
 }
 ```
 
+kotlin:
+
+```kotlin
+class SimpleMovieLister {
+
+    // a late-initialized property so that the Spring container can inject a MovieFinder
+    lateinit var movieFinder: MovieFinder
+
+    // business logic that actually uses the injected MovieFinder is omitted...
+}
+```
+
 `ApplicationContext`所管理Bean同时支持基于构造函数和基于setter方法的依赖注入，同时也支持使用setter方法在通过构造函数注入依赖之后再次注入依赖。 开发者在`BeanDefinition`中可以使用`PropertyEditor`实例来自由选择注入方式。然而，大多数的开发者并不直接使用这些类，而是更喜欢使用XML配置来进行bean定义， 或者基于注解的组件（例如使用 `@Component`,`@Controller`等），或者在配置了`@Configuration`的类上面使用`@Bean`的方法。 然后，这些源在内部转换为 `BeanDefinition`的实例，并用于加载整个Spring IoC容器实例。
 
 如何选择基于构造器和基于setter方法?
 
-因为开发者可以混用两种依赖注入方式，两种方式用于处理不同的情况：必要的依赖通常通过构造函数注入，而可选的依赖则通过setter方法注入。其中，在setter方法上添加[@Required](#beans-required-annotation) 注解可用于构造必要的依赖。
+因为开发者可以混用两种依赖注入方式，两种方式用于处理不同的情况：必要的依赖通常通过构造函数注入，而可选的依赖则通过setter方法注入。其中，在setter方法上添加[@Required](#beans-required-annotation) 注解可用于构造必要的依赖。但是，最好使用带有参数验证的构造函数注入。
 
 Spring团队推荐使用基于构造函数的注入，因为这种方式会促使开发者将组件开发成不可变对象并且确保注入的依赖不为`null`。另外，基于构造函数的注入的组件被客户端调用的时候也已经是完全构造好的 。当然，从另一方面来说，过多的构造函数参数也是非常糟糕的代码方式，这种方式说明类附带了太多的功能，最好重构将不同职能分离。
 
@@ -728,6 +867,16 @@ public class ExampleBean {
 }
 ```
 
+kotlin:
+
+```kotlin
+class ExampleBean {
+    lateinit var beanOne: AnotherBean
+    lateinit var beanTwo: YetAnotherBean
+    var i: Int = 0
+}
+```
+
 在前面的示例中，setter被声明为与XML文件中指定的属性匹配。以下示例使用基于构造函数的DI：
 
 ```xml
@@ -765,6 +914,15 @@ public class ExampleBean {
         this.i = i;
     }
 }
+```
+
+kotlin:
+
+```kotlin
+class ExampleBean(
+        private val beanOne: AnotherBean,
+        private val beanTwo: YetAnotherBean,
+        private val i: Int)
 ```
 
 bean定义中指定的构造函数参数用作 `ExampleBean`的构造函数的参数。
@@ -805,6 +963,23 @@ public class ExampleBean {
 }
 ```
 
+kotlin:
+
+```kotlin
+class ExampleBean private constructor() {
+    companion object {
+        // a static factory method; the arguments to this method can be
+        // considered the dependencies of the bean that is returned,
+        // regardless of how those arguments are actually used.
+        fun createInstance(anotherBean: AnotherBean, yetAnotherBean: YetAnotherBean, i: Int): ExampleBean {
+            val eb = ExampleBean (...)
+            // some other operations...
+            return eb
+        }
+    }
+}
+```
+
 `静态工厂方法`的参数由`<constructor-arg/>`元素提供，与实际使用的构造函数完全相同。工厂方法返回类的类型不必与包含`静态工厂方法` 的类完全相同， 尽管在本例中是这样。实例（非静态）工厂方法的使用方式也是相似的（除了使用`factory-bean`属性而不是`class`属性。因此此处不在展开讨论。
 
 <a id="beans-factory-properties-detailed"></a>
@@ -836,7 +1011,7 @@ public class ExampleBean {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close"
@@ -854,7 +1029,7 @@ public class ExampleBean {
 
 ```xml
 <bean id="mappings"
-    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 
     <!-- typed as a java.util.Properties -->
     <property name="properties">
@@ -1061,7 +1236,16 @@ public class SomeClass {
         this.accounts = accounts;
     }
 }
+```
 
+kotlin:
+
+```kotlin
+class SomeClass {
+    lateinit var accounts: Map<String, Float>
+}
+```
+```xml
 <beans>
     <bean id="something" class="x.y.SomeClass">
         <property name="accounts">
@@ -1074,6 +1258,8 @@ public class SomeClass {
     </bean>
 </beans>
 ```
+
+
 
 当`something`的属性`accounts`准备注入的时候，accounts的泛型信息Map`Map<String, Float>` 就会通过反射拿到。 这样，Spring的类型转换系统能够识别不同的类型，如上面的例子`Float`然后会将字符串的值`9.99, 2.75`, 和`3.99`转换成对应的`Float`类型。
 
@@ -1095,6 +1281,12 @@ public class SomeClass {
 exampleBean.setEmail("");
 ```
 
+kotlin:
+
+```kotlin
+exampleBean.email = ""
+```
+
 `<null/>`将被处理为null值。以下清单显示了一个示例:
 
 ```xml
@@ -1109,6 +1301,12 @@ exampleBean.setEmail("");
 
 ```java
 exampleBean.setEmail(null);
+```
+
+kotlin:
+
+```kotlin
+exampleBean.email = null
 ```
 
 <a id="beans-p-namespace"></a>
@@ -1126,7 +1324,7 @@ Spring是支持基于XML的格式化[命名空间](#xsd-schemas)扩展的。本�
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean name="classic" class="com.example.ExampleBean">
         <property name="email" value="someone@somewhere.com"/>
@@ -1146,7 +1344,7 @@ Spring是支持基于XML的格式化[命名空间](#xsd-schemas)扩展的。本�
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean name="john-classic" class="com.example.Person">
         <property name="name" value="John Doe"/>
@@ -1181,32 +1379,35 @@ p命名空间并不如标准XML格式灵活。例如，声明属性的引用可�
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.springframework.org/schema/c"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="thingOne" class="x.y.ThingTwo"/>
-    <bean id="thingTwo" class="x.y.ThingThree"/>
+    <bean id="beanTwo" class="x.y.ThingTwo"/>
+    <bean id="beanThree" class="x.y.ThingThree"/>
 
-    <!-- traditional declaration -->
-    <bean id="thingOne" class="x.y.ThingOne">
-        <constructor-arg ref="thingTwo"/>
-        <constructor-arg ref="thingThree"/>
-        <constructor-arg value="something@somewhere.com"/>
+    <!-- traditional declaration with optional argument names -->
+    <bean id="beanOne" class="x.y.ThingOne">
+        <constructor-arg name="thingTwo" ref="beanTwo"/>
+        <constructor-arg name="thingThree" ref="beanThree"/>
+        <constructor-arg name="email" value="something@somewhere.com"/>
     </bean>
 
-    <!-- c-namespace declaration -->
-    <bean id="thingOne" class="x.y.ThingOne" c:thingTwo-ref="thingTwo" c:thingThree-ref="thingThree" c:email="something@somewhere.com"/>
+    <!-- c-namespace declaration with argument names -->
+    <bean id="beanOne" class="x.y.ThingOne" c:thingTwo-ref="beanTwo"
+        c:thingThree-ref="beanThree" c:email="something@somewhere.com"/>
 
 </beans>
 ```
 
-`c:`:命名空间使用了和`p:` :命名空间相类似的方式（使用了`-ref` 来配置引用).而且,同样的,c命名空间也是定义在Spring Core中的（不是XSD模式).
+`c:`:命名空间使用了和`p:` :命名空间相类似的方式（使用了`-ref` 来配置引用).而且,同样的,c命名空间也是定义在Spring Core中的（不是XSD模式)。
 
 在少数的例子之中,构造函数的参数名字并不可用（通常,如果字节码没有debug信息的编译),你可以使用回调参数的索引，如下面的例子:
 
-    <!-- c-namespace index declaration -->
-    <bean id="thingOne" class="x.y.ThingOne" c:_0-ref="thingTwo" c:_1-ref="thingThree"/>
+```xml
+<bean id="beanOne" class="x.y.ThingOne" c:_0-ref="beanTwo" c:_1-ref="beanThree"
+    c:_2="something@somewhere.com"/>
+```
 
-由于XML语法，索引表示法需要使用`_`作为属性名字的前缀，因为XML属性名称不能以数字开头（即使某些IDE允许它）。
+由于XML语法，索引表示法需要使用`_`作为属性名字的前缀，因为XML属性名称不能以数字开头（即使某些IDE允许它）。相应的索引符号也可用于<constructor-arg>元素，但并不常用，因为声明的普通顺序在那里就足够了。
 
 实际上，[构造函数解析机制](#beans-factory-ctor-arguments-resolution)在匹配参数方面非常有效，因此除非您确实需要，否则我们建议在整个配置中使用名称表示法。
 
@@ -1374,6 +1575,38 @@ public class CommandManager implements ApplicationContextAware {
 }
 ```
 
+kotlin:
+
+```kotlin
+// a class that uses a stateful Command-style class to perform some processing
+package fiona.apple
+
+// Spring-API imports
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
+
+class CommandManager : ApplicationContextAware {
+
+    private lateinit var applicationContext: ApplicationContext
+
+    fun process(commandState: Map<*, *>): Any {
+        // grab a new instance of the appropriate Command
+        val command = createCommand()
+        // set the state on the (hopefully brand new) Command instance
+        command.state = commandState
+        return command.execute()
+    }
+
+    // notice the Spring API dependency!
+    protected fun createCommand() =
+            applicationContext.getBean("command", Command::class.java)
+
+    override fun setApplicationContext(applicationContext: ApplicationContext) {
+        this.applicationContext = applicationContext
+    }
+}
+```
+
 上面的代码并不让人十分满意，因为业务的代码已经与Spring框架耦合在一起。方法注入是Spring IoC容器的一个高级功能，可以让您处理这种问题。 Spring提供了一个稍微高级的注入方式来处理这种问题
 
 您可以在此[博客条目](https://spring.io/blog/2004/08/06/method-injection/)中阅读有关方法注入的更多信息。
@@ -1415,6 +1648,28 @@ public abstract class CommandManager {
 }
 ```
 
+kotlin:
+
+```kotlin
+package fiona.apple
+
+// no more Spring imports!
+
+abstract class CommandManager {
+
+    fun process(commandState: Any): Any {
+        // grab a new instance of the appropriate Command interface
+        val command = createCommand()
+        // set the state on the (hopefully brand new) Command instance
+        command.state = commandState
+        return command.execute()
+    }
+
+    // okay... but where is the implementation of this method?
+    protected abstract fun createCommand(): Command
+}
+```
+
 在包含需要注入方法的客户端类中 (在本例中为`CommandManager`）注入方法的签名需要如下形式：
 
 ```javajava
@@ -1453,6 +1708,22 @@ public abstract class CommandManager {
 }
 ```
 
+kotlin:
+
+```kotlin
+abstract class CommandManager {
+
+    fun process(commandState: Any): Any {
+        val command = createCommand()
+        command.state = commandState
+        return command.execute()
+    }
+
+    @Lookup("myCommand")
+    protected abstract fun createCommand(): Command
+}
+```
+
 或者，更常见的是，开发者也可以根据查找方法的返回类型来查找匹配的bean，如下
 
 ```java
@@ -1466,6 +1737,22 @@ public abstract class CommandManager {
 
     @Lookup
     protected abstract MyCommand createCommand();
+}
+```
+
+kotlin:
+
+```kotlin
+abstract class CommandManager {
+
+    fun process(commandState: Any): Any {
+        val command = createCommand()
+        command.state = commandState
+        return command.execute()
+    }
+
+    @Lookup
+    protected abstract fun createCommand(): Command
 }
 ```
 
@@ -1494,6 +1781,19 @@ public class MyValueCalculator {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MyValueCalculator {
+
+    fun computeValue(input: String): String {
+        // some real code...
+    }
+
+    // some other methods...
+}
+```
+
 实现`org.springframework.beans.factory.support.MethodReplacer`接口的类提供了新的方法定义，如以下示例所示：
 
 ```java
@@ -1506,6 +1806,24 @@ public class ReplacementComputeValue implements MethodReplacer {
     public Object reimplement(Object o, Method m, Object[] args) throws Throwable {
         // get the input value, work with it, and return a computed result
         String input = (String) args[0];
+        ...
+        return ...;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+/**
+* meant to be used to override the existing computeValue(String)
+* implementation in MyValueCalculator
+*/
+class ReplacementComputeValue : MethodReplacer {
+
+    override fun reimplement(obj: Any, method: Method, args: Array<out Any>): Any {
+        // get the input value, work with it, and return a computed result
+        val input = args[0] as String;
         ...
         return ...;
     }
@@ -1676,6 +1994,16 @@ public class LoginAction {
 }
 ```
 
+kotlin:
+
+```kotlin
+@RequestScope
+@Component
+class LoginAction {
+    // ...
+}
+```
+
 <a id="beans-factory-scopes-session"></a>
 
 ##### [](#beans-factory-scopes-session)Session作用域
@@ -1698,6 +2026,16 @@ public class UserPreferences {
 }
 ```
 
+kotlin:
+
+```kotlin
+@SessionScope
+@Component
+class UserPreferences {
+    // ...
+}
+```
+
 <a id="beans-factory-scopes-application"></a>
 
 ##### [](#beans-factory-scopes-application)Application作用域
@@ -1716,6 +2054,16 @@ Spring容器会在整个Web应用内使用到`appPreferences`的时候创建一�
 @ApplicationScope
 @Component
 public class AppPreferences {
+    // ...
+}
+```
+
+kotlin:
+
+```kotlin
+@ApplicationScope
+@Component
+class AppPreferences {
     // ...
 }
 ```
@@ -1744,9 +2092,9 @@ JSR-330将这样的变种称为Provider，它使用`Provider<MyTargetBean>` 声�
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- an HTTP Session-scoped bean exposed as a proxy -->
     <bean id="userPreferences" class="com.something.UserPreferences" scope="session">
@@ -1833,10 +2181,18 @@ bean的作用域机制是可扩展的，开发者可以自定义作用域，甚�
 Object get(String name, ObjectFactory objectFactory)
 ```
 
+```kotlin
+fun get(name: String, objectFactory: ObjectFactory<*>): Any
+```
+
 下面的方法将从相应的作用域中移除对象。同样，以会话为例，该函数会删除会话作用域的Bean。删除的对象会作为返回值返回，当无法找到对象时将返回null。 以下方法从相应作用域中删除对象：:
 
 ```java
 Object remove(String name)
+```
+
+```kotlin
+fun remove(name: String): Any
 ```
 
 以下方法注册范围在销毁时或在Scope中的指定对象被销毁时应该执行的回调:
@@ -1845,12 +2201,20 @@ Object remove(String name)
 void registerDestructionCallback(String name, Runnable destructionCallback)
 ```
 
+```kotlin
+fun registerDestructionCallback(name: String, destructionCallback: Runnable)
+```
+
 有关销毁回调的更多信息，请参看[javadoc](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/config/Scope.html#registerDestructionCallback)或Spring的Scope实现部分。
 
 下面的方法获取相应作用域的区分标识符:
 
 ```java
 String getConversationId()
+```
+
+```kotlin
+fun getConversationId(): String
 ```
 
 这个标识符在不同的作用域中是不同的。例如对于会话作用域，这个标识符就是会话的标识符。.
@@ -1865,6 +2229,10 @@ String getConversationId()
 void registerScope(String scopeName, Scope scope);
 ```
 
+```kotlin
+fun registerScope(scopeName: String, scope: Scope)
+```
+
 这个方法是在`ConfigurableBeanFactory`的接口中声明的，可以用在多数的`ApplicationContext`实现，也可以通过 `BeanFactory`属性来调用。
 
 `registerScope(..)`方法的第一个参数是相关`作用域`的唯一名称。举例来说，Spring容器中的单例和原型就以它本身来命名。 第二个参数就是开发者希望注册和使用的自定义`Scope`实现的具有对象 T
@@ -1876,6 +2244,11 @@ void registerScope(String scopeName, Scope scope);
 ```java
 Scope threadScope = new SimpleThreadScope();
 beanFactory.registerScope("thread", threadScope);
+```
+
+```kotlin
+val threadScope = SimpleThreadScope()
+beanFactory.registerScope("thread", threadScope)
 ```
 
 然后，您可以创建符合自定义Scope的作用域规则的bean定义，如下所示：
@@ -1958,14 +2331,25 @@ JSR-250 `@PostConstruct` 和 `@PreDestroy`注解通常被认为是在现代Sprin
 void afterPropertiesSet() throws Exception;
 ```
 
+```kotlin
+fun afterPropertiesSet()
+```
+
 Spring团队是不建议开发者使用`InitializingBean`接口，因为这样会将代码耦合到Spring的特殊接口上。他们建议使用[`@PostConstruct`](#beans-postconstruct-and-predestroy-annotations) 注解或者指定一个POJO的实现方法， 这会比实现接口更好。在基于XML的元数据配置上，开发者可以使用`init-method` 属性来指定一个没有参数的方法，使用Java配置的开发者可以在`@Bean`上添加 `initMethod` 属性。 请参阅 [接收生命周期回调](#beans-java-lifecycle-callbacks)接收生命周期回调：
 
 ```xml
 <bean id="exampleInitBean" class="examples.ExampleBean" init-method="init"/>
-
+//java
 public class ExampleBean {
 
     public void init() {
+        // do some initialization work
+    }
+}
+//kotlin
+class ExampleBean {
+
+    fun init() {
         // do some initialization work
     }
 }
@@ -1975,10 +2359,18 @@ public class ExampleBean {
 
 ```xml
 <bean id="exampleInitBean" class="examples.AnotherExampleBean"/>
-
+//java
 public class AnotherExampleBean implements InitializingBean {
 
     public void afterPropertiesSet() {
+        // do some initialization work
+    }
+}
+
+//kotlin
+class AnotherExampleBean : InitializingBean {
+
+    override fun afterPropertiesSet() {
         // do some initialization work
     }
 }
@@ -1996,14 +2388,27 @@ public class AnotherExampleBean implements InitializingBean {
 void destroy() throws Exception;
 ```
 
+```kotlin
+fun destroy()
+```
+
 我们建议您不要使用 `DisposableBean` 回调接口，因为它会不必要地将代码耦合到Spring。或者，我们建议使用[`@PreDestroy`](#beans-postconstruct-and-predestroy-annotations)注解 或指定bean定义支持的泛型方法。 在基于XML的元数据配置中，您可以在`<bean/>`上使用`destroy-method`属性。 使用Java配置，您可以使用`@Bean`的 `destroyMethod` 属性。 请参阅[接收生命周期回调](#beans-java-lifecycle-callbacks)。 考虑以下定义：
 
 ```xml
 <bean id="exampleInitBean" class="examples.ExampleBean" destroy-method="cleanup"/>
 
+//java
 public class ExampleBean {
 
     public void cleanup() {
+        // do some destruction work (like releasing pooled connections)
+    }
+}
+
+//kotlin
+class ExampleBean {
+
+    fun cleanup() {
         // do some destruction work (like releasing pooled connections)
     }
 }
@@ -2014,9 +2419,18 @@ public class ExampleBean {
 ```xml
 <bean id="exampleInitBean" class="examples.AnotherExampleBean"/>
 
+//java
 public class AnotherExampleBean implements DisposableBean {
 
     public void destroy() {
+        // do some destruction work (like releasing pooled connections)
+    }
+}
+
+//kotlin
+class AnotherExampleBean : DisposableBean {
+
+    override fun destroy() {
         // do some destruction work (like releasing pooled connections)
     }
 }
@@ -2049,6 +2463,22 @@ public class DefaultBlogService implements BlogService {
     public void init() {
         if (this.blogDao == null) {
             throw new IllegalStateException("The [blogDao] property must be set.");
+        }
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+class DefaultBlogService : BlogService {
+
+    private var blogDao: BlogDao? = null
+
+    // this is (unsurprisingly) the initialization callback method
+    fun init() {
+        if (blogDao == null) {
+            throw IllegalStateException("The [blogDao] property must be set.")
         }
     }
 }
@@ -2123,6 +2553,19 @@ public interface Lifecycle {
 }
 ```
 
+kotlin:
+
+```kotlin
+interface Lifecycle {
+
+    fun start()
+
+    fun stop()
+
+    val isRunning: Boolean
+}
+```
+
 任何Spring管理的对象都可以实现`Lifecycle` 接口。然后，当`ApplicationContext`接收到启动和停止信号时（例如，对于运行时的停止/重启场景），ApplicationContext会通知到所有上下文中包含的生命周期对象。 它通过委托 `LifecycleProcessor`完成此操作，如下面的清单所示：
 
 ```java
@@ -2131,6 +2574,17 @@ public interface LifecycleProcessor extends Lifecycle {
     void onRefresh();
 
     void onClose();
+}
+```
+
+kotlin:
+
+```kotlin
+interface LifecycleProcessor : Lifecycle {
+
+    fun onRefresh()
+
+    fun onClose()
 }
 ```
 
@@ -2149,6 +2603,15 @@ public interface Phased {
 }
 ```
 
+kotlin:
+
+```kotlin
+interface Phased {
+
+    val phase: Int
+}
+```
+
 以下清单显示了`SmartLifecycle`接口的定义:
 
 ```java
@@ -2157,6 +2620,15 @@ public interface SmartLifecycle extends Lifecycle, Phased {
     boolean isAutoStartup();
 
     void stop(Runnable callback);
+}
+```
+
+```kotlin
+interface SmartLifecycle : Lifecycle, Phased {
+
+    val isAutoStartup: Boolean
+
+    fun stop(callback: Runnable)
 }
 ```
 
@@ -2202,6 +2674,23 @@ public final class Boot {
 }
 ```
 
+kotlin:
+
+```kotlin
+import org.springframework.context.support.ClassPathXmlApplicationContext
+
+fun main() {
+    val ctx = ClassPathXmlApplicationContext("beans.xml")
+
+    // add a shutdown hook for the above context...
+    ctx.registerShutdownHook()
+
+    // app runs here...
+
+    // main method exits, hook is called prior to the app shutting down...
+}
+```
+
 <a id="beans-factory-aware"></a>
 
 #### [](#beans-factory-aware)1.6.2. `ApplicationContextAware` 和 `BeanNameAware`
@@ -2212,6 +2701,16 @@ public final class Boot {
 public interface ApplicationContextAware {
 
     void setApplicationContext(ApplicationContext applicationContext) throws BeansException;
+}
+```
+
+kotlin:
+
+```kotlin
+interface ApplicationContextAware {
+
+    @Throws(BeansException::class)
+    fun setApplicationContext(applicationContext: ApplicationContext)
 }
 ```
 
@@ -2228,13 +2727,21 @@ public interface BeanNameAware {
 }
 ```
 
+```kotlin
+interface BeanNameAware {
+
+    @Throws(BeansException::class)
+    fun setBeanName(name: String)
+}
+```
+
 这个回调的调用在属性配置完成之后，但是在初始化回调之前。例如`InitializingBean`, `afterPropertiesSet`方法以及自定义的初始化方法等。
 
 <a id="aware-list"></a>
 
 #### [](#aware-list)1.6.3. 其他的 `Aware`接口
 
-除了 `ApplicationContextAware`和`BeanNameAware`（前面已讨论过）之外，Spring还提供了一系列`Aware`接口，让bean告诉容器，它们需要一些具体的基础配置信息。。 一些重要的`Aware`接口参看下表：
+除了 `ApplicationContextAware`和`BeanNameAware`（前面已讨论过）之外，Spring还提供了一系列`Aware`回调接口，让bean告诉容器，它们需要一些具体的基础配置信息。。 一些重要的`Aware`接口参看下表：
 
 Table 4. Aware 接口
 
@@ -2245,13 +2752,13 @@ Table 4. Aware 接口
 | `BeanClassLoaderAware`           | 用于加载bean类的类加载器                                     | [实例化Bean](#beans-factory-class)                           |
 | `BeanFactoryAware`               | 声明 `BeanFactory`.                                          | [`ApplicationContextAware` 和 `BeanNameAware`](#beans-factory-aware) |
 | `BeanNameAware`                  | 声明bean的名称.                                              | [`ApplicationContextAware` 和 `BeanNameAware`](#beans-factory-aware) |
-| `BootstrapContextAware`          | 容器运行的资源适配器`BootstrapContext`。通常仅在JCA感知的 `ApplicationContext` 实例中可用 | [JCA CCI](https://github.com/DocsHome/spring-docs/blob/master/pages/integration/integration.md#cci)                              |
+| `BootstrapContextAware`          | 容器运行的资源适配器`BootstrapContext`。通常仅在JCA-aware的 `ApplicationContext` 实例中可用 | [JCA CCI](https://github.com/DocsHome/spring-docs/blob/master/pages/integration/integration.md#cci) |
 | `LoadTimeWeaverAware`            | 定义的weaver用于在加载时处理类定义.                          | [在Spring框架中使用AspectJ进行加载时织入](#aop-aj-ltw)       |
 | `MessageSourceAware`             | 用于解析消息的已配置策略（支持参数化和国际化）               | [`ApplicationContext`的其他作用](#context-introduction)      |
-| `NotificationPublisherAware`     | Spring JMX通知发布者                                         | [通知](https://github.com/DocsHome/spring-docs/blob/master/pages/integration/integration.md#jmx-notifications)                   |
+| `NotificationPublisherAware`     | Spring JMX通知发布者                                         | [通知](https://github.com/DocsHome/spring-docs/blob/master/pages/integration/integration.md#jmx-notifications) |
 | `ResourceLoaderAware`            | 配置的资源加载器                                             | [资源](#resources)                                           |
-| `ServletConfigAware`             | 当前`ServletConfig`容器运行。仅在Web下的Spring `ApplicationContext`中有效 | [Spring MVC](https://github.com/DocsHome/spring-docs/blob/master/pages/web/web.md#mvc)                                   |
-| `ServletContextAware`            | 容器运行的当前ServletContext。仅在Web下的Spring `ApplicationContext`中有效。 | [Spring MVC](https://github.com/DocsHome/spring-docs/blob/master/pages/web/web.md#mvc)                                     |
+| `ServletConfigAware`             | 当前`ServletConfig`容器运行。仅在Web下的Spring `ApplicationContext`中有效 | [Spring MVC](https://github.com/DocsHome/spring-docs/blob/master/pages/web/web.md#mvc) |
+| `ServletContextAware`            | 容器运行的当前ServletContext。仅在Web下的Spring `ApplicationContext`中有效。 | [Spring MVC](https://github.com/DocsHome/spring-docs/blob/master/pages/web/web.md#mvc) |
 
 请再次注意，使用这些接口会将您的代码绑定到Spring API，而不会遵循IoC原则。 因此，我们建议将它们用于需要以编程方式访问容器的基础架构bean。
 
@@ -2315,7 +2822,7 @@ bean定义可以包含许多配置信息，包括构造函数参数，属性值�
 
 #### [](#beans-factory-extension-bpp)1.8.1. 使用`BeanPostProcessor`自定义Bean
 
-`BeanPostProcessor`接口定义了可以实现的回调方法，以提供您自己的（或覆盖容器的默认）实例化逻辑，依赖关系解析逻辑等。 如果要在Spring容器完成实例化，配置和初始化bean之后实现某些自定义逻辑，则可以插入一个或多个`BeanPostProcessor`实现。
+`BeanPostProcessor`接口定义了可以实现的回调方法，以提供您自己的（或覆盖容器的默认）实例化逻辑，依赖关系解析逻辑等。 如果要在Spring容器完成实例化，配置和初始化bean之后实现某些自定义逻辑，则可以插入一个或多个自定义`BeanPostProcessor`实现。
 
 您可以配置多个`BeanPostProcessor` 实例，并且可以通过设置`order`属性来控制这些 `BeanPostProcessor` 实例的执行顺序。 仅当`BeanPostProcessor`实现 `Ordered`接口时，才能设置此属性。如果编写自己的`BeanPostProcessor`，则应考虑实现Ordered接口。 有关更多详细信息， 请参阅[`BeanPostProcessor`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html) 和 [`Ordered`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/core/Ordered.html)的javadoc。 另请参阅有关[`BeanPostProcessor` 实例](#beans-factory-programmatically-registering-beanpostprocessors)的编程注册的说明。
 
@@ -2370,6 +2877,23 @@ public class InstantiationTracingBeanPostProcessor implements BeanPostProcessor 
 }
 ```
 
+```kotlin
+import org.springframework.beans.factory.config.BeanPostProcessor
+
+class InstantiationTracingBeanPostProcessor : BeanPostProcessor {
+
+    // simply return the instantiated bean as-is
+    override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any? {
+        return bean // we could potentially return any object reference here...
+    }
+
+    override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? {
+        println("Bean '$beanName' created : $bean")
+        return bean
+    }
+}
+```
+
 以下beans元素使用`InstantiationTracingBeanPostProcessor`:
 
 ```xml
@@ -2378,9 +2902,9 @@ public class InstantiationTracingBeanPostProcessor implements BeanPostProcessor 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:lang="http://www.springframework.org/schema/lang"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/lang
-        http://www.springframework.org/schema/lang/spring-lang.xsd">
+        https://www.springframework.org/schema/lang/spring-lang.xsd">
 
     <lang:groovy id="messenger"
             script-source="classpath:org/springframework/scripting/groovy/Messenger.groovy">
@@ -2416,10 +2940,22 @@ public final class Boot {
 }
 ```
 
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = ClassPathXmlApplicationContext("scripting/beans.xml")
+    val messenger = ctx.getBean<Messenger>("messenger")
+    println(messenger)
+}
+```
+
 上述应用程序的输出类似于以下内容:
 
+```
 Bean 'messenger' created :  org.springframework.scripting.groovy.GroovyMessenger@272961
 org.springframework.scripting.groovy.GroovyMessenger@272961
+```
 
 <a id="beans-factory-extension-bpp-examples-rabpp"></a>
 
@@ -2439,22 +2975,22 @@ org.springframework.scripting.groovy.GroovyMessenger@272961
 
 `BeanFactoryPostProcessor`会在整个容器内起作用，所有它仅仅与正在使用的容器相关。如果在一个容器中定义了`BeanFactoryPostProcessor`， 那么它只会处理那个容器中的bean。 换句话说，在一个容器中定义的bean不会被另一个容器定义的`BeanFactoryPostProcessor`处理，即使这两个容器都是同一层次结构的一部分。
 
-bean工厂后置处理器在`ApplicationContext`中声明时自动执行，这样就可以对定义在容器中的元数据配置进行修改。 Spring包含许多预定义的bean工厂后处理器， 例如`PropertyOverrideConfigurer` 和`PropertyPlaceholderConfigurer`。 您还可以使用自定义`BeanFactoryPostProcessor`。 例如，注册自定义属性编辑器。 .
+bean工厂后置处理器在`ApplicationContext`中声明时自动执行，这样就可以对定义在容器中的元数据配置进行修改。 Spring包含许多预定义的bean工厂后处理器， 例如`PropertyOverrideConfigurer` 和`PropertySourcesPlaceholderConfigurer`。 您还可以使用自定义`BeanFactoryPostProcessor`。 例如，注册自定义属性编辑器。 .
 
 `ApplicationContext` 自动检测部署到其中的任何实现`BeanFactoryPostProcessor`接口的bean。 它在适当的时候使用这些bean作为bean工厂后置处理器。 你可以部署这些后置处理器为你想用的任意其它bean。
 
 注意，和`BeanPostProcessor`一样，通常不应该配置`BeanFactoryPostProcessor`来进行延迟初始化。如果没有其它bean引用`Bean(Factory)PostProcessor`， 那么后置处理器就不会被初始化。因此，标记它为延迟初始化就会被忽略，，即便你在`<beans />`元素声明中设置`default-lazy-init`=true属性，`Bean(Factory)PostProcessor`也会提前初始化bean。
 
-<a id="beans-factory-placeholderconfigurer"></a>
+<a id="beans-factory-PropertySourcesPlaceholderConfigurer"></a>
 
-##### [](#beans-factory-placeholderconfigurer)示例: 类名替换`PropertyPlaceholderConfigurer`
+##### [](#beans-factory-PropertySourcesPlaceholderConfigurer示例: 类名替换`PropertySourcesPlaceholderConfigurer`
 
-您可以使用`PropertyPlaceholderConfigurer`通过使用标准Java `Properties`格式从单独文件中的bean定义外部化属性值。 这样做可以使部署应用程序的人能够定制特定于环境的属性，如数据库URL和密码，而无需修改容器的主XML定义文件或文件的复杂性或风险。
+您可以使用`PropertySourcesPlaceholderConfigurer`通过使用标准Java `Properties`格式从单独文件中的bean定义外部化属性值。 这样做可以使部署应用程序的人能够定制特定于环境的属性，如数据库URL和密码，而无需修改容器的主XML定义文件或文件的复杂性或风险。
 
 考虑以下这个基于XML的元数据配置代码片段，这里的DataSource使用了占位符来定义:
 
 ```xml
-<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
     <property name="locations" value="classpath:com/something/jdbc.properties"/>
 </bean>
 
@@ -2467,7 +3003,7 @@ bean工厂后置处理器在`ApplicationContext`中声明时自动执行，这�
 </bean>
 ```
 
-该示例显示了从外部属性文件配置的属性。在运行时，`PropertyPlaceholderConfigurer`应用于替换DataSource的某些属性的元数据。 要替换的值被指定为$ {property-name}形式的占位符，它遵循Ant和log4j以及JSP EL样式。
+该示例显示了从外部属性文件配置的属性。在运行时，`PropertySourcesPlaceholderConfigurer`应用于替换DataSource的某些属性的元数据。 要替换的值被指定为$ {property-name}形式的占位符，它遵循Ant和log4j以及JSP EL样式。
 
 而真正的值是来自于标准的Java `Properties`格式的文件:
 
@@ -2478,7 +3014,7 @@ jdbc.username=sa
 jdbc.password=root
 ```
 
-在上面的例子中，`${jdbc.username}` 字符串在运行时将替换为值'sa'，并且同样适用于与属性文件中的键匹配的其他占位符值。 `PropertyPlaceholderConfigurer`检查bean定义的大多数属性和属性中的占位符。 此外，您可以自定义占位符前缀和后缀。
+在上面的例子中，`${jdbc.username}` 字符串在运行时将替换为值'sa'，并且同样适用于与属性文件中的键匹配的其他占位符值。 `PropertySourcesPlaceholderConfigurer`检查bean定义的大多数属性和属性中的占位符。 此外，您可以自定义占位符前缀和后缀。
 
 使用Spring 2.5中引入的`context` 命名空间，您可以使用专用配置元素配置属性占位符。 您可以在`location`属性中以逗号分隔列表的形式提供一个或多个位置，如以下示例所示：
 
@@ -2486,21 +3022,12 @@ jdbc.password=root
 <context:property-placeholder location="classpath:com/something/jdbc.properties"/>
 ```
 
-`PropertyPlaceholderConfigurer`不仅在您指定的属性文件中查找属性。 默认情况下，如果它在指定的属性文件中找不到属性，它还会检查Java `System`属性。 开发者可以通过设置`systemPropertiesMode`属性，使用下面三个整数的某一个来自定义这种行为：
+`PropertySourcesPlaceholderConfigurer`不仅在您指定的属性文件中查找属性。 默认情况下，如果它在指定的属性文件中找不到属性，则会检查Spring Environment属性和常规Java System属性。
 
-*   `never` (0): 从不检查系统属性。
-
-*   `fallback` (1): 如果没有在指定的属性文件中解析到属性，那么就检查系统属性（默认）。
-
-*   `override` (2): 在检查指定的属性文件之前，首先去检查系统属性，允许系统属性覆盖其它任意的属性资源。
-
-
-有关更多信息，请参见[`PropertyPlaceholderConfigurer`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html) javadoc
-
-你可以使用`PropertyPlaceholderConfigurer`来替换类名，当开发者在运行时需要选择某个特定的实现类时，这是很有用的。例如
+你可以使用`PropertySourcesPlaceholderConfigurer`来替换类名，当开发者在运行时需要选择某个特定的实现类时，这是很有用的。例如
 
 ```xml
-<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<bean class="org.springframework.beans.factory.config.PropertySourcesPlaceholderConfigurer">
     <property name="locations">
         <value>classpath:com/something/strategy.properties</value>
     </property>
@@ -2592,9 +3119,9 @@ XML设置的替代方法是基于注解的配置，它依赖于字节码元数�
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
 
@@ -2625,7 +3152,21 @@ public class SimpleMovieLister {
 }
 ```
 
+kotlin:
+
+```kotlin
+ class SimpleMovieLister {
+
+    @Required
+    lateinit var movieFinder: MovieFinder
+
+    // ...
+}
+```
+
 此注解仅表示受影响的bean属性必须在配置时通过bean定义中的显式赋值或自动注入值。如果受影响的bean属性尚未指定值，容器将抛出异常；这导致及时的、明确的失败，避免在运行后再抛出`NullPointerException`或类似的异常。 在这里，建议开发者将断言放入bean类本身，例如放入init方法。这样做强制执行那些必需的引用和值，即使是在容器外使用这个类。
+
+从Spring Framework 5.1开始，@ Required注解已正式弃用，转而使用构造函数注入进行必需的属性设置（或用自定义InitializingBean.afterPropertiesSet（）的实现bean属性setter方法）。
 
 <a id="beans-autowired-annotation"></a>
 
@@ -2649,6 +3190,14 @@ public class MovieRecommender {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MovieRecommender @Autowired constructor(
+    private val customerPreferenceDao: CustomerPreferenceDao)
+
+```
+
 从Spring Framework 4.3开始，如果目标bean仅定义一个构造函数，则不再需要`@Autowired`构造函数。如果有多个构造函数可用，则至少有一个必须注解`@Autowired`以让容器知道它使用的是哪个
 
 您还可以将`@Autowired`注解应用于“传统”setter方法，如以下示例所示：
@@ -2667,6 +3216,17 @@ public class SimpleMovieLister {
 }
 ```
 
+```kotlin
+class SimpleMovieLister {
+
+    @Autowired
+    lateinit var movieFinder: MovieFinder
+
+    // ...
+
+}
+```
+
 您还可以将注解应用于具有任意名称和多个参数的方法，如以下示例所示：:
 
 ```java
@@ -2681,6 +3241,26 @@ public class MovieRecommender {
             CustomerPreferenceDao customerPreferenceDao) {
         this.movieCatalog = movieCatalog;
         this.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    // ...
+}
+```
+
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    private lateinit var movieCatalog: MovieCatalog
+
+    private lateinit var customerPreferenceDao: CustomerPreferenceDao
+
+    @Autowired
+    fun prepare(movieCatalog: MovieCatalog,
+                customerPreferenceDao: CustomerPreferenceDao) {
+        this.movieCatalog = movieCatalog
+        this.customerPreferenceDao = customerPreferenceDao
     }
 
     // ...
@@ -2706,6 +3286,19 @@ public class MovieRecommender {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MovieRecommender @Autowired constructor(
+    private val customerPreferenceDao: CustomerPreferenceDao) {
+
+    @Autowired
+    private lateinit var movieCatalog: MovieCatalog
+
+    // ...
+}
+```
+
 确保您的组件（例如，`MovieCatalog`或`CustomerPreferenceDao`）始终按照用于@Autowired注入点的类型声明。 否则，由于在运行时未找到类型匹配，注入可能会失败。
 
 对于通过类路径扫描找到的XML定义的bean或组件类，容器通常预先知道具体类型。 但是，对于`@Bean`工厂方法，您需要确保其声明的具体返回类型。 对于实现多个接口的组件或可能由其实现类型引用的组件，请考虑在工厂方法上声明最具体的返回类型（至少与引用bean的注入点所需的特定类型一致）。 .
@@ -2722,6 +3315,18 @@ public class MovieRecommender {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    private lateinit var movieCatalogs: Array<MovieCatalog>
+
+    // ...
+}
+```
+
 也可以应用于集合类型，如以下示例所示:
 
 ```java
@@ -2733,6 +3338,18 @@ public class MovieRecommender {
     public void setMovieCatalogs(Set<MovieCatalog> movieCatalogs) {
         this.movieCatalogs = movieCatalogs;
     }
+
+    // ...
+}
+```
+
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    lateinit var movieCatalogs: Set<MovieCatalog>
 
     // ...
 }
@@ -2760,7 +3377,19 @@ public class MovieRecommender {
 }
 ```
 
-默认情况下，当没有候选的bean可用时，自动注入将会失败；默认的处理方式是将带有注解的方法，、构造函数和字段标明为required=false属性。这种设置不是必须的，如下：
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    lateinit var movieCatalogs: Map<String, MovieCatalog>
+
+    // ...
+}
+```
+
+默认情况下，当没有候选的bean可用时，自动注入将会失败；对于声明的数组，集合或映射，至少应有一个匹配元素。
+
+默认的处理方式是将带有注解的方法、构造函数和字段标明为必须依赖，也可以使用required=false属性。来标明这种依赖不是必须的，如下：
 
 ```java
 public class SimpleMovieLister {
@@ -2776,13 +3405,37 @@ public class SimpleMovieLister {
 }
 ```
 
-只有一个带注解的构造函数per-class 可以标记为required，但是可以注解多个非必需的构造函数。在这种情况下，每个项都会是候选者，而Spring使用的是最贪婪的构造函数。 这个构造函数的依赖关系可以得到满足，那就是具有最多参数的构造函数。
+```kotlin
+class SimpleMovieLister {
 
-推荐使用`@Required`注解来代替`@Autowired`的required属性，required属性表示该属性不是自动装配必需的，如果该属性不能被自动装配。 则该属性会被忽略。 另一方面， `@Required`会强调通过容器支持的任何方式来设置属性。 如果没有值被注入的话，会引发相应的异常。
+    @Autowired(required = false)
+    var movieFinder: MovieFinder? = null
+
+    // ...
+}
+```
+
+如果不需要的方法（或在多个参数的情况下，其中一个依赖项）不可用，则根本不会调用该方法。 在这种情况下，完全不需要填充非必需字段，而将其默认值保留在适当的位置。
+
+注入的构造函数和工厂方法参数是一种特殊情况，因为由于Spring的构造函数解析算法可能会处理多个构造函数，因此@Autowired中的required属性的含义有所不同。 缺省情况下，实际上有效地需要构造函数和工厂方法参数，但是在单构造函数场景中有一些特殊规则，例如，如果没有可用的匹配bean，则多元素注入点（数组，集合，映射）解析为空实例。 这允许一种通用的实现模式，其中所有依赖项都可以在唯一的多参数构造函数中声明-例如，声明为没有@Autowired批注的单个公共构造函数。
+
+每个类仅可以将一个带注解的构造函数标记为必需，但是可以注解多个非必需的构造函数。在这种情况下，每个项都会是候选者，而Spring使用的是最贪婪的构造函数。 这个构造函数的依赖关系可以得到满足，那就是具有最多参数的构造函数。
+
+推荐使用`@Required`注解来代替`@Autowired`的required属性，required属性表示该属性不是自动装配必需的，如果该属性不能被自动装配。 则该属性会被忽略。 另一方面， `@Required`会强制执行通过容器支持的任何方式来设置属性。 如果没有值被注入的话，会引发相应的异常。
 
 或者，您可以通过Java 8的`java.util.Optional`表达特定依赖项的非必需特性，如以下示例所示：
 
 ```java
+public class SimpleMovieLister {
+
+    @Autowired
+    public void setMovieFinder(Optional<MovieFinder> movieFinder) {
+        ...
+    }
+}
+```
+
+```kotlin
 public class SimpleMovieLister {
 
     @Autowired
@@ -2801,6 +3454,16 @@ public class SimpleMovieLister {
     public void setMovieFinder(@Nullable MovieFinder movieFinder) {
         ...
     }
+}
+```
+
+```kotlin
+class SimpleMovieLister {
+
+    @Autowired
+    var movieFinder: MovieFinder? = null
+
+    // ...
 }
 ```
 
@@ -2844,6 +3507,23 @@ public class MovieConfiguration {
 }
 ```
 
+kotlin:
+
+```kotlin
+@Configuration
+class MovieConfiguration {
+
+    @Bean
+    @Primary
+    fun firstMovieCatalog(): MovieCatalog { ... }
+
+    @Bean
+    fun secondMovieCatalog(): MovieCatalog { ... }
+
+    // ...
+}
+```
+
 使用上述配置，以下 `MovieRecommender`将与`firstMovieCatalog`一起自动装配：
 
 ```java
@@ -2851,6 +3531,18 @@ public class MovieRecommender {
 
     @Autowired
     private MovieCatalog movieCatalog;
+
+    // ...
+}
+```
+
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    private lateinit var movieCatalog: MovieCatalog
 
     // ...
 }
@@ -2864,9 +3556,9 @@ public class MovieRecommender {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
 
@@ -2900,6 +3592,19 @@ public class MovieRecommender {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    @Qualifier("main")
+    private lateinit var movieCatalog: MovieCatalog
+
+    // ...
+}
+```
+
 您还可以在各个构造函数参数或方法参数上指定`@Qualifier`注解，如以下示例所示：
 
 ```java
@@ -2920,6 +3625,26 @@ public class MovieRecommender {
 }
 ```
 
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    private lateinit var movieCatalog: MovieCatalog
+
+    private lateinit var customerPreferenceDao: CustomerPreferenceDao
+
+    @Autowired
+    fun prepare(@Qualifier("main") movieCatalog: MovieCatalog,
+                customerPreferenceDao: CustomerPreferenceDao) {
+        this.movieCatalog = movieCatalog
+        this.customerPreferenceDao = customerPreferenceDao
+    }
+
+    // ...
+}
+```
+
 以下示例显示了相应的bean定义。.
 
 ```xml
@@ -2928,20 +3653,20 @@ public class MovieRecommender {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
 
     <bean class="example.SimpleMovieCatalog">
-        <qualifier value="main"/> (1)
+        <qualifier value="main"/> 
 
         <!-- inject any dependencies required by this bean -->
     </bean>
 
     <bean class="example.SimpleMovieCatalog">
-        <qualifier value="action"/> (2)
+        <qualifier value="action"/> 
 
         <!-- inject any dependencies required by this bean -->
     </bean>
@@ -2981,6 +3706,15 @@ public @interface Genre {
 }
 ```
 
+kotlin:
+
+```kotlin
+@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class Genre(val value: String)
+```
+
 然后，您可以在自动装配的字段和参数上提供自定义限定符，如以下示例所示：
 
 ```java
@@ -3001,6 +3735,24 @@ public class MovieRecommender {
 }
 ```
 
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    @Genre("Action")
+    private lateinit var actionCatalog: MovieCatalog
+
+    private lateinit var comedyCatalog: MovieCatalog
+
+    @Autowired
+    fun setComedyCatalog(@Genre("Comedy") comedyCatalog: MovieCatalog) {
+        this.comedyCatalog = comedyCatalog
+    }
+
+    // ...
+}
+```
+
 接下来，提供候选bean定义的信息。开发者可以添加`<qualifier/>`标签作为`<bean/>`标签的子元素，然后指定 `type`类型和`value`值来匹配自定义的qualifier注解。 type是自定义注解的权限定类名(包路径+类名）。如果没有重名的注解，那么可以使用类名(不含包路径）。 以下示例演示了两种方法：
 
 ```xml
@@ -3009,9 +3761,9 @@ public class MovieRecommender {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
 
@@ -3043,6 +3795,13 @@ public @interface Offline {
 }
 ```
 
+```kotlin
+@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class Offline
+```
+
 然后将注解添加到需要自动注入的字段或属性中:
 
 ```java
@@ -3051,6 +3810,19 @@ public class MovieRecommender {
     @Autowired
     @Offline (1)
     private MovieCatalog offlineCatalog;
+
+    // ...
+}
+```
+
+kotlin:
+
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    @Offline 
+    private lateinit var offlineCatalog: MovieCatalog
 
     // ...
 }
@@ -3083,10 +3855,23 @@ public @interface MovieQualifier {
 }
 ```
 
+```kotlin
+@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class MovieQualifier(val genre: String, val format: Format)
+```
+
 在这种情况下， `Format`是一个枚举类型，定义如下:
 
 ```java
 public enum Format {
+    VHS, DVD, BLURAY
+}
+```
+
+```kotlin
+enum class Format {
     VHS, DVD, BLURAY
 }
 ```
@@ -3116,6 +3901,29 @@ public class MovieRecommender {
 }
 ```
 
+```kotlin
+class MovieRecommender {
+
+    @Autowired
+    @MovieQualifier(format = Format.VHS, genre = "Action")
+    private lateinit var actionVhsCatalog: MovieCatalog
+
+    @Autowired
+    @MovieQualifier(format = Format.VHS, genre = "Comedy")
+    private lateinit var comedyVhsCatalog: MovieCatalog
+
+    @Autowired
+    @MovieQualifier(format = Format.DVD, genre = "Action")
+    private lateinit var actionDvdCatalog: MovieCatalog
+
+    @Autowired
+    @MovieQualifier(format = Format.BLURAY, genre = "Comedy")
+    private lateinit var comedyBluRayCatalog: MovieCatalog
+
+    // ...
+}
+```
+
 最后，bean定义应包含匹配的限定符值。此示例还演示了可以使用bean meta属性而不是使用`<qualifier/>`子元素。如果可行，`<qualifier/>`元素及其属性优先， 但如果不存在此类限定符，那么自动注入机制会使用 `<meta/>` 标签中提供的值，如以下示例中的最后两个bean定义：
 
 ```xml
@@ -3124,9 +3932,9 @@ public class MovieRecommender {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
 
@@ -3183,6 +3991,18 @@ public class MyConfiguration {
 }
 ```
 
+```kotlin
+@Configuration
+class MyConfiguration {
+
+    @Bean
+    fun stringStore() = StringStore()
+
+    @Bean
+    fun integerStore() = IntegerStore()
+}
+```
+
 假设上面的bean都实现了泛型接口,即 `Store<String>`和`Store<Integer>`,那么可以用`@Autowire`来注解`Store` 接口, 并将泛型用作限定符，如下例所示：
 
 ```java
@@ -3193,6 +4013,14 @@ private Store<String> s1; // <String> qualifier, injects the stringStore bean
 private Store<Integer> s2; // <Integer> qualifier, injects the integerStore bean
 ```
 
+```kotlin
+@Autowired
+private lateinit var s1: Store<String> // <String> qualifier, injects the stringStore bean
+
+@Autowired
+private lateinit var s2: Store<Integer> // <Integer> qualifier, injects the integerStore bean
+```
+
 通用限定符也适用于自动装配列表，`Map`实例和数组。 以下示例自动装配通用`List`：
 
 ```java
@@ -3200,6 +4028,13 @@ private Store<Integer> s2; // <Integer> qualifier, injects the integerStore bean
 // Store<String> beans will not appear in this list
 @Autowired
 private List<Store<Integer>> s;
+```
+
+```kotlin
+// Inject all Store beans as long as they have an <Integer> generic
+// Store<String> beans will not appear in this list
+@Autowired
+private lateinit var s: List<Store<Integer>>
 ```
 
 <a id="beans-custom-autowire-configurer"></a>
@@ -3234,7 +4069,7 @@ private List<Store<Integer>> s;
 
 #### [](#beans-resource-annotation)1.9.7. `@Resource`
 
-Spring还通过在字段或bean属性setter方法上使用JSR-250 `@Resource`注解来支持注入。 这是Java EE 5和6中的常见模式（例如，在JSF 1.2托管bean或JAX-WS 2.0端点中）。 Spring也为Spring管理对象提供这种模式。
+Spring还通过在字段或bean属性setter方法上使用JSR-250 `@Resource(javax.annotation.Resource)`注解来支持注入。 这是Java EE 中的常见模式（例如，JSF-managed beans 和JAX-WS 端点中）。 Spring也为Spring管理对象提供这种模式。
 
 `@Resource` 接受一个name属性.。默认情况下，Spring将该值解释为要注入的bean名称。 换句话说，它遵循按名称语义，如以下示例所示:
 
@@ -3247,6 +4082,14 @@ public class SimpleMovieLister {
     public void setMovieFinder(MovieFinder movieFinder) {
         this.movieFinder = movieFinder;
     }
+}
+```
+
+```kotlin
+class SimpleMovieLister {
+
+    @Resource(name="myMovieFinder") 
+    private lateinit var movieFinder:MovieFinder
 }
 ```
 
@@ -3263,6 +4106,15 @@ public class SimpleMovieLister {
     public void setMovieFinder(MovieFinder movieFinder) {
         this.movieFinder = movieFinder;
     }
+}
+```
+
+```kotlin
+class SimpleMovieLister {
+
+    @Resource
+    private lateinit var movieFinder: MovieFinder
+
 }
 ```
 
@@ -3288,13 +4140,220 @@ public class MovieRecommender {
 }
 ```
 
+```kotlin
+class MovieRecommender {
+
+    @Resource
+    private lateinit var customerPreferenceDao: CustomerPreferenceDao
+
+
+    @Resource
+    private lateinit var context: ApplicationContext 
+
+    // ...
+}
+```
+
 **1**、`context`域将会注入`ApplicationContext`
+
+<a id="beans-value-annotations"></a>
+
+#### [](#beans-value-annotations)1.9.8. 使用`@Value` 
+
+`@Value`通常用于注入外部属性：
+
+java:
+
+```java
+@Component
+public class MovieRecommender {
+
+    private final String catalog;
+
+    public MovieRecommender(@Value("${catalog.name}") String catalog) {
+        this.catalog = catalog;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+@Component
+class MovieRecommender(@Value("\${catalog.name}") private val catalog: String)
+```
+
+使用以下配置：
+
+java:
+
+```java
+@Configuration
+@PropertySource("classpath:application.properties")
+public class AppConfig { }
+```
+
+kotlin:
+
+```kotlin
+@Configuration
+@PropertySource("classpath:application.properties")
+class AppConfig
+```
+
+以及以下application.properties文件：
+
+```xml
+catalog.name=MovieCatalog
+```
+
+在这种情况下，catalog参数和字段将等于MovieCatalog值。
+
+Spring提供了一个默认的宽松内嵌值解析器。 它将尝试解析属性值，如果无法解析，则将属性名称（例如`$ {catalog.name}`）作为值注入。 如果要严格控制不存在的值，则应声明一个`PropertySourcesPlaceholderConfigurer` bean，如以下示例所示：
+
+java:
+
+```java
+@Configuration
+public class AppConfig {
+
+     @Bean
+     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+           return new PropertySourcesPlaceholderConfigurer();
+     }
+}
+```
+
+kotlin:
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun propertyPlaceholderConfigurer() = PropertySourcesPlaceholderConfigurer()
+}
+```
+
+使用JavaConfig配置PropertySourcesPlaceholderConfigurer时，@ Bean方法必须是静态的。
+
+如果无法解析任何`$ {}`占位符，则使用上述配置可确保Spring初始化失败。 也可以使用setPlaceholderPrefix，setPlaceholderSuffix或setValueSeparator之类的方法来自定义占位符。
+
+Spring Boot默认配置一个`PropertySourcesPlaceholderConfigurer` bean，它将从`application.properties和application.yml`文件获取属性。
+
+Spring提供的内置转换器支持允许自动处理简单的类型转换（例如，转换为Integer或int）。 多个逗号分隔的值可以自动转换为String数组，而无需付出额外的努力。
+
+可以提供如下默认值：
+
+java:
+
+```java
+@Component
+public class MovieRecommender {
+
+    private final String catalog;
+
+    public MovieRecommender(@Value("${catalog.name:defaultCatalog}") String catalog) {
+        this.catalog = catalog;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+@Component
+class MovieRecommender(@Value("\${catalog.name:defaultCatalog}") private val catalog: String)
+```
+
+Spring `BeanPostProcessor`在后台使用`ConversionService`处理将`@Value`中的String值转换为目标类型的过程。 如果要为自己的自定义类型提供转换支持，则可以提供自己的`ConversionService` bean实例，如以下示例所示：
+
+java:
+
+```java
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public ConversionService conversionService() {
+        DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
+        conversionService.addConverter(new MyCustomConverter());
+        return conversionService;
+    }
+}
+```
+
+kotlin
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun conversionService(): ConversionService {
+            return DefaultFormattingConversionService().apply {
+            addConverter(MyCustomConverter())
+        }
+    }
+}
+```
+
+当@Value包含SpEL表达式时，该值将在运行时动态计算，如以下示例所示：
+
+java:
+
+```java
+@Component
+public class MovieRecommender {
+
+    private final String catalog;
+
+    public MovieRecommender(@Value("#{systemProperties['user.catalog'] + 'Catalog' }") String catalog) {
+        this.catalog = catalog;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+@Component
+class MovieRecommender(
+    @Value("#{systemProperties['user.catalog'] + 'Catalog' }") private val catalog: String)
+```
+
+SpEL还可以使用更复杂的数据结构：
+
+java:
+
+```java
+@Component
+public class MovieRecommender {
+
+    private final Map<String, Integer> countOfMoviesPerCatalog;
+
+    public MovieRecommender(
+            @Value("#{{'Thriller': 100, 'Comedy': 300}}") Map<String, Integer> countOfMoviesPerCatalog) {
+        this.countOfMoviesPerCatalog = countOfMoviesPerCatalog;
+    }
+}
+```
+
+kotlin:
+
+```kotlin
+@Component
+class MovieRecommender(
+    @Value("#{{'Thriller': 100, 'Comedy': 300}}") private val countOfMoviesPerCatalog: Map<String, Int>)
+```
+
+
 
 <a id="beans-postconstruct-and-predestroy-annotations"></a>
 
-#### [](#beans-postconstruct-and-predestroy-annotations)1.9.8. `@PostConstruct` 和 `@PreDestroy`
+#### [](#beans-postconstruct-and-predestroy-annotations)1.9.9. `@PostConstruct` 和 `@PreDestroy`
 
-`CommonAnnotationBeanPostProcessor` 不仅仅识别`@Resource` 注解，还识别JSR-250生命周期注解。，在Spring 2.5中引入了这些注解， 它们提供了另一个替代[初始化回调](#beans-factory-lifecycle-initializingbean)和[销毁回调](#beans-factory-lifecycle-disposablebean)。 如果`CommonAnnotationBeanPostProcessor`在Spring `ApplicationContext`中注册，它会在相应的Spring bean生命周期中调用相应的方法，就像是Spring生命周期接口方法，或者是明确声明的回调函数那样。 在以下示例中，缓存在初始化时预先填充并在销毁时清除：
+`CommonAnnotationBeanPostProcessor` 不仅仅识别`@Resource` 注解，还识别JSR-250生命周期注解 `javax.annotation.PostConstruct` 和`javax.annotation.PreDestroy`. 。，在Spring 2.5中引入了这些注解， 它们提供了另一个替代[初始化回调](#beans-factory-lifecycle-initializingbean)和[销毁回调](#beans-factory-lifecycle-disposablebean)。 如果`CommonAnnotationBeanPostProcessor`在Spring `ApplicationContext`中注册，它会在相应的Spring bean生命周期中调用相应的方法，就像是Spring生命周期接口方法，或者是明确声明的回调函数那样。 在以下示例中，缓存在初始化时预先填充并在销毁时清除：
 
 ```java
 public class CachingMovieLister {
@@ -3306,6 +4365,21 @@ public class CachingMovieLister {
 
     @PreDestroy
     public void clearMovieCache() {
+        // clears the movie cache upon destruction...
+    }
+}
+```
+
+```kotlin
+class CachingMovieLister {
+
+    @PostConstruct
+    fun populateMovieCache() {
+        // populates the movie cache upon initialization...
+    }
+
+    @PreDestroy
+    fun clearMovieCache() {
         // clears the movie cache upon destruction...
     }
 }
@@ -3346,6 +4420,19 @@ public @interface Service {
 }
 ```
 
+kotlin:
+
+```kotlin
+@Target(AnnotationTarget.TYPE)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+@Component 
+annotation class Service {
+
+    // ...
+}
+```
+
 **1**、`Component`使`@Service`以与@`@Component`相同的方式处理。
 
 元注解也可以进行组合，进而创建组合注解。例如，来自Spring MVC的`@RestController`注解是由`@Controller`和`@ResponseBody`组成的
@@ -3369,6 +4456,17 @@ public @interface SessionScope {
 }
 ```
 
+```kotlin
+@Target(AnnotationTarget.TYPE, AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+@Scope(WebApplicationContext.SCOPE_SESSION)
+annotation class SessionScope(
+        @get:AliasFor(annotation = Scope::class)
+        val proxyMode: ScopedProxyMode = ScopedProxyMode.TARGET_CLASS
+)
+```
+
 然后，您可以使用`@SessionScope`而不声明`proxyMode`，如下所示：
 
 ```java
@@ -3379,12 +4477,28 @@ public class SessionScopedService {
 }
 ```
 
+```kotlin
+@Service
+@SessionScope
+class SessionScopedService {
+    // ...
+}
+```
+
 您还可以覆盖`proxyMode`的值，如以下示例所示:
 
 ```java
 @Service
 @SessionScope(proxyMode = ScopedProxyMode.INTERFACES)
 public class SessionScopedUserService implements UserService {
+    // ...
+}
+```
+
+```kotlin
+@Service
+@SessionScope(proxyMode = ScopedProxyMode.INTERFACES)
+class SessionScopedUserService : UserService {
     // ...
 }
 ```
@@ -3415,6 +4529,16 @@ public class JpaMovieFinder implements MovieFinder {
 }
 ```
 
+```kotlin
+@Service
+class SimpleMovieLister(private val movieFinder: MovieFinder)
+
+@Repository
+class JpaMovieFinder : MovieFinder {
+    // implementation elided for clarity
+}
+```
+
 想要自动检测这些类并注册相应的bean，需要在`@Configuration`配置中添加`@ComponentScan`注解，其中`basePackages`属性是两个类的父包路径。 （或者，您可以指定以逗号或分号或空格分隔的列表，其中包含每个类的父包）。
 
 ```java
@@ -3422,6 +4546,14 @@ public class JpaMovieFinder implements MovieFinder {
 @ComponentScan(basePackages = "org.example")
 public class AppConfig  {
     ...
+}
+```
+
+```kotlin
+@Configuration
+@ComponentScan(basePackages = ["org.example"])
+class AppConfig  {
+    // ...
 }
 ```
 
@@ -3435,9 +4567,9 @@ public class AppConfig  {
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="org.example"/>
 
@@ -3458,7 +4590,7 @@ public class AppConfig  {
 
 #### [](#beans-scanning-filters)1.10.4. 在自定义扫描中使用过滤器
 
-默认情况下，使用`@Component`, `@Repository`, `@Service`,`@Controller`注解的类或者注解为`@Component`的自定义注解类才能被检测为候选组件。 但是，开发者可以通过应用自定义过滤器来修改和扩展此行为。将它们添加为`@ComponentScan`注解的`includeFilters`或`excludeFilters`参数(或作为`component-scan` 元素。元素的`include-filter`或`exclude-filter`子元素。每个filter元素都需要包含`type`和`expression`属性。下表介绍了筛选选项：
+默认情况下，使用`@Component`, `@Repository`, `@Service`,`@Controller`  `@Configuration`注解的类或者注解为`@Component`的自定义注解类才能被检测为候选组件。 但是，开发者可以通过应用自定义过滤器来修改和扩展此行为。将它们添加为`@ComponentScan`注解的`includeFilters`或`excludeFilters`参数(或作为`component-scan` 元素。元素的`include-filter`或`exclude-filter`子元素。每个filter元素都需要包含`type`和`expression`属性。下表介绍了筛选选项：
 
 Table 5.过滤类型
 
@@ -3479,6 +4611,16 @@ Table 5.过滤类型
         excludeFilters = @Filter(Repository.class))
 public class AppConfig {
     ...
+}
+```
+
+```kotlin
+@Configuration
+@ComponentScan(basePackages = "org.example",
+        includeFilters = [Filter(type = FilterType.REGEX, pattern = [".*Stub.*Repository"])],
+        excludeFilters = [Filter(Repository::class)])
+class AppConfig {
+    // ...
 }
 ```
 
@@ -3514,6 +4656,20 @@ public class FactoryMethodComponent {
     }
 
     public void doWork() {
+        // Component method implementation omitted
+    }
+}
+```
+
+```kotlin
+@Component
+class FactoryMethodComponent {
+
+    @Bean
+    @Qualifier("public")
+    fun publicInstance() = TestBean("publicInstance")
+
+    fun doWork() {
         // Component method implementation omitted
     }
 }
@@ -3561,6 +4717,36 @@ public class FactoryMethodComponent {
 }
 ```
 
+```kotlin
+@Component
+class FactoryMethodComponent {
+
+    companion object {
+        private var i: Int = 0
+    }
+
+    @Bean
+    @Qualifier("public")
+    fun publicInstance() = TestBean("publicInstance")
+
+    // use of a custom qualifier and autowiring of method parameters
+    @Bean
+    protected fun protectedInstance(
+            @Qualifier("public") spouse: TestBean,
+            @Value("#{privateInstance.age}") country: String) = TestBean("protectedInstance", 1).apply {
+        this.spouse = spouse
+        this.country = country
+    }
+
+    @Bean
+    private fun privateInstance() = TestBean("privateInstance", i++)
+
+    @Bean
+    @RequestScope
+    fun requestScopedInstance() = TestBean("requestScopedInstance", 3)
+}
+```
+
 该示例将方法参数为`String`，名称为`country`的bean自动装配为另一个名为`privateInstance`的bean的`age`属性值。 Spring表达式语言元素通过记号`#{ <expression> }`来定义属性的值。对于 `@Value`注解，表达式解析器在解析表达式后，会查找bean的名字并设置value值。
 
 从Spring4.3开始，您还可以声明一个类型为`InjectionPoint`的工厂方法参数（或其更具体的子类：`DependencyDescriptor`）以访问触发创建当前bean的请求注入点。 请注意，这仅适用于真实创建的bean实例，而不适用于注入现有实例。因此，这个特性对prototype scope的bean最有意义。对于其他作用域，工厂方法将只能看到触发在给定scope中创建新bean实例的注入点。 例如，触发创建一个延迟单例bean的依赖。在这种情况下，使用提供的注入点元数据拥有优雅的语义。 以下示例显示了如何使用`InjectionPoint`:
@@ -3573,6 +4759,17 @@ public class FactoryMethodComponent {
     public TestBean prototypeInstance(InjectionPoint injectionPoint) {
         return new TestBean("prototypeInstance for " + injectionPoint.getMember());
     }
+}
+```
+
+```kotlin
+@Component
+class FactoryMethodComponent {
+
+    @Bean
+    @Scope("prototype")
+    fun prototypeInstance(injectionPoint: InjectionPoint) =
+            TestBean("prototypeInstance for ${injectionPoint.member}")
 }
 ```
 
@@ -3608,6 +4805,18 @@ public class MovieFinderImpl implements MovieFinder {
 }
 ```
 
+```kotlin
+@Service("myMovieLister")
+class SimpleMovieLister {
+    // ...
+}
+
+@Repository
+class MovieFinderImpl : MovieFinder {
+    // ...
+}
+```
+
 如果您不想依赖默认的bean命名策略，则可以提供自定义bean命名策略。首先，实现 [`BeanNameGenerator`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/support/BeanNameGenerator.html)接口，并确保包括一个默认的无参构造函数。 然后，在配置扫描程序时提供完全限定的类名，如以下示例注解和bean定义所示：
 
     @Configuration
@@ -3615,11 +4824,19 @@ public class MovieFinderImpl implements MovieFinder {
     public class AppConfig {
         ...
     }
-
+    //kotlin
+    @Configuration
+    @ComponentScan(basePackages = ["org.example"], nameGenerator = MyNameGenerator::class)
+    class AppConfig {
+        // ...
+    }
+    
     <beans>
         <context:component-scan base-package="org.example"
             name-generator="org.example.MyNameGenerator" />
     </beans>
+
+
 
 作为一般规则，考虑在其他组件可能对其进行显式引用时使用注解指定名称。 另一方面，只要容器负责装配时，自动生成的名称就足够了。
 
@@ -3637,6 +4854,14 @@ public class MovieFinderImpl implements MovieFinder {
 }
 ```
 
+```kotlin
+@Scope("prototype")
+@Repository
+class MovieFinderImpl : MovieFinder {
+    // ...
+}
+```
+
 `@Scope`注解仅在具体bean类（用于带注解的组件）或工厂方法（用于`@Bean`方法）上进行关联。 与XML bean定义相比，没有bean继承的概念，并且 类级别的继承结构与元数据无关。
 
 有关特定于Web的范围（如Spring上下文中的“request” or “session”）的详细信息，请参阅[请求，会话，应用程序和WebSocket作用域](#beans-factory-scopes-other)。 这些作用域与构建注解一样，您也可以使用Spring的元注解方法编写自己的作用域注解：例如，使用`@Scope("prototype")`进行元注解的自定义注解，可能还会声明自定义作用域代理模式。
@@ -3644,12 +4869,18 @@ public class MovieFinderImpl implements MovieFinder {
 想要提供自定义作用域的解析策略，而不是依赖于基于注解的方法，那么需要实现[`ScopeMetadataResolver`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/context/annotation/ScopeMetadataResolver.html)接口，并确保包含一个默认的无参数构造函数。 然后，在配置扫描程序时提供完全限定类名。以下注解和bean定义示例显示：
 
 ```java
+//java
 @Configuration
 @ComponentScan(basePackages = "org.example", scopeResolver = MyScopeResolver.class)
 public class AppConfig {
     ...
 }
-
+//kotlin
+@Configuration
+@ComponentScan(basePackages = ["org.example"], scopeResolver = MyScopeResolver::class)
+class AppConfig {
+    // ...
+}
 <beans>
     <context:component-scan base-package="org.example" scope-resolver="org.example.MyScopeResolver"/>
 </beans>
@@ -3658,11 +4889,20 @@ public class AppConfig {
 当使用某个非单例作用域时，为作用域对象生成代理可能非常必要，原因参看 [作为依赖关系的作用域bean](#beans-factory-scopes-other-injection)。 为此，组件扫描元素上提供了scoped-proxy属性。 三个可能的值是：`no`, `interfaces`, 和 `targetClass`。 例如，以下配置导致标准JDK动态代理：
 
 ```java
+//java
 @Configuration
 @ComponentScan(basePackages = "org.example", scopedProxy = ScopedProxyMode.INTERFACES)
 public class AppConfig {
     ...
 }
+
+//kotlin
+@Configuration
+@ComponentScan(basePackages = ["org.example"], scopedProxy = ScopedProxyMode.INTERFACES)
+class AppConfig {
+    // ...
+}
+
 
 <beans>
     <context:component-scan base-package="org.example" scoped-proxy="interfaces"/>
@@ -3695,6 +4935,24 @@ public class CachingMovieCatalog implements MovieCatalog {
 }
 ```
 
+```kotlin
+@Component
+@Qualifier("Action")
+class ActionMovieCatalog : MovieCatalog
+
+@Component
+@Genre("Action")
+class ActionMovieCatalog : MovieCatalog {
+    // ...
+}
+
+@Component
+@Offline
+class CachingMovieCatalog : MovieCatalog {
+    // ...
+}
+```
+
 与大多数基于注解的替代方法一样，注解元数据绑定到类定义本身，而使用在XML配置时，允许同一类型的beans在qualifier元数据中提供变量， 因为元数据是依据实例而不是类来提供的。
 
 <a id="beans-scanning-index"></a>
@@ -3710,7 +4968,7 @@ public class CachingMovieCatalog implements MovieCatalog {
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context-indexer</artifactId>
-        <version>5.1.3.BUILD-SNAPSHOT</version>
+        <version>5.2.0.RELEASE</version>
         <optional>true</optional>
     </dependency>
 </dependencies>
@@ -3720,7 +4978,15 @@ public class CachingMovieCatalog implements MovieCatalog {
 
 ```groovy
 dependencies {
-    compileOnly("org.springframework:spring-context-indexer:5.1.3.BUILD-SNAPSHOT")
+     compileOnly "org.springframework:spring-context-indexer:5.2.0.RELEASE"
+}
+```
+
+对于Gradle 4.6和更高版本，应在 `annotationProcessor` 配置中声明依赖项，如以下示例所示：
+
+```groovy
+dependencies {
+    annotationProcessor "org.springframework:spring-context-indexer:{spring-version}"
 }
 ```
 
@@ -3736,7 +5002,7 @@ dependencies {
 
 从Spring 3.0开始，Spring提供对JSR-330标准注解（依赖注入）的支持。 这些注解的扫描方式与Spring注解相同。 要使用它们，您需要在类路径中包含相关的jar。
 
-如果使用Maven工具，那么`@javax.inject.Inject`可以在Maven中央仓库中找到( [http://repo1.maven.org/maven2/javax/inject/javax.inject/1/](https://repo1.maven.org/maven2/javax/inject/javax.inject/1/)). 您可以将以下依赖项添加到文件pom.xml：:
+如果使用Maven工具，那么`@javax.inject.Inject`可以在Maven中央仓库中找到( [https://repo1.maven.org/maven2/javax/inject/javax.inject/1/](https://repo1.maven.org/maven2/javax/inject/javax.inject/1/)). 您可以将以下依赖项添加到文件pom.xml：:
 
 ```xml
 <dependency>
@@ -3771,6 +5037,24 @@ public class SimpleMovieLister {
 }
 ```
 
+kotlin:
+
+```kotlin
+import javax.inject.Inject
+
+class SimpleMovieLister {
+
+    @Inject
+    lateinit var movieFinder: MovieFinder
+
+
+    fun listMovies() {
+        movieFinder.findMovies(...)
+        // ...
+    }
+}
+```
+
 与 `@Autowired`一样，您可以在字段，方法和构造函数参数级别使用`@Inject`注解。此外，还可以将注入点声明为`Provider`。 它允许按需访问作用域较小的bean或通过`Provider.get()`调用对其他bean进行延迟访问。以下示例提供了前面示例的变体：
 
 ```java
@@ -3789,6 +5073,22 @@ public class SimpleMovieLister {
     public void listMovies() {
         this.movieFinder.get().findMovies(...);
         ...
+    }
+}
+```
+
+```kotlin
+import javax.inject.Inject
+
+class SimpleMovieLister {
+
+    @Inject
+    lateinit var movieFinder: MovieFinder
+
+
+    fun listMovies() {
+        movieFinder.findMovies(...)
+        // ...
     }
 }
 ```
@@ -3812,6 +5112,25 @@ public class SimpleMovieLister {
 }
 ```
 
+kotlin:
+
+```kotlin
+import javax.inject.Inject
+import javax.inject.Named
+
+class SimpleMovieLister {
+
+    private lateinit var movieFinder: MovieFinder
+
+    @Inject
+    fun setMovieFinder(@Named("main") movieFinder: MovieFinder) {
+        this.movieFinder = movieFinder
+    }
+
+    // ...
+}
+```
+
 与`@Autowired`一样，`@Inject` 也可以与`java.util.Optional`或`@Nullable`一起使用。 这在这里用更适用，因为`@Inject`没有`required`的属性。 以下一对示例显示了如何使用`@Inject`和`@Nullable`:
 
 ```java
@@ -3828,6 +5147,16 @@ public class SimpleMovieLister {
     @Inject
     public void setMovieFinder(@Nullable MovieFinder movieFinder) {
         ...
+    }
+}
+```
+
+```kotlin
+public class SimpleMovieLister {
+
+    @Inject
+    public void setMovieFinder(Optional<MovieFinder> movieFinder) {
+        // ...
     }
 }
 ```
@@ -3856,6 +5185,20 @@ public class SimpleMovieLister {
 }
 ```
 
+```kotlin
+import javax.inject.Inject
+import javax.inject.Named
+
+@Named("movieListener")  // @ManagedBean("movieListener") could be used as well
+class SimpleMovieLister {
+
+    @Inject
+    lateinit var movieFinder: MovieFinder
+
+    // ...
+}
+```
+
 在不指定组件名称的情况下使用`@Component`是很常见的。 `@Named`可以以类似的方式使用，如下例所示：
 
 ```java
@@ -3876,6 +5219,20 @@ public class SimpleMovieLister {
 }
 ```
 
+```kotlin
+import javax.inject.Inject
+import javax.inject.Named
+
+@Named
+class SimpleMovieLister {
+
+    @Inject
+    lateinit var movieFinder: MovieFinder
+
+    // ...
+}
+```
+
 当使用`@Named` 或 `@ManagedBean`时，可以与Spring注解完全相同的方式使用component-scanning组件扫描。 如以下示例所示:
 
 ```java
@@ -3883,6 +5240,14 @@ public class SimpleMovieLister {
 @ComponentScan(basePackages = "org.example")
 public class AppConfig  {
     ...
+}
+```
+
+```kotlin
+@Configuration
+@ComponentScan(basePackages = ["org.example"])
+class AppConfig  {
+    // ...
 }
 ```
 
@@ -3952,6 +5317,19 @@ public class AppConfig {
 }
 ```
 
+kotlin:
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun myService(): MyService {
+        return MyServiceImpl()
+    }
+}
+```
+
 前面的`AppConfig`类等效于以下Spring `<beans/>`XML：
 
 ```xml
@@ -3994,6 +5372,18 @@ public static void main(String[] args) {
 }
 ```
 
+kotlin:
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(AppConfig::class.java)
+    val myService = ctx.getBean<MyService>()
+    myService.doStuff()
+}
+```
+
 如前所述，`AnnotationConfigApplicationContext`不仅限于使用`@Configuration`类。 任何`@Component`或JSR-330带注解的类都可以作为输入提供给构造函数，如以下示例所示：
 
 ```java
@@ -4001,6 +5391,18 @@ public static void main(String[] args) {
     ApplicationContext ctx = new AnnotationConfigApplicationContext(MyServiceImpl.class, Dependency1.class, Dependency2.class);
     MyService myService = ctx.getBean(MyService.class);
     myService.doStuff();
+}
+```
+
+kotlin:
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(MyServiceImpl::class.java, Dependency1::class.java, Dependency2::class.java)
+    val myService = ctx.getBean<MyService>()
+    myService.doStuff()
 }
 ```
 
@@ -4023,6 +5425,19 @@ public static void main(String[] args) {
 }
 ```
 
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext()
+    ctx.register(AppConfig::class.java, OtherConfig::class.java)
+    ctx.register(AdditionalConfig::class.java)
+    ctx.refresh()
+    val myService = ctx.getBean<MyService>()
+    myService.doStuff()
+}
+```
+
 <a id="beans-java-instantiating-container-scan"></a>
 
 ##### [](#beans-java-instantiating-container-scan)3 使用`scan(String…)`扫描组件
@@ -4034,6 +5449,14 @@ public static void main(String[] args) {
 @ComponentScan(basePackages = "com.acme") (1)
 public class AppConfig  {
     ...
+}
+```
+
+```kotlin
+@Configuration
+@ComponentScan(basePackages = ["com.acme"]) 
+class AppConfig  {
+    // ...
 }
 ```
 
@@ -4053,6 +5476,15 @@ public static void main(String[] args) {
     ctx.scan("com.acme");
     ctx.refresh();
     MyService myService = ctx.getBean(MyService.class);
+}
+```
+
+```kotlin
+fun main() {
+    val ctx = AnnotationConfigApplicationContext()
+    ctx.scan("com.acme")
+    ctx.refresh()
+    val myService = ctx.getBean<MyService>()
 }
 ```
 
@@ -4141,6 +5573,17 @@ public class AppConfig {
 }
 ```
 
+kotlin:
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun transferService() = TransferServiceImpl()
+}
+```
+
 前面的配置完全等同于以下Spring XML:
 
 ```xml
@@ -4151,7 +5594,9 @@ public class AppConfig {
 
 这两个声明都在`ApplicationContext`中创建一个名为`transferService`的bean，并且绑定了`TransferServiceImpl`的实例。如下图所示：
 
+```
 transferService -> com.acme.TransferServiceImpl
+```
 
 您还可以使用接口（或基类）返回类型声明`@Bean`方法，如以下示例所示：
 
@@ -4162,6 +5607,17 @@ public class AppConfig {
     @Bean
     public TransferService transferService() {
         return new TransferServiceImpl();
+    }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun transferService(): TransferService {
+        return TransferServiceImpl()
     }
 }
 ```
@@ -4183,6 +5639,17 @@ public class AppConfig {
     @Bean
     public TransferService transferService(AccountRepository accountRepository) {
         return new TransferServiceImpl(accountRepository);
+    }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun transferService(accountRepository: AccountRepository): TransferService {
+        return TransferServiceImpl(accountRepository)
     }
 }
 ```
@@ -4231,6 +5698,33 @@ public class AppConfig {
 }
 ```
 
+```kotlin
+class BeanOne {
+
+    fun init() {
+        // initialization logic
+    }
+}
+
+class BeanTwo {
+
+    fun cleanup() {
+        // destruction logic
+    }
+}
+
+@Configuration
+class AppConfig {
+
+    @Bean(initMethod = "init")
+    fun beanOne() = BeanOne()
+
+    @Bean(destroyMethod = "cleanup")
+    fun beanTwo() = BeanTwo()
+}
+
+```
+
 默认情况下，使用Java Config定义的bean中`close`方法或者`shutdown`方法，会作为销毁回调而自动调用。若bean中有`close` 或 `shutdown` 方法，并且您不希望在容器关闭时调用它，则可以将`@Bean(destroyMethod="")` 添加到bean定义中以禁用默认`(inferred)` 模式。
 
 开发者可能希望对通过JNDI获取的资源执行此操作，因为它的生命周期是在应用程序外部管理的。更进一步，使用 `DataSource`时一定要关闭它，不关闭将会出问题。
@@ -4241,6 +5735,13 @@ public class AppConfig {
 @Bean(destroyMethod="")
 public DataSource dataSource() throws NamingException {
     return (DataSource) jndiTemplate.lookup("MyDS");
+}
+```
+
+```kotlin
+@Bean(destroyMethod = "")
+fun dataSource(): DataSource {
+    return jndiTemplate.lookup("MyDS") as DataSource
 }
 ```
 
@@ -4257,6 +5758,19 @@ public class AppConfig {
         BeanOne beanOne = new BeanOne();
         beanOne.init();
         return beanOne;
+    }
+
+    // ...
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun beanOne() = BeanOne().apply {
+        init()
     }
 
     // ...
@@ -4291,6 +5805,18 @@ public class MyConfiguration {
 }
 ```
 
+```kotlin
+@Configuration
+class MyConfiguration {
+
+    @Bean
+    @Scope("prototype")
+    fun encryptor(): Encryptor {
+        // ...
+    }
+}
+```
+
 <a id="beans-java-scoped-proxy"></a>
 
 ###### [](#beans-java-scoped-proxy)`@Scope` and `scoped-proxy`
@@ -4316,6 +5842,21 @@ public Service userService() {
 }
 ```
 
+```kotlin
+// an HTTP Session-scoped bean exposed as a proxy
+@Bean
+@SessionScope
+fun userPreferences() = UserPreferences()
+
+@Bean
+fun userService(): Service {
+    return SimpleUserService().apply {
+        // a reference to the proxied userPreferences bean
+        setUserPreferences(userPreferences()
+    }
+}
+```
+
 <a id="beans-java-customizing-bean-naming"></a>
 
 ##### [](#beans-java-customizing-bean-naming)自定义Bean命名
@@ -4333,6 +5874,15 @@ public class AppConfig {
 }
 ```
 
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean("myThing")
+    fun thing() = Thing()
+}
+```
+
 <a id="beans-java-bean-aliasing"></a>
 
 ##### [](#beans-java-bean-aliasing)bean别名
@@ -4345,6 +5895,17 @@ public class AppConfig {
 
     @Bean(name = { "dataSource", "subsystemA-dataSource", "subsystemB-dataSource" })
     public DataSource dataSource() {
+        // instantiate, configure and return DataSource bean...
+    }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean("dataSource", "subsystemA-dataSource", "subsystemB-dataSource")
+    fun dataSource(): DataSource {
         // instantiate, configure and return DataSource bean...
     }
 }
@@ -4367,6 +5928,16 @@ public class AppConfig {
     public Thing thing() {
         return new Thing();
     }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    @Description("Provides a basic example of a bean")
+    fun thing() = Thing()
 }
 ```
 
@@ -4398,6 +5969,18 @@ public class AppConfig {
 }
 ```
 
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun beanOne() = BeanOne(beanTwo())
+
+    @Bean
+    fun beanTwo() = BeanTwo()
+}
+```
+
 在前面的示例中，`beanOne`通过构造函数注入接收对`beanTwo`的引用。
 
 这种声明bean间依赖关系的方法只有在 `@Configuration` 类中声明`@Bean`方法时才有效。 您不能使用普通的`@Component`类声明bean间依赖关系。
@@ -4423,6 +6006,21 @@ public abstract class CommandManager {
 }
 ```
 
+```kotlin
+abstract class CommandManager {
+    fun process(commandState: Any): Any {
+        // grab a new instance of the appropriate Command interface
+        val command = createCommand()
+        // set the state on the (hopefully brand new) Command instance
+        command.setState(commandState)
+        return command.execute()
+    }
+
+    // okay... but where is the implementation of this method?
+    protected abstract fun createCommand(): Command
+}
+```
+
 通过使用Java配置，您可以创建 `CommandManager`的子类，其中抽象的 `createCommand()` 方法被覆盖，以便查找新的（原型）对象。 以下示例显示了如何执行此操作：
 
 ```java
@@ -4441,6 +6039,27 @@ public CommandManager commandManager() {
     return new CommandManager() {
         protected Command createCommand() {
             return asyncCommand();
+        }
+    }
+}
+```
+
+```kotlin
+@Bean
+@Scope("prototype")
+fun asyncCommand(): AsyncCommand {
+    val command = AsyncCommand()
+    // inject dependencies here as required
+    return command
+}
+
+@Bean
+fun commandManager(): CommandManager {
+    // return new anonymous implementation of CommandManager with createCommand()
+    // overridden to return a new prototype Command object
+    return object : CommandManager() {
+        override fun createCommand(): Command {
+            return asyncCommand()
         }
     }
 }
@@ -4473,6 +6092,31 @@ public class AppConfig {
     @Bean
     public ClientDao clientDao() {
         return new ClientDaoImpl();
+    }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean
+    fun clientService1(): ClientService {
+        return ClientServiceImpl().apply {
+            clientDao = clientDao()
+        }
+    }
+
+    @Bean
+    fun clientService2(): ClientService {
+        return ClientServiceImpl().apply {
+            clientDao = clientDao()
+        }
+    }
+
+    @Bean
+    fun clientDao(): ClientDao {
+        return ClientDaoImpl()
     }
 }
 ```
@@ -4520,6 +6164,23 @@ public class ConfigB {
 }
 ```
 
+```kotlin
+@Configuration
+class ConfigA {
+
+    @Bean
+    fun a() = A()
+}
+
+@Configuration
+@Import(ConfigA::class)
+class ConfigB {
+
+    @Bean
+    fun b() = B()
+}
+```
+
 现在，在实例化上下文时，不需要同时指定`ConfigA.class`和 `ConfigB.class`，只需要显式提供`ConfigB`，如下例所示：
 
 ```java
@@ -4529,6 +6190,18 @@ public static void main(String[] args) {
     // now both beans A and B will be available...
     A a = ctx.getBean(A.class);
     B b = ctx.getBean(B.class);
+}
+```
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(ConfigB::class.java)
+
+    // now both beans A and B will be available...
+    val a = ctx.getBean<A>()
+    val b = ctx.getBean<B>()
 }
 ```
 
@@ -4578,6 +6251,46 @@ public static void main(String[] args) {
     // everything wires up across configuration classes...
     TransferService transferService = ctx.getBean(TransferService.class);
     transferService.transfer(100.00, "A123", "C456");
+}
+```
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+@Configuration
+class ServiceConfig {
+
+    @Bean
+    fun transferService(accountRepository: AccountRepository): TransferService {
+        return TransferServiceImpl(accountRepository)
+    }
+}
+
+@Configuration
+class RepositoryConfig {
+
+    @Bean
+    fun accountRepository(dataSource: DataSource): AccountRepository {
+        return JdbcAccountRepository(dataSource)
+    }
+}
+
+@Configuration
+@Import(ServiceConfig::class, RepositoryConfig::class)
+class SystemTestConfig {
+
+    @Bean
+    fun dataSource(): DataSource {
+        // return new DataSource
+    }
+}
+
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(SystemTestConfig::class.java)
+    // everything wires up across configuration classes...
+    val transferService = ctx.getBean<TransferService>()
+    transferService.transfer(100.00, "A123", "C456")
 }
 ```
 
@@ -4636,6 +6349,48 @@ public static void main(String[] args) {
 }
 ```
 
+```kotlin
+import org.springframework.beans.factory.getBean
+
+@Configuration
+class ServiceConfig {
+
+    @Autowired
+    lateinit var accountRepository: AccountRepository
+
+    @Bean
+    fun transferService(): TransferService {
+        return TransferServiceImpl(accountRepository)
+    }
+}
+
+@Configuration
+class RepositoryConfig(private val dataSource: DataSource) {
+
+    @Bean
+    fun accountRepository(): AccountRepository {
+        return JdbcAccountRepository(dataSource)
+    }
+}
+
+@Configuration
+@Import(ServiceConfig::class, RepositoryConfig::class)
+class SystemTestConfig {
+
+    @Bean
+    fun dataSource(): DataSource {
+        // return new DataSource
+    }
+}
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(SystemTestConfig::class.java)
+    // everything wires up across configuration classes...
+    val transferService = ctx.getBean<TransferService>()
+    transferService.transfer(100.00, "A123", "C456")
+}
+```
+
 仅在Spring Framework 4.3中支持`@Configuration`类中的构造函数注入。 另请注意，如果目标bean仅定义了一个构造函数，则无需指定`@Autowired`。 在前面的示例中，`RepositoryConfig`构造函数中不需要`@Autowired`。
 
 完全导入bean便于查找
@@ -4655,6 +6410,21 @@ public class ServiceConfig {
     public TransferService transferService() {
         // navigate 'through' the config class to the @Bean method!
         return new TransferServiceImpl(repositoryConfig.accountRepository());
+    }
+}
+```
+
+```kotlin
+@Configuration
+class ServiceConfig {
+
+    @Autowired
+    private lateinit var repositoryConfig: RepositoryConfig
+
+    @Bean
+    fun transferService(): TransferService {
+        // navigate 'through' the config class to the @Bean method!
+        return TransferServiceImpl(repositoryConfig.accountRepository())
     }
 }
 ```
@@ -4708,6 +6478,55 @@ public static void main(String[] args) {
 }
 ```
 
+```kotlin
+import org.springframework.beans.factory.getBean
+
+@Configuration
+class ServiceConfig {
+
+    @Autowired
+    private lateinit var repositoryConfig: RepositoryConfig
+
+    @Bean
+    fun transferService(): TransferService {
+        return TransferServiceImpl(repositoryConfig.accountRepository())
+    }
+}
+
+@Configuration
+interface RepositoryConfig {
+
+    @Bean
+    fun accountRepository(): AccountRepository
+}
+
+@Configuration
+class DefaultRepositoryConfig : RepositoryConfig {
+
+    @Bean
+    fun accountRepository(): AccountRepository {
+        return JdbcAccountRepository(...)
+    }
+}
+
+@Configuration
+@Import(ServiceConfig::class, DefaultRepositoryConfig::class)  // import the concrete config!
+class SystemTestConfig {
+
+    @Bean
+    fun dataSource(): DataSource {
+        // return DataSource
+    }
+
+}
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(SystemTestConfig::class.java)
+    val transferService = ctx.getBean<TransferService>()
+    transferService.transfer(100.00, "A123", "C456")
+}
+```
+
 现在，`ServiceConfig`与具体的`DefaultRepositoryConfig`松散耦合，内置的IDE工具仍然很有用：您可以很容易获取`RepositoryConfig`实现类的继承体系。 以这种方式,操作`@Configuration`类及其依赖关系与操作基于接口的代码的过程没有什么区别
 
 如果要影响某些bean的启动创建顺序，可以考虑将其中一些声明为`@Lazy` （用于在首次访问时创建而不是在启动时）或`@DependsOn`某些其他bean（确保在创建之前创建特定的其他bean（当前的bean，超出后者的直接依赖性所暗示的））。
@@ -4738,6 +6557,22 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         }
     }
     return true;
+}
+```
+
+```kotlin
+override fun matches(context: ConditionContext, metadata: AnnotatedTypeMetadata): Boolean {
+    // Read the @Profile annotation attributes
+    val attrs = metadata.getAllAnnotationAttributes(Profile::class.java.name)
+    if (attrs != null) {
+        for (value in attrs["value"]!!) {
+            if (context.environment.acceptsProfiles(Profiles .of(*value as Array<String>))) {
+                return true
+            }
+        }
+        return false
+    }
+    return true
 }
 ```
 
@@ -4780,37 +6615,64 @@ public class AppConfig {
 }
 ```
 
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Autowired
+    private lateinit var dataSource: DataSource
+
+    @Bean
+    fun accountRepository(): AccountRepository {
+        return JdbcAccountRepository(dataSource)
+    }
+
+    @Bean
+    fun transferService() = TransferService(accountRepository())
+}
+```
+
 以下示例显示了示例`system-test-config.xml`文件的一部分：
 
-    <beans>
-        <!-- enable processing of annotations such as @Autowired and @Configuration -->
-        <context:annotation-config/>
-        <context:property-placeholder location="classpath:/com/acme/jdbc.properties"/>
+```xml
+<beans>
+    <!-- enable processing of annotations such as @Autowired and @Configuration -->
+    <context:annotation-config/>
+    <context:property-placeholder location="classpath:/com/acme/jdbc.properties"/>
 
-        <bean class="com.acme.AppConfig"/>
+    <bean class="com.acme.AppConfig"/>
 
-        <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="url" value="${jdbc.url}"/>
-            <property name="username" value="${jdbc.username}"/>
-            <property name="password" value="${jdbc.password}"/>
-        </bean>
-    </beans>
+    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+</beans>
+```
 
 以下示例显示了可能的`jdbc.properties`文件:
 
-```
+```properties
 jdbc.url=jdbc:hsqldb:hsql://localhost/xdb
 jdbc.username=sa
 jdbc.password=
 ```
 
+```java
+public static void main(String[] args) {
+    ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/com/acme/system-test-config.xml");
+    TransferService transferService = ctx.getBean(TransferService.class);
+    // ...
+}
+```
 
-
-    public static void main(String[] args) {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/com/acme/system-test-config.xml");
-        TransferService transferService = ctx.getBean(TransferService.class);
-        // ...
-    }
+```kotlin
+fun main() {
+    val ctx = ClassPathXmlApplicationContext("classpath:/com/acme/system-test-config.xml")
+    val transferService = ctx.getBean<TransferService>()
+    // ...
+}
+```
 
 在 `system-test-config.xml`文件中， `AppConfig` `<bean/>`不声明`id`元素。虽然这样做是可以的，但是没有必要，因为没有其他bean引用它，并且不太可能通过名称从容器中明确地获取它。 类似地，`DataSource` bean只是按类型自动装配，因此不严格要求显式的bean`id`。
 
@@ -4866,6 +6728,29 @@ properties-config.xml
 </beans>
 ```
 
+```kotlin
+@Configuration
+@ImportResource("classpath:/com/acme/properties-config.xml")
+class AppConfig {
+
+    @Value("\${jdbc.url}")
+    private lateinit var url: String
+
+    @Value("\${jdbc.username}")
+    private lateinit var username: String
+
+    @Value("\${jdbc.password}")
+    private lateinit var password: String
+
+    @Bean
+    fun dataSource(): DataSource {
+        return DriverManagerDataSource(url, username, password)
+    }
+}
+```
+
+
+
 ```
 jdbc.properties
 jdbc.url=jdbc:hsqldb:hsql://localhost/xdb
@@ -4880,6 +6765,16 @@ jdbc.password=
         TransferService transferService = ctx.getBean(TransferService.class);
         // ...
     }
+
+```kotlin
+import org.springframework.beans.factory.getBean
+
+fun main() {
+    val ctx = AnnotationConfigApplicationContext(AppConfig::class.java)
+    val transferService = ctx.getBean<TransferService>()
+    // ...
+}
+```
 
 <a id="beans-environment"></a>
 
@@ -4917,6 +6812,17 @@ public DataSource dataSource() {
 }
 ```
 
+```kotlin
+@Bean
+fun dataSource(): DataSource {
+    return EmbeddedDatabaseBuilder()
+            .setType(EmbeddedDatabaseType.HSQL)
+            .addScript("my-schema.sql")
+            .addScript("my-test-data.sql")
+            .build()
+}
+```
+
 现在考虑如何将此应用程序部署到QA或生产环境中，假设应用程序的数据源已注册到生产应用程序服务器的JNDI目录。 我们的`dataSource` bean现在看起来如下：
 
 ```java
@@ -4924,6 +6830,14 @@ public DataSource dataSource() {
 public DataSource dataSource() throws Exception {
     Context ctx = new InitialContext();
     return (DataSource) ctx.lookup("java:comp/env/jdbc/datasource");
+}
+```
+
+```kotlin
+@Bean(destroyMethod = "")
+fun dataSource(): DataSource {
+    val ctx = InitialContext()
+    return ctx.lookup("java:comp/env/jdbc/datasource") as DataSource
 }
 ```
 
@@ -4964,6 +6878,33 @@ public class JndiDataConfig {
 }
 ```
 
+```kotlin
+@Configuration
+@Profile("development")
+class StandaloneDataConfig {
+
+    @Bean
+    fun dataSource(): DataSource {
+        return EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScript("classpath:com/bank/config/sql/schema.sql")
+                .addScript("classpath:com/bank/config/sql/test-data.sql")
+                .build()
+    }
+}
+
+@Configuration
+@Profile("production")
+class JndiDataConfig {
+
+    @Bean(destroyMethod = "")
+    fun dataSource(): DataSource {
+        val ctx = InitialContext()
+        return ctx.lookup("java:comp/env/jdbc/datasource") as DataSource
+    }
+}
+```
+
 如前所述，使用`@Bean`方法，您通常选择使用Spring的`JndiTemplate`/`JndiLocatorDelegate`帮助程序或前面显示的 直接JNDI `InitialContext`用法但不使用`JndiObjectFactoryBean`变量来使用编程JNDI查找，这会强制您将返回类型声明为 `FactoryBean`类型。 As mentioned earlier, with `@Bean` methods, you typically choose to use programmatic JNDI lookups, by using either Spring’s `JndiTemplate`/`JndiLocatorDelegate` helpers or the straight JNDI `InitialContext` usage shown earlier but not the `JndiObjectFactoryBean` variant, which would force you to declare the return type as the `FactoryBean` type.
 
 profile字符串可以包含简单的profile名称（例如，`production`）或profile表达式。 profile表达式允许表达更复杂的概要逻辑（例如，`production & us-east`）。 profile表达式支持以下运算符：
@@ -4985,6 +6926,13 @@ profile字符串可以包含简单的profile名称（例如，`production`）或
 @Profile("production")
 public @interface Production {
 }
+```
+
+```kotlin
+@Target(AnnotationTarget.TYPE)
+@Retention(AnnotationRetention.RUNTIME)
+@Profile("production")
+annotation class Production
 ```
 
 如果`@Configuration`类标有 `@Profile`,类中所有`@Bean`和`@Import`注解相关的类都将被忽略,除非该profile被激活。 如果一个`@Component`或`@Configuration`类被标记为`@Profile({"p1", "p2"})`。那么除非profile 'p1' or 'p2' 已被激活。 否则该类将不会注册/处理。如果给定的配置文件以NOT运算符(`!`)为前缀，如果配置文件为not active，则注册的元素将被注册。 例如，给定`@Profile({"p1", "!p2"})`，如果配置文件“p1”处于活动状态或配置文件“p2”未激活，则会进行注册。
@@ -5011,6 +6959,27 @@ public class AppConfig {
         Context ctx = new InitialContext();
         return (DataSource) ctx.lookup("java:comp/env/jdbc/datasource");
     }
+}
+```
+
+```kotlin
+@Configuration
+class AppConfig {
+
+    @Bean("dataSource")
+    @Profile("development") 
+    fun standaloneDataSource(): DataSource {
+        return EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScript("classpath:com/bank/config/sql/schema.sql")
+                .addScript("classpath:com/bank/config/sql/test-data.sql")
+                .build()
+    }
+
+    @Bean("dataSource")
+    @Profile("production") 
+    fun jndiDataSource() =
+        InitialContext().lookup("java:comp/env/jdbc/datasource") as DataSource
 }
 ```
 
@@ -5113,12 +7082,24 @@ ctx.register(SomeConfig.class, StandaloneDataConfig.class, JndiDataConfig.class)
 ctx.refresh();
 ```
 
+```kotlin
+val ctx = AnnotationConfigApplicationContext().apply {
+    environment.setActiveProfiles("development")
+    register(SomeConfig::class.java, StandaloneDataConfig::class.java, JndiDataConfig::class.java)
+    refresh()
+}
+```
+
 此外,配置文件也可以通过`spring.profiles.active`属性声明式性地激活,可以通过系统环境变量，JVM系统属性，`web.xml`中的Servlet上下文参数指定， 甚至作为JNDI中的一个条目设置（[`PropertySource` 抽象](#beans-property-source-abstraction)）。在集成测试中，可以通过 `spring-test`模块中的`@ActiveProfiles`注解来声明活动配置文件(参见使用[环境配置文件的上下文配置](https://github.com/DocsHome/spring-docs/blob/master/pages/test/testing.mdl#testcontext-ctx-management-env-profiles))
 
 配置文件不是“二选一”的。开发者可以一次激活多个配置文件。使用编程方式，您可以为`setActiveProfiles()`方法提供多个配置文件名称，该方法接受 `String…`varargs。 以下示例激活多个配置文件：
 
 ```java
 ctx.getEnvironment().setActiveProfiles("profile1", "profile2");
+```
+
+```kotlin
+ctx.getEnvironment().setActiveProfiles("profile1", "profile2")
 ```
 
 声明性地，`spring.profiles.active`可以接受以逗号分隔的profile名列表，如以下示例所示：
@@ -5148,6 +7129,21 @@ public class DefaultDataConfig {
 }
 ```
 
+```kotlin
+@Configuration
+@Profile("default")
+class DefaultDataConfig {
+
+    @Bean
+    fun dataSource(): DataSource {
+        return EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScript("classpath:com/bank/config/sql/schema.sql")
+                .build()
+    }
+}
+```
+
 如果没有配置文件激活，上面的`dataSource`就会被创建。这提供了一种默认的方式，如果有任何一个配置文件启用，default配置就不会生效。
 
 默认配置文件的名字(default）可以通过`Environment`的`setDefaultProfiles()`方法或者`spring.profiles.default`属性修改。
@@ -5163,6 +7159,13 @@ ApplicationContext ctx = new GenericApplicationContext();
 Environment env = ctx.getEnvironment();
 boolean containsMyProperty = env.containsProperty("my-property");
 System.out.println("Does my environment contain the 'my-property' property? " + containsMyProperty);
+```
+
+```kotlin
+val ctx = GenericApplicationContext()
+val env = ctx.environment
+val containsMyProperty = env.containsProperty("my-property")
+println("Does my environment contain the 'my-property' property? $containsMyProperty")
 ```
 
 在上面的代码段中,一个高级别的方法用于访问Spring是否为当前环境定义了`my-property` 属性。为了回答这个问题，`Environment`对象对一组PropertySource对象进行搜索。 [`PropertySource`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/core/env/PropertySource.html)是对任何键值对的简单抽象，Spring的[`StandardEnvironment`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/core/env/StandardEnvironment.html)配置有两个`PropertySource`对象 ，一个表示JVM系统属性(`System.getProperties()`),一个表示系统环境变量(`System.getenv()`)。
@@ -5194,6 +7197,12 @@ MutablePropertySources sources = ctx.getEnvironment().getPropertySources();
 sources.addFirst(new MyPropertySource());
 ```
 
+```kotlin
+val ctx = GenericApplicationContext()
+val sources = ctx.environment.propertySources
+sources.addFirst(MyPropertySource())
+```
+
 在上面的代码中， `MyPropertySource`在搜索中添加了最高优先级。如果它包含`my-property`属性，则会检测并返回该属性， 优先于其他 `PropertySource`中的任何`my-property`属性。 [`MutablePropertySources`](https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/core/env/MutablePropertySources.html) API公开了许多方法，允许你显式操作property属性源。
 
 <a id="beans-using-propertysource"></a>
@@ -5221,6 +7230,21 @@ public class AppConfig {
 }
 ```
 
+```kotlin
+@Configuration
+@PropertySource("classpath:/com/myco/app.properties")
+class AppConfig {
+
+    @Autowired
+    private lateinit var env: Environment
+
+    @Bean
+    fun testBean() = TestBean().apply {
+        name = env.getProperty("testbean.name")!!
+    }
+}
+```
+
 任何的存在于`@PropertySource`中的`${…}`占位符，将会被解析为定义在环境中的属性配置文件中的属性值。 如以下示例所示：
 
 ```java
@@ -5236,6 +7260,21 @@ public class AppConfig {
         TestBean testBean = new TestBean();
         testBean.setName(env.getProperty("testbean.name"));
         return testBean;
+    }
+}
+```
+
+```kotlin
+@Configuration
+@PropertySource("classpath:/com/\${my.placeholder:default/path}/app.properties")
+class AppConfig {
+
+    @Autowired
+    private lateinit var env: Environment
+
+    @Bean
+    fun testBean() = TestBean().apply {
+        name = env.getProperty("testbean.name")!!
     }
 }
 ```
@@ -5271,6 +7310,12 @@ public class AppConfig {
 @EnableLoadTimeWeaving
 public class AppConfig {
 }
+```
+
+```kotlin
+@Configuration
+@EnableLoadTimeWeaving
+class AppConfig
 ```
 
 或者，对于XML配置，您可以使用`context:load-time-weaver` 元素:
@@ -5351,6 +7396,14 @@ public static void main(String[] args) {
 }
 ```
 
+```kotlin
+fun main() {
+    val resources = ClassPathXmlApplicationContext("beans.xml")
+    val message = resources.getMessage("message", null, "Default", Locale.ENGLISH)
+    println(message)
+}
+```
+
 上述程序产生的结果如下:
 
 Alligators rock!
@@ -5374,6 +7427,7 @@ Alligators rock!
 
 </beans>
 
+        //java
 public class Example {
 
     private MessageSource messages;
@@ -5386,6 +7440,18 @@ public class Example {
         String message = this.messages.getMessage("argument.required",
             new Object [] {"userDao"}, "Required", null);
         System.out.println(message);
+    }
+}
+
+//kotlin
+class Example {
+
+    lateinit var messages: MessageSource
+
+    fun execute() {
+        val message = messages.getMessage("argument.required",
+                arrayOf("userDao"), "Required", Locale.ENGLISH)
+        println(message)
     }
 }
 ```
@@ -5407,6 +7473,15 @@ public static void main(final String[] args) {
     String message = resources.getMessage("argument.required",
         new Object [] {"userDao"}, "Required", Locale.UK);
     System.out.println(message);
+}
+```
+
+```kotlin
+fun main() {
+    val resources = ClassPathXmlApplicationContext("beans.xml")
+    val message = resources.getMessage("argument.required",
+            arrayOf("userDao"), "Required", Locale.UK)
+    println(message)
 }
 ```
 
@@ -5457,6 +7532,12 @@ public class BlackListEvent extends ApplicationEvent {
 }
 ```
 
+```kotlin
+class BlackListEvent(source: Any,
+                    val address: String,
+                    val content: String) : ApplicationEvent(source)
+```
+
 要发布自定义`ApplicationEvent`，请在`ApplicationEventPublisher`上调用`publishEvent()`方法。 通常，这是通过创建一个实现 `ApplicationEventPublisherAware`并将其注册为Spring bean的类来完成的。 以下示例显示了这样一个类：
 
 ```java
@@ -5483,6 +7564,30 @@ public class EmailService implements ApplicationEventPublisherAware {
 }
 ```
 
+```kotlin
+class EmailService : ApplicationEventPublisherAware {
+
+    private lateinit var blackList: List<String>
+    private lateinit var publisher: ApplicationEventPublisher
+
+    fun setBlackList(blackList: List<String>) {
+        this.blackList = blackList
+    }
+
+    override fun setApplicationEventPublisher(publisher: ApplicationEventPublisher) {
+        this.publisher = publisher
+    }
+
+    fun sendEmail(address: String, content: String) {
+        if (blackList!!.contains(address)) {
+            publisher!!.publishEvent(BlackListEvent(this, address, content))
+            return
+        }
+        // send email...
+    }
+}
+```
+
 在配置时，Spring容器检测到`EmailService`实现`ApplicationEventPublisherAware`并自动调用`setApplicationEventPublisher()`。 实际上，传入的参数是Spring容器本身。 您正在通过其`ApplicationEventPublisher`接口与应用程序上下文进行交互。
 
 要接收自定义 `ApplicationEvent`，您可以创建一个实现`ApplicationListener`的类并将其注册为Spring bean。 以下示例显示了这样一个类：
@@ -5497,6 +7602,17 @@ public class BlackListNotifier implements ApplicationListener<BlackListEvent> {
     }
 
     public void onApplicationEvent(BlackListEvent event) {
+        // notify appropriate parties via notificationAddress...
+    }
+}
+```
+
+```kotlin
+class BlackListNotifier : ApplicationListener<BlackListEvent> {
+
+    lateinit var notificationAddres: String
+
+    override fun onApplicationEvent(event: BlackListEvent) {
         // notify appropriate parties via notificationAddress...
     }
 }
@@ -5548,6 +7664,18 @@ public class BlackListNotifier {
 }
 ```
 
+```kotlin
+class BlackListNotifier {
+
+    lateinit var notificationAddress: String
+
+    @EventListener
+    fun processBlackListEvent(event: BlackListEvent) {
+        // notify appropriate parties via notificationAddress...
+    }
+}
+```
+
 方法签名再次声明它侦听的事件类型，但这次使用灵活的名称并且没有实现特定的侦听器接口。只要实际事件类型在其实现层次结构中解析通用参数，也可以通过泛型缩小事件类型。
 
 如果您的方法应该监听多个事件，或者您想要根据任何参数进行定义，那么也可以在注解本身上指定事件类型。 以下示例显示了如何执行此操作：:
@@ -5557,6 +7685,13 @@ public class BlackListNotifier {
         ...
     }
 
+```kotlin
+@EventListener(ContextStartedEvent::class, ContextRefreshedEvent::class)
+fun handleContextStart() {
+    // ...
+}
+```
+
 还可以通过使用定义[`SpEL` 表达式](#expressions)的注解的`condition`属性来添加额外的运行时过滤，该表达式应匹配以实际调用特定事件的方法。
 
 以下示例显示了仅当事件的`content`属性等于`my-event`时才能重写我们的通知程序以进行调用：
@@ -5564,6 +7699,13 @@ public class BlackListNotifier {
 ```java
 @EventListener(condition = "#blEvent.content == 'my-event'")
 public void processBlackListEvent(BlackListEvent blEvent) {
+    // notify appropriate parties via notificationAddress...
+}
+```
+
+```kotlin
+@EventListener(condition = "#blEvent.content == 'my-event'")
+fun processBlackListEvent(blEvent: BlackListEvent) {
     // notify appropriate parties via notificationAddress...
 }
 ```
@@ -5590,6 +7732,14 @@ public ListUpdateEvent handleBlackListEvent(BlackListEvent event) {
 }
 ```
 
+```kotlin
+@EventListener
+fun handleBlackListEvent(event: BlackListEvent): ListUpdateEvent {
+    // notify appropriate parties via notificationAddress and
+    // then publish a ListUpdateEvent...
+}
+```
+
 [异步侦听器](#context-functionality-events-async)不支持此功能。
 
 这将通过上述方法处理每个`BlackListEvent`并发布一个新的`ListUpdateEvent`，如果需要发布多个事件，则可以返回事件 `集合`。
@@ -5604,6 +7754,14 @@ public ListUpdateEvent handleBlackListEvent(BlackListEvent event) {
 @EventListener
 @Async
 public void processBlackListEvent(BlackListEvent event) {
+    // BlackListEvent is processed in a separate thread
+}
+```
+
+```kotlin
+@EventListener
+@Async
+fun processBlackListEvent(event: BlackListEvent) {
     // BlackListEvent is processed in a separate thread
 }
 ```
@@ -5629,6 +7787,14 @@ public void processBlackListEvent(BlackListEvent event) {
 }
 ```
 
+```kotlin
+@EventListener
+@Order(42)
+fun processBlackListEvent(event: BlackListEvent) {
+    // notify appropriate parties via notificationAddress...
+}
+```
+
 <a id="context-functionality-events-generics"></a>
 
 ##### [](#context-functionality-events-generics)泛型的事件
@@ -5639,6 +7805,13 @@ public void processBlackListEvent(BlackListEvent event) {
 @EventListener
 public void onPersonCreated(EntityCreatedEvent<Person> event) {
     ...
+}
+```
+
+```kotlin
+@EventListener
+fun onPersonCreated(event: EntityCreatedEvent<Person>) {
+    // ...
 }
 ```
 
@@ -5656,6 +7829,15 @@ public class EntityCreatedEvent<T> extends ApplicationEvent implements Resolvabl
     @Override
     public ResolvableType getResolvableType() {
         return ResolvableType.forClassWithGenerics(getClass(), ResolvableType.forInstance(getSource()));
+    }
+}
+```
+
+```kotlin
+class EntityCreatedEvent<T>(entity: T) : ApplicationEvent(entity), ResolvableTypeProvider {
+
+    override fun getResolvableType(): ResolvableType? {
+        return ResolvableType.forClassWithGenerics(javaClass, ResolvableType.forInstance(getSource()))
     }
 }
 ```
@@ -5763,6 +7945,17 @@ factory.addBeanPostProcessor(new MyBeanPostProcessor());
 // now start using the factory
 ```
 
+```kotlin
+val factory = DefaultListableBeanFactory()
+// populate the factory with bean definitions
+
+// now register any needed BeanPostProcessor instances
+factory.addBeanPostProcessor(AutowiredAnnotationBeanPostProcessor())
+factory.addBeanPostProcessor(MyBeanPostProcessor())
+
+// now start using the factory
+```
+
 要将`BeanFactoryPostProcessor` 应用于普通的`DefaultListableBeanFactory`，需要调用其`postProcessBeanFactory`方法，如以下示例所示：
 
 ```java
@@ -5776,6 +7969,19 @@ cfg.setLocation(new FileSystemResource("jdbc.properties"));
 
 // now actually do the replacement
 cfg.postProcessBeanFactory(factory);
+```
+
+```kotlin
+val factory = DefaultListableBeanFactory()
+val reader = XmlBeanDefinitionReader(factory)
+reader.loadBeanDefinitions(FileSystemResource("beans.xml"))
+
+// bring in some property values from a Properties file
+val cfg = PropertySourcesPlaceholderConfigurer()
+cfg.setLocation(FileSystemResource("jdbc.properties"))
+
+// now actually do the replacement
+cfg.postProcessBeanFactory(factory)
 ```
 
 在这两种情况下，显示注册步骤都不方便，这就是为什么各种`ApplicationContext`变体优先于Spring支持的应用程序中的普通`DefaultListableBeanFactory`， 尤其是在典型企业设置中依赖`BeanFactoryPostProcessor` 和 `BeanPostProcessor`实例来扩展容器功能时。
