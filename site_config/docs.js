@@ -63,18 +63,18 @@ export default {
             {
                 title: 'Spring Framework',
                 children: [
-                    {
-                        title: '说明',
-                        link: '/zh-cn/docs/springframework/README.html',
-                    },
-                    {
-                        title: '摘要',
-                        link: '/zh-cn/docs/springframework/SUMMARY.html',
-                    },
-                    {
-                        title: '概述',
-                        link: '/zh-cn/docs/springframework/overview/overview.html',
-                    },
+                    // {
+                    //     title: '说明',
+                    //     link: '/zh-cn/docs/springframework/README.html',
+                    // },
+                    // {
+                    //     title: '摘要',
+                    //     link: '/zh-cn/docs/springframework/SUMMARY.html',
+                    // },
+                    // {
+                    //     title: '概述',
+                    //     link: '/zh-cn/docs/springframework/overview/overview.html',
+                    // },
                     {
                         title: '核心组件',
                         children: [
@@ -86,11 +86,11 @@ export default {
                                 title: 'IOC容器',
                                 children: [
                                     {
-                                        title: 'bean',
-                                        link: '/zh-cn/docs/springframework/core/container/bean.html',
+                                        title: 'bean1',
+                                        link: '/zh-cn/docs/springframework/core/container/bean1.html',
                                     },
                                     {
-                                        title: 'bean',
+                                        title: 'bean2',
                                         link: '/zh-cn/docs/springframework/core/container/bean.html',
                                     },
                                 ],
@@ -129,143 +129,115 @@ export default {
                             },
                         ],
                     },
-                    {
-                        title: '测试',
-                        children: [
-                            {},
-                            {},
-                            {},
-                            {},
-                        ],
-                    },
-                    {
-                        title: 'Web Servlet',
-                        children: [
-                            {
-                                title: '全部章节一览',
-                                link: '/zh-cn/docs/springframework/web/overview.html',
-                            },
-                            {
-                                title: 'Spring Web MVC',
-                                link: '/zh-cn/docs/springframework/web/mvc.html',
-                            },
-                            {
-                                title: 'REST 客户端',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/web/appendix.html',
-                            },
-                        ],
-                    },
-                    {
-                        title: 'Web Reactive框架',
-                        children: [{}],
-                    },
-                    {
-                        title: '集成',
-                        children: [
-                            {
-                                title: '全部章节一览',
-                                link: '/zh-cn/docs/springframework/integration/overview.html',
-                            },
-                            {
-                                title: 'Spring的远程处理和Web服务',
-                                link: '/zh-cn/docs/springframework/integration/remoting.html',
-                            },
-                            {
-                                title: '企业级JavaBean(EJB) 集成',
-                                link: '/zh-cn/docs/springframework/integration/ejb.html',
-                            },
-                            {
-                                title: ' JMS (Java 消息服务 )',
-                                link: '/zh-cn/docs/springframework/integration/jms.html',
-                            },
-                            {
-                                title: 'JMX',
-                                link: '/zh-cn/docs/springframework/integration/jmx.html',
-                            },
-                            {
-                                title: 'JCA CCI',
-                                link: '/zh-cn/docs/springframework/integration/cci.html',
-                            },
-                            {
-                                title: '电子邮件',
-                                link: '/zh-cn/docs/springframework/integration/mail.html',
-                            },
-                            {
-                                title: '执行任务和计划任务',
-                                link: '/zh-cn/docs/springframework/integration/scheduling.html',
-                            },
-                            {
-                                title: '缓存抽象',
-                                link: '/zh-cn/docs/springframework/integration/cache.html',
-                            },
-                            {
-                                title: '附录',
-                                link: '/zh-cn/docs/springframework/integration/appendix.html',
-                            },
-                        ],
-                    },
-                    {
-                        title: '语言',
-                        children: [{}],
-                    },
-                ],
+                    // {
+                // title: '测试',
+                // children: [
+                // ],
+            // },
+            // {
+            //     title: 'Web Servlet',
+            //     children: [
+            //         {
+            //             title: '全部章节一览',
+            //             link: '/zh-cn/docs/springframework/web/overview.html',
+            //         },
+            //         {
+            //             title: 'Spring Web MVC',
+            //             link: '/zh-cn/docs/springframework/web/mvc.html',
+            //         },
+            //         {
+            //             title: 'REST 客户端',
+            //             link: '/zh-cn/docs/springframework/web/appendix.html',
+            //         },
+            //         {
+            //             title: '附录',
+            //             link: '/zh-cn/docs/springframework/web/appendix.html',
+            //         },
+            //     ],
+            // },
+            // {
+            //     title: 'Web Reactive框架',
+            //     children: [{}],
+            // },
+            // {
+            //     title: '集成',
+            //     children: [
+            //         {
+            //             title: '全部章节一览',
+            //             link: '/zh-cn/docs/springframework/integration/overview.html',
+            //         },
+            //         {
+            //             title: 'Spring的远程处理和Web服务',
+            //             link: '/zh-cn/docs/springframework/integration/remoting.html',
+            //         },
+            //         {
+            //             title: '企业级JavaBean(EJB) 集成',
+            //             link: '/zh-cn/docs/springframework/integration/ejb.html',
+            //         },
+            //         {
+            //             title: ' JMS (Java 消息服务 )',
+            //             link: '/zh-cn/docs/springframework/integration/jms.html',
+            //         },
+            //         {
+            //             title: 'JMX',
+            //             link: '/zh-cn/docs/springframework/integration/jmx.html',
+            //         },
+            //         {
+            //             title: 'JCA CCI',
+            //             link: '/zh-cn/docs/springframework/integration/cci.html',
+            //         },
+            //         {
+            //             title: '电子邮件',
+            //             link: '/zh-cn/docs/springframework/integration/mail.html',
+            //         },
+            //         {
+            //             title: '执行任务和计划任务',
+            //             link: '/zh-cn/docs/springframework/integration/scheduling.html',
+            //         },
+            //         {
+            //             title: '缓存抽象',
+            //             link: '/zh-cn/docs/springframework/integration/cache.html',
+            //         },
+            //         {
+            //             title: '附录',
+            //             link: '/zh-cn/docs/springframework/integration/appendix.html',
+            //         },
+            //     ],
+            // },
+            // {
+            //     title: '语言',
+            //     children: [{}],
+            // },
+        ],
             },
-            {
-                title: 'SpringBoot',
-                children: [
-                    {
-                        title: 'SpringBoot',
-                        link: '/zh-cn/docs/springboot/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'nginx',
-                children: [
-                    {
-                        title: 'nginx',
-                        link: '/zh-cn/docs/nginx/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'Microservices',
-                children:
-                    [
-                        {
-                            title: 'Microservices',
-                            link: '/zh-cn/docs/microservices/demo.html',
-                        },
-                    ],
-            },
+            // {
+            //     title: 'SpringBoot',
+            //     children: [
+            //         {
+            //             title: 'SpringBoot',
+            //             link: '/zh-cn/docs/springboot/demo.html',
+            //         },
+            //     ],
+            // },
+            // {
+            //     title: 'nginx',
+            //     children: [
+            //         {
+            //             title: 'nginx',
+            //             link: '/zh-cn/docs/nginx/demo.html',
+            //         },
+            //     ],
+            // },
+            // {
+            //     title: 'Microservices',
+            //     children:
+            //         [
+            //             {
+            //                 title: 'Microservices',
+            //                 link: '/zh-cn/docs/microservices/demo.html',
+            //             },
+            //         ],
+            // },
         ],
         barText: '文档',
     },

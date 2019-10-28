@@ -65,7 +65,7 @@
     }
   }
 
-  .menu-item-level-2, .menu-item-level-3 {
+  .menu-item-level-2, .menu-item-level-3,.menu-item-level-4 {
     cursor: pointer;
     & > span, & > a {
       font-family: Avenir-Medium;
@@ -86,7 +86,7 @@
     }
   }
 
-  .menu-item-level-2 {
+  .menu-item-level-2,.menu-item-level-3,menu-item-level-4 {
     & > span, & > a {
       padding-left: 40px;
       height: 36px;
@@ -100,8 +100,15 @@
     }
   }
   .menu-item-level-3 {
-    & > a {
+    & > a, & > span {
       padding-left: 60px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+  .menu-item-level-4 {
+    & > a {
+      padding-left: 80px;
       height: 36px;
       line-height: 36px;
     }

@@ -244,6 +244,15 @@
       }
     },
     {
+      "filename": "bean1.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\bean1.html",
+      "meta": {
+        "title": "Spring  Framework 中文文档",
+        "keywords": "keywords: docs，jcohy-docs，spring,readme",
+        "description": "Spring  Framework 中文文档"
+      }
+    },
+    {
       "filename": "databuffers.md",
       "link": "\\zh-cn\\docs\\springframework\\core\\databuffers.html",
       "meta": {}
