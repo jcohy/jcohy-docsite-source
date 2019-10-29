@@ -34,6 +34,7 @@ class Item extends React.Component {
             opened: !this.state.opened,
         });
     }
+
     render() {
         const { item } = this.props;
         const hasChildren = item.children && item.children.length;
@@ -58,7 +59,7 @@ class Item extends React.Component {
           </span>
                     }
                     <ul>
-                        {item.children.map((submenu, j) => <SubMenu submenu={submenu}/>)})}
+                        {item.children.map((submenu, j) => <SubMenu submenu={submenu} key={j}  onItemClick={this.onItemClick} />)})}
                     </ul>
 
                     {/*{this.renderSubMenu(item.children)}*/}

@@ -9,29 +9,29 @@ class SubMenu extends React.Component {
     super(props);
     const { submenu } = props;
     const hasChildren = submenu.children && submenu.children.length;
-    let isOpen = props.submenu.opened;
+    let subOpen = props.submenu.subOpen;
     if (hasChildren) {
-      if (isOpen === undefined) {
+      if (subOpen === undefined) {
         // 未配置展开，则是否展开由是否选中决定
-        isOpen = submenu.children.find(child => getLink(child.link) === window.location.pathname);
+        subOpen = submenu.children.find(child => getLink(child.link) === window.location.pathname);
       }
     } else {
-      isOpen = false;
+      subOpen = false;
     }
     this.state = {
-      isOpen,
+      subOpen,
     };
   }
 
-  onItemClick(e) {
-    this.props.toggleMenuBody();
+  onSubItemClick(e) {
     e.stopPropagation();
   }
 
-  subToggle() {
+  subToggle(e) {
     this.setState({
-      isOpen: !this.state.isOpen,
+      subOpen: !this.state.subOpen,
     });
+    e.stopPropagation();
   }
 
   renderSubMenu(data) {
@@ -46,7 +46,7 @@ class SubMenu extends React.Component {
               'menu-item-selected': getLink(item.link) === window.location.pathname,
             })}
             key={index}
-            onClick={this.onItemClick}
+            onClick={this.onSubItemClick}
           >
             <a href={getLink(item.link)} target={item.target || '_self'}>{item.title}</a>
           </li>
@@ -59,14 +59,14 @@ class SubMenu extends React.Component {
   render() {
     const { submenu } = this.props;
     const hasChildren = submenu.children && submenu.children.length;
-    const { isOpen } = this.state;
+    const { subOpen } = this.state;
     const cls = classnames({
       'menu-item': true,
       'menu-item-level-3': true,
       'menu-item-selected': getLink(submenu.link) === window.location.pathname,
     });
     const style = {
-      height: isOpen ? 36 * (submenu.children.length + 1) : 36,
+      height: subOpen ? 36 * (submenu.children.length + 1) : 36,
       overflow: 'hidden',
     };
     if (hasChildren) {
@@ -75,7 +75,7 @@ class SubMenu extends React.Component {
         {
           <span>
             {submenu.title}
-            <img style={{ transform: `rotate(${isOpen ? 0 : -90}deg)` }} className="menu-toggle" src={getLink('/img/system/arrow_down.png')} />
+            <img style={{ transform: `rotate(${subOpen ? 0 : -90}deg)` }} className="menu-toggle" src={getLink('/img/system/arrow_down.png')} />
           </span>
         }
         {this.renderSubMenu(submenu.children)}
@@ -83,7 +83,7 @@ class SubMenu extends React.Component {
       );
     }
     return (
-      <li style={style} className={cls} onClick={this.onItemClick}>
+      <li style={style} className={cls} onClick={this.onSubItemClick}>
         <a href={getLink(submenu.link)} target={submenu.target || '_self'}>{submenu.title}</a>
       </li>
     );
