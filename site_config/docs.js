@@ -63,18 +63,18 @@ export default {
             {
                 title: 'Spring Framework',
                 children: [
-                    // {
-                    //     title: '说明',
-                    //     link: '/zh-cn/docs/springframework/README.html',
-                    // },
-                    // {
-                    //     title: '摘要',
-                    //     link: '/zh-cn/docs/springframework/SUMMARY.html',
-                    // },
-                    // {
-                    //     title: '概述',
-                    //     link: '/zh-cn/docs/springframework/overview/overview.html',
-                    // },
+                    {
+                        title: '说明',
+                        link: '/zh-cn/docs/springframework/README.html',
+                    },
+                    {
+                        title: '摘要',
+                        link: '/zh-cn/docs/springframework/SUMMARY.html',
+                    },
+                    {
+                        title: '概述',
+                        link: '/zh-cn/docs/springframework/overview/overview.html',
+                    },
                     {
                         title: '核心组件',
                         children: [
@@ -84,16 +84,73 @@ export default {
                             },
                             {
                                 title: 'IOC容器',
-                                children: [
-                                    {
-                                        title: 'bean1',
-                                        link: '/zh-cn/docs/springframework/core/container/bean1.html',
-                                    },
-                                    {
-                                        title: 'bean2',
-                                        link: '/zh-cn/docs/springframework/core/container/bean.html',
-                                    },
-                                ],
+                                link: '/zh-cn/docs/springframework/core/IoC-container.html',
+                                // children: [
+                                //     {
+                                //         title: 'Spring IoC容器和 bean 的介绍',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-introduction.html',
+                                //     },
+                                //     {
+                                //         title: '容器概述',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-basics.html',
+                                //     },
+                                //     {
+                                //         title: 'Bean 的概述',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-definition.html',
+                                //     },
+                                //     {
+                                //         title: '依赖',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-dependencies.html',
+                                //     },
+                                //     {
+                                //         title: 'bean的作用域',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-factory-scopes.html',
+                                //     },
+                                //     {
+                                //         title: '自定义Bean的特性',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-factory-nature.html',
+                                //     },
+                                //     {
+                                //         title: 'bean 定义的继承',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-child-bean-definitions.html',
+                                //     },
+                                //     {
+                                //         title: '容器的扩展点',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-factory-extension.html',
+                                //     },
+                                //     {
+                                //         title: '基于注解的容器配置',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-annotation-config.html',
+                                //     },
+                                //     {
+                                //         title: '类路径扫描和管理组件',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-classpath-scanning.html',
+                                //     },
+                                //     {
+                                //         title: '使用JSR 330标准注解',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-standard-annotations.html',
+                                //     },
+                                //     {
+                                //         title: '基于Java的容器配置',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-java.html',
+                                //     },
+                                //     {
+                                //         title: '抽象环境',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-environment.html',
+                                //     },
+                                //     {
+                                //         title: '注册`LoadTimeWeaver`',
+                                //         link: '/zh-cn/docs/springframework/core/container/context-load-time-weaver.html',
+                                //     },
+                                //     {
+                                //         title: 'ApplicationContext 的附加功能',
+                                //         link: '/zh-cn/docs/springframework/core/container/context-introduction.html',
+                                //     },
+                                //     {
+                                //         title: 'BeanFactory',
+                                //         link: '/zh-cn/docs/springframework/core/container/beans-beanfactory.html',
+                                //     },
+                                // ],
                             },
                             {
                                 title: '资源',

@@ -235,21 +235,147 @@
       "meta": {}
     },
     {
-      "filename": "bean.md",
-      "link": "\\zh-cn\\docs\\springframework\\core\\container\\bean.html",
+      "filename": "beans-annotation-config.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-annotation-config.html",
       "meta": {
-        "title": "Spring  Framework 中文文档",
-        "keywords": "keywords: docs，jcohy-docs，spring,readme",
-        "description": "Spring  Framework 中文文档"
+        "title": "基于注解的容器配置",
+        "keywords": "keywords: docs，jcohy-docs，spring,基于注解的容器配置",
+        "description": "Spring  Framework 中文文档 》 基于注解的容器配置"
       }
     },
     {
-      "filename": "bean1.md",
-      "link": "\\zh-cn\\docs\\springframework\\core\\container\\bean1.html",
+      "filename": "beans-basics.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-basics.html",
       "meta": {
-        "title": "Spring  Framework 中文文档",
-        "keywords": "keywords: docs，jcohy-docs，spring,readme",
-        "description": "Spring  Framework 中文文档"
+        "title": "容器概述",
+        "keywords": "keywords: docs，jcohy-docs，spring,容器概述",
+        "description": "Spring  Framework 中文文档 》 容器概述"
+      }
+    },
+    {
+      "filename": "beans-beanfactory.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-beanfactory.html",
+      "meta": {
+        "title": "BeanFactory",
+        "keywords": "keywords: docs，jcohy-docs，spring,BeanFactory",
+        "description": "Spring  Framework 中文文档 》 BeanFactory"
+      }
+    },
+    {
+      "filename": "beans-child-bean-definitions.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-child-bean-definitions.html",
+      "meta": {
+        "title": "bean定义的继承",
+        "keywords": "keywords: docs，jcohy-docs，spring,bean定义的继承",
+        "description": "Spring  Framework 中文文档 》 bean定义的继承"
+      }
+    },
+    {
+      "filename": "beans-classpath-scanning.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-classpath-scanning.html",
+      "meta": {
+        "title": "类路径扫描和管理组件",
+        "keywords": "keywords: docs，jcohy-docs，spring,类路径扫描和管理组件",
+        "description": "Spring  Framework 中文文档 》 类路径扫描和管理组件"
+      }
+    },
+    {
+      "filename": "beans-definition.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-definition.html",
+      "meta": {
+        "title": "Bean 的概述",
+        "keywords": "keywords: docs，jcohy-docs，spring,Bean 的概述",
+        "description": "Spring  Framework 中文文档 》 Bean 的概述"
+      }
+    },
+    {
+      "filename": "beans-dependencies.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-dependencies.html",
+      "meta": {
+        "title": "依赖",
+        "keywords": "keywords: docs，jcohy-docs，spring,依赖",
+        "description": "Spring  Framework 中文文档 》 依赖"
+      }
+    },
+    {
+      "filename": "beans-environment.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-environment.html",
+      "meta": {
+        "title": "抽象环境",
+        "keywords": "keywords: docs，jcohy-docs，spring,抽象环境",
+        "description": "Spring  Framework 中文文档 》 抽象环境"
+      }
+    },
+    {
+      "filename": "beans-factory-extension.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-factory-extension.html",
+      "meta": {
+        "title": "容器的扩展点",
+        "keywords": "keywords: docs，jcohy-docs，spring,容器的扩展点",
+        "description": "Spring  Framework 中文文档 》 容器的扩展点"
+      }
+    },
+    {
+      "filename": "beans-factory-nature.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-factory-nature.html",
+      "meta": {
+        "title": "自定义Bean的特性",
+        "keywords": "keywords: docs，jcohy-docs，spring,自定义Bean的特性",
+        "description": "Spring  Framework 中文文档 》 自定义Bean的特性"
+      }
+    },
+    {
+      "filename": "beans-factory-scopes.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-factory-scopes.html",
+      "meta": {
+        "title": "bean的作用域",
+        "keywords": "keywords: docs，jcohy-docs，spring,bean的作用域",
+        "description": "Spring  Framework 中文文档 》 bean的作用域"
+      }
+    },
+    {
+      "filename": "beans-introduction.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-introduction.html",
+      "meta": {
+        "title": "Spring IoC容器和bean的介绍",
+        "keywords": "keywords: docs，jcohy-docs，spring,Spring IoC容器和bean的介绍",
+        "description": "Spring  Framework 中文文档 》 Spring IoC容器和bean的介绍"
+      }
+    },
+    {
+      "filename": "beans-java.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-java.html",
+      "meta": {
+        "title": "基于Java的容器配置",
+        "keywords": "keywords: docs，jcohy-docs，spring,基于Java的容器配置",
+        "description": "Spring  Framework 中文文档 》 基于Java的容器配置"
+      }
+    },
+    {
+      "filename": "beans-standard-annotations.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\beans-standard-annotations.html",
+      "meta": {
+        "title": "使用JSR 330标准注解",
+        "keywords": "keywords: docs，jcohy-docs，spring,使用JSR 330标准注解",
+        "description": "Spring  Framework 中文文档 》 使用JSR 330标准注解"
+      }
+    },
+    {
+      "filename": "context-introduction.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\context-introduction.html",
+      "meta": {
+        "title": "`ApplicationContext`的附加功能",
+        "keywords": "keywords: docs，jcohy-docs，spring,`ApplicationContext`的附加功能",
+        "description": "Spring  Framework 中文文档 》 `ApplicationContext`的附加功能"
+      }
+    },
+    {
+      "filename": "context-load-time-weaver.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\container\\context-load-time-weaver.html",
+      "meta": {
+        "title": "注册`LoadTimeWeaver`",
+        "keywords": "keywords: docs，jcohy-docs，spring,注册`LoadTimeWeaver`",
+        "description": "Spring  Framework 中文文档 》 注册`LoadTimeWeaver`"
       }
     },
     {
