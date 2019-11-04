@@ -164,6 +164,69 @@ $animation5Height: 460px;
       }
     }
   }
+  .card-section {
+    background: #F9FAFA;
+    .card-body {
+      max-width: $contentWidth;
+      box-sizing: border-box;
+      margin: 0 auto;
+      min-height: 640px;
+      padding: 0 40px;
+      position: relative;
+      //display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 40px;
+        height: 165px;
+        opacity: 0.3;
+        border-right: 1px solid #666;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        left: 39px;
+        top: 165px;
+        width: 3px;
+        height: 17px;
+        background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+      }
+      .card {
+        display: inline-block;
+        width: calc(100% - 726px);
+        min-width: 300px;
+        max-width: 590px;
+        h3 {
+          font-family: Avenir-Heavy;
+          font-size: 36px;
+          color: #333;
+          margin-bottom: 40px;
+          word-break: break-word;
+        }
+        p {
+          opacity: 0.56;
+          font-family: Avenir-Medium;
+          font-size: 18px;
+          color: #999;
+        }
+      }
+      @media screen and (max-width: 1106px){
+        .card {
+          display: inline-block;
+          width: 100%;
+          max-width: 100%;
+        }
+        img {
+          margin: 0;
+        }
+      }
+    }
+  }
+  /** introduction-section  **/
   .introduction-section {
     background: #F9FAFA;
     .introduction-body {
@@ -193,7 +256,7 @@ $animation5Height: 460px;
         top: 165px;
         width: 3px;
         height: 17px;
-        background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%); 
+        background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
       }
       .introduction {
         display: inline-block;
@@ -224,7 +287,7 @@ $animation5Height: 460px;
         .introduction {
           display: inline-block;
           width: 100%;
-          max-width: 100%; 
+          max-width: 100%;
         }
         img {
           margin: 0;
@@ -257,7 +320,7 @@ $animation5Height: 460px;
       transform: translateX(-50%);
       width: 3px;
       height: 17px;
-      background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%); 
+      background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
     }
     h3 {
       font-family: Avenir-Heavy;
@@ -330,7 +393,7 @@ $animation5Height: 460px;
         top: 48px;
         width: 3px;
         height: 17px;
-        background: #fff; 
+        background: #fff;
       }
       .left-part {
         display: inline-block;
@@ -416,7 +479,7 @@ $animation5Height: 460px;
       transform: translateX(-50%);
       width: 3px;
       height: 17px;
-      background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%); 
+      background-image: linear-gradient(0deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
     }
     h3 {
       font-family: Avenir-Heavy;

@@ -7,7 +7,11 @@ import Footer from '../../components/footer';
 import Language from '../../components/language';
 import Item from './featureItem';
 import homeConfig from '../../../site_config/home';
+import cardConfig from '../../../site_config/card'
 import './index.scss';
+import CardItem from './cardItem'
+import { Tabs } from 'antd';
+import 'antd/dist/antd.css';
 
 class Home extends Language {
 
@@ -32,11 +36,16 @@ class Home extends Language {
       }
     });
   }
-
+  callback(key) {
+    console.log(key);
+  }
   render() {
     const language = this.getLanguage();
     const dataSource = homeConfig[language];
+    const cardSource = cardConfig[language];
+    const { TabPane } = Tabs;
     const { headerType } = this.state;
+
     const headerLogo = headerType === 'primary' ? '/img/jcohy_white.png' : '/img/jcohy_colorful.png';
     return (
       <div className="home-page">
@@ -64,6 +73,23 @@ class Home extends Language {
           <div className="animation animation3" />
           <div className="animation animation4" />
           <div className="animation animation5" />
+        </section>
+        <section className="card-section">
+            <div className="card-body">
+              <Tabs onChange={this.callback} type="line">
+              {
+                cardSource.map((cardItem,i) => {
+                  return (
+                        <TabPane tab={cardItem.title} key={i}>
+                          <CardItem cardItem={cardItem} key={i}
+
+                          />
+                        </TabPane>
+                  )
+                })
+              }
+              </Tabs>
+            </div>
         </section>
         {/*<section className="introduction-section">*/}
         {/*  <div className="introduction-body">*/}
