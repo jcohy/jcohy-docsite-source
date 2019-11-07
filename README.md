@@ -5,3 +5,8 @@ description: Spring  Framework 中文文档
 ---
 
 # Spring  Framework 中文文档
+
+node -v
+V10.16.3
+npm -v
+6.9.0
