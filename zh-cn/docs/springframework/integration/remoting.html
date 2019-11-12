@@ -596,16 +596,16 @@
 <p>许多<code>RestTemplate</code>方法接受URI模板和URI模板变量，可以是<code>String</code>变量参数，也可以是<code>Map&lt;String,String&gt;</code>。</p>
 <p>以下示例使用<code>String</code>变量参数：</p>
 <pre><code class="language-java">String result = restTemplate.getForObject(
-        <span class="hljs-string">"http://example.com/hotels/{hotel}/bookings/{booking}"</span>, String.class, <span class="hljs-string">"42"</span>, <span class="hljs-string">"21"</span>);
+        "http://example.com/hotels/{hotel}/bookings/{booking}", String.class, "42", "21");
 </code></pre>
 <p>以下示例使用<code>Map&lt;String, String&gt;</code> :</p>
 <pre><code class="language-java">Map&lt;String, String&gt; vars = Collections.singletonMap(<span class="hljs-string">"hotel"</span>, <span class="hljs-string">"42"</span>);
 
 String result = restTemplate.getForObject(
-        <span class="hljs-string">"http://example.com/hotels/{hotel}/rooms/{hotel}"</span>, String.class, vars);
+        <span class="hljs-string">"http://example.com/hotels/{hotel}/rooms/{hotel}"</span>, String<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">vars</span>)</span>;
 </code></pre>
 <p>请记住，URI模板是自动编码的，如以下示例所示：</p>
-<pre><code class="language-java">restTemplate.getForObject(<span class="hljs-string">"http://example.com/hotel list"</span>, String.class);
+<pre><code class="language-java">restTemplate.getForObject(<span class="hljs-string">"http://example.com/hotel list"</span>, String<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 
 <span class="hljs-comment">// Results in request to "http://example.com/hotel%20list"</span>
 </code></pre>
@@ -621,7 +621,7 @@ RequestEntity&lt;Void&gt; requestEntity = RequestEntity.get(uri)
         .header((<span class="hljs-string">"MyRequestHeader"</span>, <span class="hljs-string">"MyValue"</span>)
         .build();
 
-ResponseEntity&lt;String&gt; response = template.exchange(requestEntity, String.class);
+ResponseEntity&lt;String&gt; response = template.exchange(requestEntity, String<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 
 String responseHeader = response.getHeaders().getFirst(<span class="hljs-string">"MyResponseHeader"</span>);
 String body = response.getBody();
@@ -690,12 +690,12 @@ String body = response.getBody();
 <h5><a href="#rest-template-jsonview"></a>Jackson JSON 视图</h5>
 <p>您可以指定<a href="http://wiki.fasterxml.com/JacksonJsonViews">Jackson JSON视图</a>以仅序列化对象属性的子集，如以下示例所示：</p>
 <pre><code class="language-java">MappingJacksonValue value = <span class="hljs-keyword">new</span> MappingJacksonValue(<span class="hljs-keyword">new</span> User(<span class="hljs-string">"eric"</span>, <span class="hljs-string">"7!jd#h23"</span>));
-value.setSerializationView(User.WithoutPasswordView.class);
+value.setSerializationView(User.WithoutPasswordView<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 
 RequestEntity&lt;MappingJacksonValue&gt; requestEntity =
     RequestEntity.post(<span class="hljs-keyword">new</span> URI(<span class="hljs-string">"http://example.com/user"</span>)).body(value);
 
-ResponseEntity&lt;String&gt; response = template.exchange(requestEntity, String.class);
+ResponseEntity&lt;String&gt; response = template.exchange(requestEntity, String<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 </code></pre>
 <p><a id="rest-template-multipart"></a></p>
 <h5><a href="#rest-template-multipart"></a>Multipart</h5>
@@ -710,7 +710,7 @@ ResponseEntity&lt;String&gt; response = template.exchange(requestEntity, String.
 <p>在大多数情况下，您不必为每个部件指定<code>Content-Type</code> 。内容类型是根据选择用于序列化它的 <code>HttpMessageConverter</code>自动确定的，或者在有资源的情况下，基于文件扩展名自动确定。 如有必要，您可以通过其中一个重载的构建器<code>part</code> 方法显式提供要用于每个部件的 <code>MediaType</code>。</p>
 <p>一旦<code>MultiValueMap</code>准备就绪，您可以将其传递给<code>RestTemplate</code>，如以下示例所示：</p>
 <pre><code class="language-java">    MultipartBodyBuilder builder = ...;
-    template.postForObject(<span class="hljs-string">"http://example.com/upload"</span>, builder.build(), Void.class);
+    template.postForObject(<span class="hljs-string">"http://example.com/upload"</span>, builder.build(), Void<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 </code></pre>
 <p>如果<code>MultiValueMap</code>包含至少一个非<code>String</code>值，该值也可以表示常规表单数据（即<code>application/x-www-form-urlencoded</code>），则无需将 <code>Content-Type</code>设置为<code>multipart/form-data</code>。 当您使用确保<code>HttpEntity</code> 包装器的 <code>MultipartBodyBuilder</code>时，情况总是如此。</p>
 <p><a id="rest-async-resttemplate"></a></p>

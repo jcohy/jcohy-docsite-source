@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="keywords: docs，jcohy-docs，spring,BeanFactory" />
+	<meta name="description" content="Spring  Framework 中文文档 》 BeanFactory" />
+	<!-- 网页标签标题 -->
+	<title>BeanFactory</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/Overview.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/open/index.html" target="_self">开源项目</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/resource/index.html" target="_self">资源</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概述</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/Overview.html" target="_self">概述</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Spring Framework</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/README.html" target="_self">说明</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/SUMMARY.html" target="_self">摘要</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/overview/overview.html" target="_self">概述</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>核心组件<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/system/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/springframework/core/overview.html" target="_self">全部章节一览</a></li><li class="menu-item menu-item-level-3"><a target="_self">IOC容器</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a target="_self">测试</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Spring  Framework 中文文档</h1>
+<h3><a href="#beans-beanfactory"></a>1.16.<code>BeanFactory</code></h3>
+<p><code>BeanFactory</code> API为Spring的IoC功能提供了基础。 它的特定契约主要用于与Spring的其他部分和相关的第三方框架集成其<code>DefaultListableBeanFactory</code>实现是更高级别<code>GenericApplicationContext</code>容器中的密钥委托。</p>
+<p><code>BeanFactory</code>和相关接口（例如<code>BeanFactoryAware</code>, <code>InitializingBean</code>，<code>DisposableBean</code>）是其他框架组件的重要集成点。 通过不需要任何注解或甚至反射，它们允许容器与其组件之间的非常有效的交互。 应用程序级bean可以使用相同的回调接口，但通常更喜欢通过注解或通过编程配置进行声明性依赖注入。</p>
+<p>请注意，核心<code>BeanFactory</code> API级别及其 <code>DefaultListableBeanFactory</code>实现不会对配置格式或要使用的任何组件注解做出假设。 所有这些风格都通过扩展（例如<code>XmlBeanDefinitionReader</code>和<code>AutowiredAnnotationBeanPostProcessor</code>）进行，并作为核心元数据表示在共享<code>BeanDefinition</code>对象上运行。 这是使Spring的容器如此灵活和可扩展的本质。</p>
+<p><a id="context-introduction-ctx-vs-beanfactory"></a></p>
+<h4><a href="#context-introduction-ctx-vs-beanfactory"></a>1.16.1. 选择<code>BeanFactory</code>还是<code>ApplicationContext</code>?</h4>
+<p>本节介绍<code>BeanFactory</code>和<code>ApplicationContext</code>容器级别之间的差异以及影响。</p>
+<p>您应该使用<code>ApplicationContext</code>，除非您有充分的理由不这样做，使用<code>GenericApplicationContext</code>及其子类<code>AnnotationConfigApplicationContext</code>作为自定义引导的常见实现。 这些是Spring用于所有常见目的的核心容器的主要入口点：加载配置文件，触发类路径扫描，以编程方式注册bean定义和带注解的类，以及（从5.0开始）注册功能bean定义。</p>
+<p>因为<code>ApplicationContext</code>包括<code>BeanFactory</code>的所有功能，和<code>BeanFactory</code>相比更值得推荐，除了一些特定的场景，例如在资源受限的设备上运行的内嵌的应用。 在<code>ApplicationContext</code>（例如<code>GenericApplicationContext</code>实现）中，按照约定（即通过bean名称或bean类型 - 特别是后处理器）检测到几种bean， 而普通的<code>DefaultListableBeanFactory</code>对任何特殊bean都是不可知的。</p>
+<p>对于许多扩展容器功能，例如注解处理和AOP代理， <a href="#beans-factory-extension-bpp"><code>BeanPostProcessor</code>扩展点是必不可少的。如果仅使用普通的<code>DefaultListableBeanFactory</code>，则默认情况下不会检测到并激活此类后置处理器。 这种情况可能令人困惑，因为您的bean配置实际上没有任何问题。 相反，在这种情况下，容器需要至少得多一些额外的处理。</a></p>
+<p>下表列出了<code>BeanFactory</code>和<code>ApplicationContext</code>接口和实现提供的功能。</p>
+<p>Table 9.特性矩阵</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>BeanFactory</code></th>
+<th><code>ApplicationContext</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bean Bean实例化/装配</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>集成的生命周期管理</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>自动注册 <code>BeanPostProcessor</code></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>自动注册 <code>BeanFactoryPostProcessor</code></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>便利的 <code>MessageSource</code> 访问 (国际化)</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>内置<code>ApplicationEvent</code> 发布机制</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>要使用 <code>DefaultListableBeanFactory</code>显式注册bean的后置处理器，您需要以编程方式调用 <code>addBeanPostProcessor</code>，如以下示例所示：</p>
+<pre><code class="language-java">DefaultListableBeanFactory factory = <span class="hljs-keyword">new</span> DefaultListableBeanFactory();
+<span class="hljs-comment">// populate the factory with bean definitions</span>
+
+<span class="hljs-comment">// now register any needed BeanPostProcessor instances</span>
+factory.addBeanPostProcessor(<span class="hljs-keyword">new</span> AutowiredAnnotationBeanPostProcessor());
+factory.addBeanPostProcessor(<span class="hljs-keyword">new</span> MyBeanPostProcessor());
+
+<span class="hljs-comment">// now start using the factory</span>
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">val</span> factory = DefaultListableBeanFactory()
+<span class="hljs-comment">// populate the factory with bean definitions</span>
+
+<span class="hljs-comment">// now register any needed BeanPostProcessor instances</span>
+factory.addBeanPostProcessor(AutowiredAnnotationBeanPostProcessor())
+factory.addBeanPostProcessor(MyBeanPostProcessor())
+
+<span class="hljs-comment">// now start using the factory</span>
+</code></pre>
+<p>要将<code>BeanFactoryPostProcessor</code> 应用于普通的<code>DefaultListableBeanFactory</code>，需要调用其<code>postProcessBeanFactory</code>方法，如以下示例所示：</p>
+<pre><code class="language-java">DefaultListableBeanFactory factory = <span class="hljs-keyword">new</span> DefaultListableBeanFactory();
+XmlBeanDefinitionReader reader = <span class="hljs-keyword">new</span> XmlBeanDefinitionReader(factory);
+reader.loadBeanDefinitions(<span class="hljs-keyword">new</span> FileSystemResource(<span class="hljs-string">"beans.xml"</span>));
+
+<span class="hljs-comment">// bring in some property values from a Properties file</span>
+PropertyPlaceholderConfigurer cfg = <span class="hljs-keyword">new</span> PropertyPlaceholderConfigurer();
+cfg.setLocation(<span class="hljs-keyword">new</span> FileSystemResource(<span class="hljs-string">"jdbc.properties"</span>));
+
+<span class="hljs-comment">// now actually do the replacement</span>
+cfg.postProcessBeanFactory(factory);
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">val</span> factory = DefaultListableBeanFactory()
+<span class="hljs-keyword">val</span> reader = XmlBeanDefinitionReader(factory)
+reader.loadBeanDefinitions(FileSystemResource(<span class="hljs-string">"beans.xml"</span>))
+
+<span class="hljs-comment">// bring in some property values from a Properties file</span>
+<span class="hljs-keyword">val</span> cfg = PropertySourcesPlaceholderConfigurer()
+cfg.setLocation(FileSystemResource(<span class="hljs-string">"jdbc.properties"</span>))
+
+<span class="hljs-comment">// now actually do the replacement</span>
+cfg.postProcessBeanFactory(factory)
+</code></pre>
+<p>在这两种情况下，显示注册步骤都不方便，这就是为什么各种<code>ApplicationContext</code>变体优先于Spring支持的应用程序中的普通<code>DefaultListableBeanFactory</code>， 尤其是在典型企业设置中依赖<code>BeanFactoryPostProcessor</code> 和 <code>BeanPostProcessor</code>实例来扩展容器功能时。</p>
+<p><code>AnnotationConfigApplicationContext</code>具有注册的所有常见注解后置处理器，并且可以通过配置注解（例如<code>@EnableTransactionManagement</code>）在封面下引入其他处理器。 在Spring的基于注解的配置模型的抽象级别，bean的后置处理器的概念变成仅仅是内部容器细节。</p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/springframework/demo.html" target="_self">Spring Framework</a></dd><dd><a href="/zh-cn/docs/springboot/demo.html" target="_self">SpringBoot</a></dd><dd><a href="/zh-cn/docs/microservices/demo.html" target="_self">Microservices</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/open/index.html" target="_self">开源项目</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2019 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

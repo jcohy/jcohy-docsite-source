@@ -20,7 +20,7 @@ const Item = (props) => {
               }
                   return (<Col span={8} >
                       <Card
-                          style={{ width: 300 ,marginBottom:'20px'}}
+                          style={{ width: 300 ,marginBottom:'20px',marginLeft:'20px'}}
                           cover={
                               <img
                                   alt={itemList.img.alt}

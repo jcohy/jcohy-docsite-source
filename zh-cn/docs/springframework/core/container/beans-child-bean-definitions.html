@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="keywords: docs，jcohy-docs，spring,bean定义的继承" />
+	<meta name="description" content="Spring  Framework 中文文档 》 bean定义的继承" />
+	<!-- 网页标签标题 -->
+	<title>bean定义的继承</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/Overview.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/open/index.html" target="_self">开源项目</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/resource/index.html" target="_self">资源</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概述</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/Overview.html" target="_self">概述</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Spring Framework</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/README.html" target="_self">说明</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/SUMMARY.html" target="_self">摘要</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/overview/overview.html" target="_self">概述</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>核心组件<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/system/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/springframework/core/overview.html" target="_self">全部章节一览</a></li><li class="menu-item menu-item-level-3"><a target="_self">IOC容器</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a target="_self">测试</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Spring  Framework 中文文档</h1>
+<h3><a href="#beans-child-bean-definitions"></a>1.7. bean定义的继承</h3>
+<p>bean定义可以包含许多配置信息，包括构造函数参数，属性值和特定于容器的信息，例如初始化方法，静态工厂方法名称等。 子bean定义从父定义继承配置数据。 子定义可以覆盖某些值或根据需要添加其他值。 使用父子bean定义可以节省很多配置输入。 实际上，这是一种模板形式。</p>
+<p>如果开发者编程式地使用<code>ApplicationContext</code>接口，子bean定义可以通过<code>ChildBeanDefinition</code>类来表示。很多开发者不会使用这个级别的方法， 而是会在类似于<code>ClassPathXmlApplicationContext</code>中声明式地配置bean定义。当你使用基于XML的配置时，你可以在子bean中使用parent属性，该属性的值用来识别父bean。 以下示例显示了如何执行此操作：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"inheritedTestBean"</span> <span class="hljs-attr">abstract</span>=<span class="hljs-string">"true"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.beans.TestBean"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"parent"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"age"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"inheritsWithDifferentClass"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.beans.DerivedTestBean"</span>
+        <span class="hljs-attr">parent</span>=<span class="hljs-string">"inheritedTestBean"</span> <span class="hljs-attr">init-method</span>=<span class="hljs-string">"initialize"</span>&gt;</span>  (1)
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"override"</span>/&gt;</span>
+    <span class="hljs-comment">&lt;!-- the age property value of 1 will be inherited from parent --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><strong>1</strong>。请注意<code>parent</code>属性。</p>
+<p>子bean如果没有指定class，它将使用父bean定义的class。但也可以进行重写。在后一种情况中，子bean必须与父bean兼容，也就是说，它必须接受父bean的属性值。</p>
+<p>子bean定义从父类继承作用域、构造器参数、属性值和可重写的方法，除此之外，还可以增加新值。开发者指定任何作用域、初始化方法、销毁方法和/或者静态工厂方法设置都会覆盖相应的父bean设置。</p>
+<p>剩下的设置会取子bean定义：依赖、自动注入模式、依赖检查、单例、延迟加载。</p>
+<p>前面的示例通过使用<code>abstract</code>属性将父bean定义显式标记为<code>abstract</code>。 如果父定义未指定类，则需要将父bean定义显式标记为<code>abstract</code>，如以下示例所示：</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"inheritedTestBeanWithoutClass"</span> <span class="hljs-attr">abstract</span>=<span class="hljs-string">"true"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"parent"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"age"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"inheritsWithClass"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.beans.DerivedTestBean"</span>
+        <span class="hljs-attr">parent</span>=<span class="hljs-string">"inheritedTestBeanWithoutClass"</span> <span class="hljs-attr">init-method</span>=<span class="hljs-string">"initialize"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"override"</span>/&gt;</span>
+    <span class="hljs-comment">&lt;!-- age will inherit the value of 1 from the parent bean definition--&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p>父bean不能单独实例化，因为它不完整，并且也明确标记为<code>abstract</code>。当定义是<code>abstract</code>的时，它只能用作纯模板bean定义，用作子定义的父定义。如果试图单独地使用声明了<code>abstract</code>的父bean， 通过引用它作为另一个bean的ref属性，或者使用父bean id进行显式的<code>getBean()</code>调用，都将返回一个错误。同样，容器内部的 <code>preInstantiateSingletons()</code>方法也会忽略定义为<code>abstract</code>的bean。</p>
+<p><code>ApplicationContext</code> 默认会预先实例化所有的单例bean。因此，如果开发者打算把(父）bean定义仅仅作为模板来使用，同时为它指定了class属性， 那么必须确保设置_abstract_的属性值为true。否则，应用程序上下文会(尝试）预实例化这个<code>abstract</code> bean。</p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/springframework/demo.html" target="_self">Spring Framework</a></dd><dd><a href="/zh-cn/docs/springboot/demo.html" target="_self">SpringBoot</a></dd><dd><a href="/zh-cn/docs/microservices/demo.html" target="_self">Microservices</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/open/index.html" target="_self">开源项目</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2019 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

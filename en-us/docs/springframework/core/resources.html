@@ -246,7 +246,7 @@ daos.xml
 MessengerService.class</p>
 <p>以下示例显示如何实例化由名为<code>services.xml</code>和<code>daos.xml</code>（位于类路径中）的文件中定义的bean组成的<code>ClassPathXmlApplicationContext</code>实例：</p>
 <pre><code class="language-java">ApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(
-    <span class="hljs-keyword">new</span> String[] {<span class="hljs-string">"services.xml"</span>, <span class="hljs-string">"daos.xml"</span>}, MessengerService.class);
+    <span class="hljs-keyword">new</span> String[] {<span class="hljs-string">"services.xml"</span>, <span class="hljs-string">"daos.xml"</span>}, MessengerService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 </code></pre>
 <p>有关各种构造函数的详细信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/jca/context/SpringContextResourceAdapter.html"><code>ClassPathXmlApplicationContext</code></a>javadoc。</p>
 <p><a id="resources-app-ctx-wildcards-in-resource-paths"></a></p>

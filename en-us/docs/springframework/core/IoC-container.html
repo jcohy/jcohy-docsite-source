@@ -176,7 +176,7 @@
 ApplicationContext context = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">"services.xml"</span>, <span class="hljs-string">"daos.xml"</span>);
 
 <span class="hljs-comment">// retrieve configured instance</span>
-PetStoreService service = context.getBean(<span class="hljs-string">"petStore"</span>, PetStoreService.class);
+PetStoreService service = context.getBean(<span class="hljs-string">"petStore"</span>, PetStoreService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 
 <span class="hljs-comment">// use configured instance</span>
 List&lt;String&gt; userList = service.getUsernameList();
@@ -1072,7 +1072,7 @@ support=support@example.co.uk
 
     <span class="hljs-function"><span class="hljs-keyword">protected</span> Command <span class="hljs-title">createCommand</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-comment">// notice the Spring API dependency!</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.applicationContext.getBean(<span class="hljs-string">"command"</span>, Command.class);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.applicationContext.getBean(<span class="hljs-string">"command"</span>, Command<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     }
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setApplicationContext</span><span class="hljs-params">(
@@ -2619,8 +2619,8 @@ dataSource.url=jdbc:mysql:mydb
      * Alias for {<span class="hljs-doctag">@link</span> Scope#proxyMode}.
      * &lt;p&gt;Defaults to {<span class="hljs-doctag">@link</span> ScopedProxyMode#TARGET_CLASS}.
      */</span>
-    <span class="hljs-meta">@AliasFor</span>(annotation = Scope.class)
-    <span class="hljs-function">ScopedProxyMode <span class="hljs-title">proxyMode</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ScopedProxyMode.TARGET_CLASS</span>;
+    <span class="hljs-meta">@AliasFor</span>(annotation = Scope<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">ScopedProxyMode</span> <span class="hljs-title">proxyMode</span>() <span class="hljs-title">default</span> <span class="hljs-title">ScopedProxyMode</span>.<span class="hljs-title">TARGET_CLASS</span></span>;
 
 }
 </code></pre>
@@ -2729,8 +2729,8 @@ dataSource.url=jdbc:mysql:mydb
 <pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
 <span class="hljs-meta">@ComponentScan</span>(basePackages = <span class="hljs-string">"org.example"</span>,
         includeFilters = <span class="hljs-meta">@Filter</span>(type = FilterType.REGEX, pattern = <span class="hljs-string">".*Stub.*Repository"</span>),
-        excludeFilters = <span class="hljs-meta">@Filter</span>(Repository.class))
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
+        excludeFilters = <span class="hljs-meta">@Filter</span>(Repository<span class="hljs-class">.<span class="hljs-keyword">class</span>))
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">AppConfig</span> </span>{
     ...
 }
 </code></pre>
@@ -3165,15 +3165,15 @@ public class AppConfig {
 <h5><a href="#beans-java-instantiating-container-contstructor"></a>简单结构</h5>
 <p>与实例化<code>ClassPathXmlApplicationContext</code>时Spring XML文件用作输入的方式大致相同， 在实例化<code>AnnotationConfigApplicationContext</code>时可以使用<code>@Configuration</code> 类作为输入。 这允许完全无XML使用Spring容器，如以下示例所示：</p>
 <pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(AppConfig.class);
-    MyService myService = ctx.getBean(MyService.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(AppConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    MyService myService = ctx.getBean(MyService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     myService.doStuff();
 }
 </code></pre>
 <p>如前所述，<code>AnnotationConfigApplicationContext</code>不仅限于使用<code>@Configuration</code>类。 任何<code>@Component</code>或JSR-330带注解的类都可以作为输入提供给构造函数，如以下示例所示：</p>
 <pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(MyServiceImpl.class, Dependency1.class, Dependency2.class);
-    MyService myService = ctx.getBean(MyService.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(MyServiceImpl<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">Dependency1</span>.<span class="hljs-title">class</span>, <span class="hljs-title">Dependency2</span>.<span class="hljs-title">class</span>)</span>;
+    MyService myService = ctx.getBean(MyService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     myService.doStuff();
 }
 </code></pre>
@@ -3183,10 +3183,10 @@ public class AppConfig {
 <p><code>AnnotationConfigApplicationContext</code>可以通过无参构造函数实例化，然后调用<code>register()</code> 方法进行配置。 这种方法在以编程的方式构建 <code>AnnotationConfigApplicationContext</code>时特别有用。下列示例显示了如何执行此操作</p>
 <pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
     AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext();
-    ctx.register(AppConfig.class, OtherConfig.class);
-    ctx.register(AdditionalConfig.class);
+    ctx.register(AppConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">OtherConfig</span>.<span class="hljs-title">class</span>)</span>;
+    ctx.register(AdditionalConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     ctx.refresh();
-    MyService myService = ctx.getBean(MyService.class);
+    MyService myService = ctx.getBean(MyService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     myService.doStuff();
 }
 </code></pre>
@@ -3210,7 +3210,7 @@ public class AppConfig {
     AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext();
     ctx.scan(<span class="hljs-string">"com.acme"</span>);
     ctx.refresh();
-    MyService myService = ctx.getBean(MyService.class);
+    MyService myService = ctx.getBean(MyService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 }
 </code></pre>
 <p>请记住<code>@Configuration</code>类是使用<code>@Component</code>进行<a href="#beans-meta-annotations">元注解</a>的，因此它们是组件扫描的候选者。 在前面的示例中， 假设AppConfig在com.acme包（或下面的任何包）中声明，它在<code>scan()</code>调用期间被拾取。 在<code>refresh()</code>之后，它的所有<code>@Bean</code>方法都被处理并在容器中注册为bean定义。</p>
@@ -3552,8 +3552,8 @@ public class AppConfig {
 }
 
 <span class="hljs-meta">@Configuration</span>
-<span class="hljs-meta">@Import</span>(ConfigA.class)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConfigB</span> </span>{
+<span class="hljs-meta">@Import</span>(ConfigA<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">ConfigB</span> </span>{
 
     <span class="hljs-meta">@Bean</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> B <span class="hljs-title">b</span><span class="hljs-params">()</span> </span>{
@@ -3563,11 +3563,11 @@ public class AppConfig {
 </code></pre>
 <p>现在，在实例化上下文时，不需要同时指定<code>ConfigA.class</code>和 <code>ConfigB.class</code>，只需要显式提供<code>ConfigB</code>，如下例所示：</p>
 <pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(ConfigB.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(ConfigB<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 
     <span class="hljs-comment">// now both beans A and B will be available...</span>
-    A a = ctx.getBean(A.class);
-    B b = ctx.getBean(B.class);
+    A a = ctx.getBean(A<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    B b = ctx.getBean(B<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 }
 </code></pre>
 <p>这种方法简化了容器实例化，因为只需要处理一个类，而不是要求您在构造期间记住可能大量的<code>@Configuration</code>类。</p>
@@ -3595,8 +3595,8 @@ public class AppConfig {
 }
 
 <span class="hljs-meta">@Configuration</span>
-<span class="hljs-meta">@Import</span>({ServiceConfig.class, RepositoryConfig.class})
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
+<span class="hljs-meta">@Import</span>({ServiceConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">RepositoryConfig</span>.<span class="hljs-title">class</span>})
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
 
     <span class="hljs-meta">@Bean</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>{
@@ -3605,9 +3605,9 @@ public class AppConfig {
 }
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     <span class="hljs-comment">// everything wires up across configuration classes...</span>
-    TransferService transferService = ctx.getBean(TransferService.class);
+    TransferService transferService = ctx.getBean(TransferService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     transferService.transfer(<span class="hljs-number">100.00</span>, <span class="hljs-string">"A123"</span>, <span class="hljs-string">"C456"</span>);
 }
 </code></pre>
@@ -3644,8 +3644,8 @@ public class AppConfig {
 }
 
 <span class="hljs-meta">@Configuration</span>
-<span class="hljs-meta">@Import</span>({ServiceConfig.class, RepositoryConfig.class})
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
+<span class="hljs-meta">@Import</span>({ServiceConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">RepositoryConfig</span>.<span class="hljs-title">class</span>})
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
 
     <span class="hljs-meta">@Bean</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>{
@@ -3654,9 +3654,9 @@ public class AppConfig {
 }
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     <span class="hljs-comment">// everything wires up across configuration classes...</span>
-    TransferService transferService = ctx.getBean(TransferService.class);
+    TransferService transferService = ctx.getBean(TransferService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     transferService.transfer(<span class="hljs-number">100.00</span>, <span class="hljs-string">"A123"</span>, <span class="hljs-string">"C456"</span>);
 }
 </code></pre>
@@ -3707,8 +3707,8 @@ public class AppConfig {
 }
 
 <span class="hljs-meta">@Configuration</span>
-<span class="hljs-meta">@Import</span>({ServiceConfig.class, DefaultRepositoryConfig.class})  <span class="hljs-comment">// import the concrete config!</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
+<span class="hljs-meta">@Import</span>({ServiceConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">DefaultRepositoryConfig</span>.<span class="hljs-title">class</span>})  // <span class="hljs-title">import</span> <span class="hljs-title">the</span> <span class="hljs-title">concrete</span> <span class="hljs-title">config</span>!
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">SystemTestConfig</span> </span>{
 
     <span class="hljs-meta">@Bean</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>{
@@ -3718,8 +3718,8 @@ public class AppConfig {
 }
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig.class);
-    TransferService transferService = ctx.getBean(TransferService.class);
+    ApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(SystemTestConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    TransferService transferService = ctx.getBean(TransferService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     transferService.transfer(<span class="hljs-number">100.00</span>, <span class="hljs-string">"A123"</span>, <span class="hljs-string">"C456"</span>);
 }
 </code></pre>
@@ -3734,7 +3734,7 @@ public class AppConfig {
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">matches</span><span class="hljs-params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> </span>{
     <span class="hljs-keyword">if</span> (context.getEnvironment() != <span class="hljs-keyword">null</span>) {
         <span class="hljs-comment">// Read the @Profile annotation attributes</span>
-        MultiValueMap&lt;String, Object&gt; attrs = metadata.getAllAnnotationAttributes(Profile.class.getName());
+        MultiValueMap&lt;String, Object&gt; attrs = metadata.getAllAnnotationAttributes(Profile<span class="hljs-class">.<span class="hljs-keyword">class</span>.<span class="hljs-title">getName</span>())</span>;
         <span class="hljs-keyword">if</span> (attrs != <span class="hljs-keyword">null</span>) {
             <span class="hljs-keyword">for</span> (Object value : attrs.get(<span class="hljs-string">"value"</span>)) {
                 <span class="hljs-keyword">if</span> (context.getEnvironment().acceptsProfiles(((String[]) value))) {
@@ -4037,7 +4037,7 @@ jdbc.password=
 <p>激活配置文件可以通过多种方式完成，但最直接的方法是以编程方式对可通过<code>ApplicationContext</code>提供的<code>Environment</code> API进行操作。 以下示例显示了如何执行此操作：</p>
 <pre><code class="language-java">AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext();
 ctx.getEnvironment().setActiveProfiles(<span class="hljs-string">"development"</span>);
-ctx.register(SomeConfig.class, StandaloneDataConfig.class, JndiDataConfig.class);
+ctx.register(SomeConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">StandaloneDataConfig</span>.<span class="hljs-title">class</span>, <span class="hljs-title">JndiDataConfig</span>.<span class="hljs-title">class</span>)</span>;
 ctx.refresh();
 </code></pre>
 <p>此外,配置文件也可以通过<code>spring.profiles.active</code>属性声明式性地激活,可以通过系统环境变量，JVM系统属性，<code>web.xml</code>中的Servlet上下文参数指定， 甚至作为JNDI中的一个条目设置（<a href="#beans-property-source-abstraction"><code>PropertySource</code> 抽象</a>）。在集成测试中，可以通过 <code>spring-test</code>模块中的<code>@ActiveProfiles</code>注解来声明活动配置文件(参见使用<a href="https://github.com/DocsHome/spring-docs/blob/master/pages/test/testing.mdl#testcontext-ctx-management-env-profiles">环境配置文件的上下文配置</a>)</p>

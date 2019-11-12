@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="keywords: docs，jcohy-docs，spring,使用JSR 330标准注解" />
+	<meta name="description" content="Spring  Framework 中文文档 》 使用JSR 330标准注解" />
+	<!-- 网页标签标题 -->
+	<title>使用JSR 330标准注解</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/Overview.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/open/index.html" target="_self">开源项目</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/resource/index.html" target="_self">资源</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概述</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/Overview.html" target="_self">概述</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Spring Framework</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/README.html" target="_self">说明</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/SUMMARY.html" target="_self">摘要</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/overview/overview.html" target="_self">概述</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>核心组件<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/system/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/springframework/core/overview.html" target="_self">全部章节一览</a></li><li class="menu-item menu-item-level-3"><a target="_self">IOC容器</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a target="_self">测试</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Spring  Framework 中文文档</h1>
+<h3><a href="#beans-standard-annotations"></a>1.11. 使用JSR 330标准注解</h3>
+<p>从Spring 3.0开始，Spring提供对JSR-330标准注解（依赖注入）的支持。 这些注解的扫描方式与Spring注解相同。 要使用它们，您需要在类路径中包含相关的jar。</p>
+<p>如果使用Maven工具，那么<code>@javax.inject.Inject</code>可以在Maven中央仓库中找到( <a href="https://repo1.maven.org/maven2/javax/inject/javax.inject/1/">https://repo1.maven.org/maven2/javax/inject/javax.inject/1/</a>). 您可以将以下依赖项添加到文件pom.xml：:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.inject<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.inject<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<p><a id="beans-inject-named"></a></p>
+<h4><a href="#beans-inject-named"></a>1.11.1. 使用<code>@Inject</code> 和 <code>@Named</code>注解实现依赖注入</h4>
+<p><code>@javax.inject.Inject</code>可以使用以下的方式来替代<code>@Autowired</code>注解:</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> javax.inject.Inject;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">listMovies</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder.findMovies(...);
+        ...
+    }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-keyword">import</span> javax.inject.Inject
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">listMovies</span><span class="hljs-params">()</span></span> {
+        movieFinder.findMovies(...)
+        <span class="hljs-comment">// ...</span>
+    }
+}
+</code></pre>
+<p>与 <code>@Autowired</code>一样，您可以在字段，方法和构造函数参数级别使用<code>@Inject</code>注解。此外，还可以将注入点声明为<code>Provider</code>。 它允许按需访问作用域较小的bean或通过<code>Provider.get()</code>调用对其他bean进行延迟访问。以下示例提供了前面示例的变体：</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Provider;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> Provider&lt;MovieFinder&gt; movieFinder;
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(Provider&lt;MovieFinder&gt; movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">listMovies</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder.get().findMovies(...);
+        ...
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">import</span> javax.inject.Inject
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">listMovies</span><span class="hljs-params">()</span></span> {
+        movieFinder.findMovies(...)
+        <span class="hljs-comment">// ...</span>
+    }
+}
+</code></pre>
+<p>如果想要为注入的依赖项使用限定名称，则应该使用<code>@Named</code>注解。如下所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(@Named(<span class="hljs-string">"main"</span>)</span> MovieFinder movieFinder) </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-keyword">import</span> javax.inject.Inject
+<span class="hljs-keyword">import</span> javax.inject.Named
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(<span class="hljs-meta">@Named(<span class="hljs-meta-string">"main"</span>)</span> movieFinder: <span class="hljs-type">MovieFinder</span>)</span></span> {
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>与<code>@Autowired</code>一样，<code>@Inject</code> 也可以与<code>java.util.Optional</code>或<code>@Nullable</code>一起使用。 这在这里用更适用，因为<code>@Inject</code>没有<code>required</code>的属性。 以下一对示例显示了如何使用<code>@Inject</code>和<code>@Nullable</code>:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(Optional&lt;MovieFinder&gt; movieFinder)</span> </span>{
+        ...
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(@Nullable MovieFinder movieFinder)</span> </span>{
+        ...
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-keyword">public</span> void setMovieFinder(Optional&lt;MovieFinder&gt; movieFinder) {
+        <span class="hljs-comment">// ...</span>
+    }
+}
+</code></pre>
+<p><a id="beans-named"></a></p>
+<h4><a href="#beans-named"></a>1.11.2. <code>@Named</code> 和 <code>@ManagedBean</code>注解: 标准与 <code>@Component</code> 注解相同</h4>
+<p><code>@javax.inject.Named</code> 或 <code>javax.annotation.ManagedBean</code>可以使用下面的方式来替代<code>@Component</code>注解：</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+
+<span class="hljs-meta">@Named</span>(<span class="hljs-string">"movieListener"</span>)  <span class="hljs-comment">// @ManagedBean("movieListener") could be used as well</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">import</span> javax.inject.Inject
+<span class="hljs-keyword">import</span> javax.inject.Named
+
+<span class="hljs-meta">@Named(<span class="hljs-meta-string">"movieListener"</span>)</span>  <span class="hljs-comment">// @ManagedBean("movieListener") could be used as well</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>在不指定组件名称的情况下使用<code>@Component</code>是很常见的。 <code>@Named</code>可以以类似的方式使用，如下例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+
+<span class="hljs-meta">@Named</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">import</span> javax.inject.Inject
+<span class="hljs-keyword">import</span> javax.inject.Named
+
+<span class="hljs-meta">@Named</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Inject</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>当使用<code>@Named</code> 或 <code>@ManagedBean</code>时，可以与Spring注解完全相同的方式使用component-scanning组件扫描。 如以下示例所示:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@ComponentScan</span>(basePackages = <span class="hljs-string">"org.example"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span>  </span>{
+    ...
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@ComponentScan(basePackages = [<span class="hljs-meta-string">"org.example"</span>])</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span>  </span>{
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>与<code>@Component</code>相反，JSR-330 <code>@Named</code> 和 JSR-250 <code>ManagedBean</code>注解不可组合。 请使用Spring的原型模型（stereotype mode)来构建自定义组件注解。</p>
+<p><a id="beans-standard-annotations-limitations"></a></p>
+<h4><a href="#beans-standard-annotations-limitations"></a>1.11.3. 使用 JSR-330标准注解的限制</h4>
+<p>使用标准注解时，需要知道哪些重要功能是不可用的。如下表所示：</p>
+<p>Table 6. Spring的组件模型元素 vs JSR-330 变量</p>
+<table>
+<thead>
+<tr>
+<th>Spring</th>
+<th>javax.inject.*</th>
+<th>javax.inject restrictions / comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Autowired</td>
+<td>@Inject</td>
+<td><code>@Inject</code> 没有'required'属性。 可以与Java 8的 <code>Optional</code>一起使用。</td>
+</tr>
+<tr>
+<td>@Component</td>
+<td>@Named / @ManagedBean</td>
+<td>JSR-330不提供可组合模型，只是一种识别命名组件的方法。</td>
+</tr>
+<tr>
+<td>@Scope(&quot;singleton&quot;)</td>
+<td>@Singleton</td>
+<td>JSR-330的默认作用域就像Spring的<code>prototype</code>。 但是，为了使其与Spring的一般默认值保持一致，默认情况下，Spring容器中声明的JSR-330 bean是一个 <code>singleton</code>。 为了使用除 <code>singleton</code>之外的范围，您应该使用Spring的<code>@Scope</code>注解。 <code>javax.inject</code>还提供了<a href="https://download.oracle.com/javaee/6/api/javax/inject/Scope.html">@Scope</a>注解。 然而，这个仅用于创建自己的注解。</td>
+</tr>
+<tr>
+<td>@Qualifier</td>
+<td>@Qualifier / @Named</td>
+<td><code>javax.inject.Qualifier</code> 只是用于构建自定义限定符的元注解。 可以通过<code>javax.inject.Named</code>创建与Spring中<code>@Qualifier</code>一样的限定符。</td>
+</tr>
+<tr>
+<td>@Value</td>
+<td>-</td>
+<td>无</td>
+</tr>
+<tr>
+<td>@Required</td>
+<td>-</td>
+<td>无</td>
+</tr>
+<tr>
+<td>@Lazy</td>
+<td>-</td>
+<td>无</td>
+</tr>
+<tr>
+<td>ObjectFactory</td>
+<td>Provider</td>
+<td><code>javax.inject.Provider</code> avax.inject.Provider是Spring的<code>ObjectFactory</code>的直接替代品， 仅仅使用简短的<code>get()</code>方法即可。 它也可以与Spring的<code>@Autowired</code>结合使用，也可以与非注解的构造函数和setter方法结合使用。</td>
+</tr>
+</tbody>
+</table>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/springframework/demo.html" target="_self">Spring Framework</a></dd><dd><a href="/zh-cn/docs/springboot/demo.html" target="_self">SpringBoot</a></dd><dd><a href="/zh-cn/docs/microservices/demo.html" target="_self">Microservices</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/open/index.html" target="_self">开源项目</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2019 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

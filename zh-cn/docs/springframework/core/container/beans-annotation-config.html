@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="keywords: docs，jcohy-docs，spring,基于注解的容器配置" />
+	<meta name="description" content="Spring  Framework 中文文档 》 基于注解的容器配置" />
+	<!-- 网页标签标题 -->
+	<title>基于注解的容器配置</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/Overview.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/open/index.html" target="_self">开源项目</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/resource/index.html" target="_self">资源</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概述</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/Overview.html" target="_self">概述</a></li></ul></li><li class="menu-item menu-item-level-1"><span>Spring Framework</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/README.html" target="_self">说明</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/SUMMARY.html" target="_self">摘要</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/springframework/overview/overview.html" target="_self">概述</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>核心组件<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/system/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/springframework/core/overview.html" target="_self">全部章节一览</a></li><li class="menu-item menu-item-level-3"><a target="_self">IOC容器</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a target="_self">测试</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Spring  Framework 中文文档</h1>
+<h3><a href="#beans-annotation-config"></a>1.9. 基于注解的容器配置</h3>
+<p>注解是否比配置Spring的XML更好?</p>
+<p>在引入基于注解的配置之后,引发了这种方法是否比XML更优秀的问题.简短的答案是得看情况,每种方法都有其优缺点。通常由开发人员决定使用更适合他们的策略。 首先看看两种定义方式,注解在它们的声明中提供了很多上下文信息，使得配置变得更短、更简洁；但是，XML擅长于在不接触源码或者无需反编译的情况下装配组件，一些开发人员更喜欢在源码上使用注解配置。 而另一些人认为注解类不再是POJO，同时认为注解配置会很分散，最终难以控制。</p>
+<p>无论选择如何，Spring都可以兼顾两种风格，甚至可以将它们混合在一起。Spring通过其<a href="#beans-java">JavaConfig</a> 选项，允许注解以无侵入的方式使用，即无需接触目标组件源代码。 而且在工具应用方面， <a href="https://spring.io/tools/sts">Spring Tool Suite</a>支持所有配置形式。</p>
+<p>XML设置的替代方法是基于注解的配置，它依赖于字节码元数据来连接组件进而替代XML声明。开发人员通过使用相关类、方法或字段声明上的注解来将配置移动到组件类本身。而不是使用XML bean来配置。 如示例中所述，<a href="#beans-factory-extension-bpp-examples-rabpp"><code>RequiredAnnotationBeanPostProcessor</code></a>,将<code>BeanPostProcessor</code> 与注解混合使用是扩展Spring IoC容器的常用方法。 例如，Spring 2.0引入了使用<a href="#beans-required-annotation"><code>@Required</code></a>注解强制属性必须在配置的时候被填充， Spring 2.5使用同样的方式来驱动Spring的依赖注入。本质上，<code>@Autowired</code>注解提供的功能与<a href="#beans-factory-autowire">自动装配协作</a>中描述的相同，但具有更细粒度的控制和更广泛的适用性。 Spring 2.5还增加了对JSR-250注解的支持，例如<code>@PostConstruct</code>和<code>@PreDestroy</code>。 Spring 3.0增加了对<code>javax.inject</code>包中包含的JSR-330（Java的依赖注入）注解的支持， 例如<code>@Inject</code>和<code>@Named</code>。有关这些注解的详细信息，请参阅<a href="#beans-standard-annotations">相关章节</a>。</p>
+<p>注解注入在XML注入之前执行，因此同时使用这两种方式进行注入时，XML配置会覆盖注解配置。</p>
+<p>与之前一样，你可以将它们注册为单独的bean定义，但也可以通过在基于XML的Spring配置中包含以下标记来隐式注册它们（请注意包含<code>context</code>命名空间）：</p>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">"http://www.springframework.org/schema/context"</span>
+    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">context:annotation-config</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</code></pre>
+<p>（隐式注册的后处理器包括 <a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/annotation/AutowiredAnnotationBeanPostProcessor.html"><code>AutowiredAnnotationBeanPostProcessor</code></a>, <a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/context/annotation/CommonAnnotationBeanPostProcessor.html"><code>CommonAnnotationBeanPostProcessor</code></a>, <a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/orm/jpa/support/PersistenceAnnotationBeanPostProcessor.html"><code>PersistenceAnnotationBeanPostProcessor</code></a>, 和前面提到的 <a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/annotation/RequiredAnnotationBeanPostProcessor.html"><code>RequiredAnnotationBeanPostProcessor</code></a>.)</p>
+<p><code>&lt;context:annotation-config/&gt;</code>只有在定义bean的相同应用程序上下文中查找bean上的注解。 这意味着，如果将 <code>&lt;context:annotation-config/&gt;</code> 放在<code>DispatcherServlet</code>的<code>WebApplicationContext</code>中， 它只检查控制器中的<code>@Autowired</code> bean，而不检查您的服务。 有关更多信息，请参阅 <a href="https://github.com/DocsHome/spring-docs/blob/master/pages/web/web.md#mvc-servlet">DispatcherServlet</a>。</p>
+<p><a id="beans-required-annotation"></a></p>
+<h4><a href="#beans-required-annotation"></a>1.9.1. @Required</h4>
+<p><code>@Required</code>注解适用于bean属性setter方法，如下例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Required</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Required</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>此注解仅表示受影响的bean属性必须在配置时通过bean定义中的显式赋值或自动注入值。如果受影响的bean属性尚未指定值，容器将抛出异常；这导致及时的、明确的失败，避免在运行后再抛出<code>NullPointerException</code>或类似的异常。 在这里，建议开发者将断言放入bean类本身，例如放入init方法。这样做强制执行那些必需的引用和值，即使是在容器外使用这个类。</p>
+<p>从Spring Framework 5.1开始，@ Required注解已正式弃用，转而使用构造函数注入进行必需的属性设置（或用自定义InitializingBean.afterPropertiesSet（）的实现bean属性setter方法）。</p>
+<p><a id="beans-autowired-annotation"></a></p>
+<h4><a href="#beans-autowired-annotation"></a>1.9.2. <code>@Autowired</code></h4>
+<p>可以使用JSR 330的 <code>@Inject</code>注解代替本节中包含的示例中的Spring的<code>@Autowired</code>注解。 有关详细信息，<a href="#beans-standard-annotations">请参见此处</a></p>
+<p>开发者可以在构造器上使用<code>@Autowired</code>注解:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> CustomerPreferenceDao customerPreferenceDao;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(CustomerPreferenceDao customerPreferenceDao)</span> </span>{
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> <span class="hljs-meta">@Autowired</span> <span class="hljs-keyword">constructor</span></span>(
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> customerPreferenceDao: CustomerPreferenceDao)
+
+</code></pre>
+<p>从Spring Framework 4.3开始，如果目标bean仅定义一个构造函数，则不再需要<code>@Autowired</code>构造函数。如果有多个构造函数可用，则至少有一个必须注解<code>@Autowired</code>以让容器知道它使用的是哪个</p>
+<p>您还可以将<code>@Autowired</code>注解应用于“传统”setter方法，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+    <span class="hljs-comment">// ...</span>
+
+}
+</code></pre>
+<p>您还可以将注解应用于具有任意名称和多个参数的方法，如以下示例所示：:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieCatalog movieCatalog;
+
+    <span class="hljs-keyword">private</span> CustomerPreferenceDao customerPreferenceDao;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">prepare</span><span class="hljs-params">(MovieCatalog movieCatalog,
+            CustomerPreferenceDao customerPreferenceDao)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieCatalog = movieCatalog;
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalog: MovieCatalog
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> customerPreferenceDao: CustomerPreferenceDao
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">prepare</span><span class="hljs-params">(movieCatalog: <span class="hljs-type">MovieCatalog</span>,
+                customerPreferenceDao: <span class="hljs-type">CustomerPreferenceDao</span>)</span></span> {
+        <span class="hljs-keyword">this</span>.movieCatalog = movieCatalog
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>还可以将<code>@Autowired</code>应用于字段，甚至可以和构造函数混合使用:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> CustomerPreferenceDao customerPreferenceDao;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> MovieCatalog movieCatalog;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(CustomerPreferenceDao customerPreferenceDao)</span> </span>{
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> <span class="hljs-meta">@Autowired</span> <span class="hljs-keyword">constructor</span></span>(
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> customerPreferenceDao: CustomerPreferenceDao) {
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalog: MovieCatalog
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>确保您的组件（例如，<code>MovieCatalog</code>或<code>CustomerPreferenceDao</code>）始终按照用于@Autowired注入点的类型声明。 否则，由于在运行时未找到类型匹配，注入可能会失败。</p>
+<p>对于通过类路径扫描找到的XML定义的bean或组件类，容器通常预先知道具体类型。 但是，对于<code>@Bean</code>工厂方法，您需要确保其声明的具体返回类型。 对于实现多个接口的组件或可能由其实现类型引用的组件，请考虑在工厂方法上声明最具体的返回类型（至少与引用bean的注入点所需的特定类型一致）。 .</p>
+<p>也可以用在数组上，注解用于标注属性或方法，数组的类型是<code>ApplicationContext</code>中定义的bean类型。如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> MovieCatalog[] movieCatalogs;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalogs: Array&lt;MovieCatalog&gt;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>也可以应用于集合类型，如以下示例所示:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> Set&lt;MovieCatalog&gt; movieCatalogs;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieCatalogs</span><span class="hljs-params">(Set&lt;MovieCatalog&gt; movieCatalogs)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieCatalogs = movieCatalogs;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalogs: Set&lt;MovieCatalog&gt;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>如果想让数组元素或集合元素按特定顺序排列，应用的bean可以实现<code>org.springframework.core.Ordered</code>， 或者使用<code>@Order</code>或标准的@<code>@Priority</code> 注解，否则，它们的顺序遵循容器中相应目标bean定义的注册顺序。</p>
+<p>您可以在类级别和<code>@Bean</code>方法上声明 <code>@Order</code>注解，可能是通过单个bean定义（在多个定义使用相同bean类的情况下）。 <code>@Order</code>值可能会影响注入点的优先级，但要注意它们不会影响单例启动顺序，这是由依赖关系和<code>@DependsOn</code>声明确定的。</p>
+<p>请注意，标准的<code>javax.annotation.Priority</code>注解在<code>@Bean</code>级别不可用，因为它无法在方法上声明。 它的语义可以通过<code>@Order</code>值与<code>@Primary</code>定义每个类型的单个bean上。</p>
+<p>只要键类型是<code>String</code>，<code>Map</code>类型就可以自动注入。 Map值将包含所有类型的bean，并且键将包含相应的bean名称。如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> Map&lt;String, MovieCatalog&gt; movieCatalogs;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieCatalogs</span><span class="hljs-params">(Map&lt;String, MovieCatalog&gt; movieCatalogs)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieCatalogs = movieCatalogs;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalogs: Map&lt;String, MovieCatalog&gt;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>默认情况下，当没有候选的bean可用时，自动注入将会失败；对于声明的数组，集合或映射，至少应有一个匹配元素。</p>
+<p>默认的处理方式是将带有注解的方法、构造函数和字段标明为必须依赖，也可以使用required=false属性。来标明这种依赖不是必须的，如下：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Autowired</span>(required = <span class="hljs-keyword">false</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired(required = false)</span>
+    <span class="hljs-keyword">var</span> movieFinder: MovieFinder? = <span class="hljs-literal">null</span>
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>如果不需要的方法（或在多个参数的情况下，其中一个依赖项）不可用，则根本不会调用该方法。 在这种情况下，完全不需要填充非必需字段，而将其默认值保留在适当的位置。</p>
+<p>注入的构造函数和工厂方法参数是一种特殊情况，因为由于Spring的构造函数解析算法可能会处理多个构造函数，因此@Autowired中的required属性的含义有所不同。 缺省情况下，实际上有效地需要构造函数和工厂方法参数，但是在单构造函数场景中有一些特殊规则，例如，如果没有可用的匹配bean，则多元素注入点（数组，集合，映射）解析为空实例。 这允许一种通用的实现模式，其中所有依赖项都可以在唯一的多参数构造函数中声明-例如，声明为没有@Autowired批注的单个公共构造函数。</p>
+<p>每个类仅可以将一个带注解的构造函数标记为必需，但是可以注解多个非必需的构造函数。在这种情况下，每个项都会是候选者，而Spring使用的是最贪婪的构造函数。 这个构造函数的依赖关系可以得到满足，那就是具有最多参数的构造函数。</p>
+<p>推荐使用<code>@Required</code>注解来代替<code>@Autowired</code>的required属性，required属性表示该属性不是自动装配必需的，如果该属性不能被自动装配。 则该属性会被忽略。 另一方面， <code>@Required</code>会强制执行通过容器支持的任何方式来设置属性。 如果没有值被注入的话，会引发相应的异常。</p>
+<p>或者，您可以通过Java 8的<code>java.util.Optional</code>表达特定依赖项的非必需特性，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(Optional&lt;MovieFinder&gt; movieFinder)</span> </span>{
+        ...
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">public</span> void setMovieFinder(Optional&lt;MovieFinder&gt; movieFinder) {
+        ...
+    }
+}
+</code></pre>
+<p>从Spring Framework 5.0开始，您还可以使用<code>@Nullable</code> 注解（任何包中的任何类型，例如，来自JSR-305的 <code>javax.annotation.Nullable</code>）：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(@Nullable MovieFinder movieFinder)</span> </span>{
+        ...
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">var</span> movieFinder: MovieFinder? = <span class="hljs-literal">null</span>
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>您也可以使用<code>@Autowired</code>作为常见的可解析依赖关系的接口，<code>BeanFactory</code>, <code>ApplicationContext</code>, <code>Environment</code>, <code>ResourceLoader</code>, <code>ApplicationEventPublisher</code>, 和 <code>MessageSource</code> 这些接口及其扩展接口（例如<code>ConfigurableApplicationContext</code> 或 <code>ResourcePatternResolver</code>） 会自动解析，无需特殊设置。 以下示例自动装配<code>ApplicationContext</code>对象：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> ApplicationContext context;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p><code>@Autowired</code>, <code>@Inject</code>, <code>@Resource</code>, 和 <code>@Value</code> 注解 由 Spring <code>BeanPostProcessor</code> 实现.也就是说开发者不能使用自定义的<code>BeanPostProcessor</code>或者自定义<code>BeanFactoryPostProcessor</code>r来使用这些注解 必须使用XML或Spring @Bean方法显式地“连接”这些类型。</p>
+<p><a id="beans-autowired-annotation-primary"></a></p>
+<h4><a href="#beans-autowired-annotation-primary"></a>1.9.3. <code>@Primary</code></h4>
+<p>由于按类型的自动注入可能匹配到多个候选者，所以通常需要对选择过程添加更多的约束。使用Spring的<code>@Primary</code>注解是实现这个约束的一种方法。 它表示如果存在多个候选者且另一个bean只需要一个特定类型的bean依赖时，就明确使用标记有<code>@Primary</code>注解的那个依赖。如果候选中只有一个&quot;Primary&quot; bean，那么它就是自动注入的值</p>
+<p>请考虑以下配置，将<code>firstMovieCatalog</code>定义为主要<code>MovieCatalog</code>：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieConfiguration</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-meta">@Primary</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> MovieCatalog <span class="hljs-title">firstMovieCatalog</span><span class="hljs-params">()</span> </span>{ ... }
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> MovieCatalog <span class="hljs-title">secondMovieCatalog</span><span class="hljs-params">()</span> </span>{ ... }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieConfiguration</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-meta">@Primary</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">firstMovieCatalog</span><span class="hljs-params">()</span></span>: MovieCatalog { ... }
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">secondMovieCatalog</span><span class="hljs-params">()</span></span>: MovieCatalog { ... }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>使用上述配置，以下 <code>MovieRecommender</code>将与<code>firstMovieCatalog</code>一起自动装配：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> MovieCatalog movieCatalog;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalog: MovieCatalog
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>相应的bean定义如下:</p>
+<pre><code class="language-java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"&gt;
+
+    &lt;context:annotation-config/&gt;
+
+    &lt;bean class="example.SimpleMovieCatalog" primary="true"&gt;
+        &lt;!-- inject any dependencies required by this bean --&gt;
+    &lt;/bean&gt;
+
+    &lt;bean class="example.SimpleMovieCatalog"&gt;
+        &lt;!-- inject any dependencies required by this bean --&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id="movieRecommender" class="example.MovieRecommender"/&gt;
+
+&lt;/beans&gt;
+</code></pre>
+<p><a id="beans-autowired-annotation-qualifiers"></a></p>
+<h4><a href="#beans-autowired-annotation-qualifiers"></a>1.9.4. 使用qualifiers微调基于注解的自动装配</h4>
+<p><code>@Primary</code> 是一种用于解决自动装配多个值的注入的有效的方法，当需要对选择过程做更多的约束时，可以使用Spring的<code>@Qualifier</code>注解，可以为指定的参数绑定限定的值。 缩小类型匹配集，以便为每个参数选择特定的bean。 在最简单的情况下，这可以是一个简单的描述性值，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Qualifier</span>(<span class="hljs-string">"main"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog movieCatalog;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Qualifier(<span class="hljs-meta-string">"main"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalog: MovieCatalog
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>您还可以在各个构造函数参数或方法参数上指定<code>@Qualifier</code>注解，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieCatalog movieCatalog;
+
+    <span class="hljs-keyword">private</span> CustomerPreferenceDao customerPreferenceDao;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">prepare</span><span class="hljs-params">(@Qualifier(<span class="hljs-string">"main"</span>)</span>MovieCatalog movieCatalog,
+            CustomerPreferenceDao customerPreferenceDao) </span>{
+        <span class="hljs-keyword">this</span>.movieCatalog = movieCatalog;
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieCatalog: MovieCatalog
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> customerPreferenceDao: CustomerPreferenceDao
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">prepare</span><span class="hljs-params">(<span class="hljs-meta">@Qualifier(<span class="hljs-meta-string">"main"</span>)</span> movieCatalog: <span class="hljs-type">MovieCatalog</span>,
+                customerPreferenceDao: <span class="hljs-type">CustomerPreferenceDao</span>)</span></span> {
+        <span class="hljs-keyword">this</span>.movieCatalog = movieCatalog
+        <span class="hljs-keyword">this</span>.customerPreferenceDao = customerPreferenceDao
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>以下示例显示了相应的bean定义。.</p>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">"http://www.springframework.org/schema/context"</span>
+    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">context:annotation-config</span>/&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"main"</span>/&gt;</span> 
+
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"action"</span>/&gt;</span> 
+
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"movieRecommender"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.MovieRecommender"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</code></pre>
+<p><strong>1</strong>、带有限定符&quot;<code>main</code>&quot;的bean会被装配到拥有相同值的构造方法参数上.</p>
+<p><strong>2</strong>、带有限定符&quot;<code>action</code>&quot;的bean会被装配到拥有相同值的构造方法参数上.</p>
+<p>bean的name会作为备用的qualifier值,因此可以定义bean的<code>id</code>为 main 替代内嵌的qualifier元素.这种匹配方式同样有效。但是，虽然可以使用这个约定来按名称引用特定的bean， 但是<code>@Autowired</code>默认是由带限定符的类型驱动注入的。这就意味着qualifier值，甚至是bean的name作为备选项，只是为了缩小类型匹配的范围。它们在语义上不表示对唯一bean id的引用。 良好的限定符值是像<code>main</code> 或 <code>EMEA</code> 或 <code>persistent</code>这样的，能表示与bean id无关的特定组件的特征，在匿名bean定义的情况下可以自动生成。</p>
+<p>Qualifiers也可以用于集合类型，如上所述，例如 <code>Set&lt;MovieCatalog&gt;</code>。在这种情况下，根据声明的限定符，所有匹配的bean都作为集合注入。 这意味着限定符不必是唯一的。 相反，它们构成过滤标准。 例如，您可以使用相同的限定符值“action”定义多个<code>MovieCatalog</code> bean，所有这些bean都注入到使用<code>@Qualifier(&quot;action&quot;)</code>注解的<code>Set&lt;MovieCatalog&gt;</code>中。</p>
+<p>在类型匹配候选项中，根据目标bean名称选择限定符值，在注入点不需要<code>@Qualifier</code>注解。 如果没有其他解析指示符（例如限定符或主标记）， 则对于非唯一依赖性情况，Spring会将注入点名称（即字段名称或参数名称）与目标bean名称进行匹配，然后选择同名的候选者，如果有的话。</p>
+<p>如果打算by name来驱动注解注入，那么就不要使用<code>@Autowired</code>（多数情况），即使在技术上能够通过@Qualifier值引用bean名字。相反，应该使用JSR-250 <code>@Resource</code> 注解，该注解在语义上定义为通过其唯一名称标识特定目标组件，其中声明的类型与匹配进程无关。<code>@Autowired</code>具有多种不同的语义，在by type选择候选bean之后，指定的<code>String</code>限定的值只会考虑这些被选择的候选者。 例如将<code>account</code> 限定符与标有相同限定符标签的bean相匹配。</p>
+<p>对于自身定义为 collection, <code>Map</code>, 或者 array type的bean， <code>@Resource</code>是一个很好的解决方案，通过唯一名称引用特定的集合或数组bean。 也就是说，从Spring4.3开始，只要元素类型信息保存在 <code>@Bean</code> 返回类型签名或集合（或其子类）中，您就可以通过Spring的 <code>@Autowired</code>类型匹配算法匹配Map和数组类型。 在这种情况下，可以使用限定的值来选择相同类型的集合，如上一段所述。</p>
+<p>从Spring4.3开始，<code>@Autowired</code>也考虑了注入的自引用，即引用当前注入的bean。自引用只是一种后备选项，还是优先使用正常的依赖注入操作其它bean。 在这个意义上，自引用不参与到正常的候选者选择中，并且总是次要的，，相反，它们总是拥有最低的优先级。在实践中，自引用通常被用作最后的手段。例如，通过bean的事务代理在同一实例上调用其他方法 在这种情况下，考虑将受影响的方法分解为单独委托的bean，或者使用 <code>@Resource</code>,，它可以通过其唯一名称获取代理返回到当前的bean上。</p>
+<p><code>@Autowired</code>可以应用在字段、构造函数和多参数方法上，允许在参数上使用qualifier限定符注解缩小取值范围。相比之下，<code>@Resource</code>仅支持具有单个参数的字段和bean属性setter方法。 因此，如果注入目标是构造函数或多参数方法，请使用qualifiers限定符。</p>
+<p>开发者也可以创建自定义的限定符注解，只需定义一个注解，在其上提供了@Qualifier注解即可。如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Target</span>({ElementType.FIELD, ElementType.PARAMETER})
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Genre {
+
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span></span>;
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)</span>
+<span class="hljs-meta">@Retention(AnnotationRetention.RUNTIME)</span>
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">annotation</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Genre</span></span>(<span class="hljs-keyword">val</span> value: String)
+</code></pre>
+<p>然后，您可以在自动装配的字段和参数上提供自定义限定符，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Genre</span>(<span class="hljs-string">"Action"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog actionCatalog;
+
+    <span class="hljs-keyword">private</span> MovieCatalog comedyCatalog;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setComedyCatalog</span><span class="hljs-params">(@Genre(<span class="hljs-string">"Comedy"</span>)</span> MovieCatalog comedyCatalog) </span>{
+        <span class="hljs-keyword">this</span>.comedyCatalog = comedyCatalog;
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Genre(<span class="hljs-meta-string">"Action"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> actionCatalog: MovieCatalog
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> comedyCatalog: MovieCatalog
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">setComedyCatalog</span><span class="hljs-params">(<span class="hljs-meta">@Genre(<span class="hljs-meta-string">"Comedy"</span>)</span> comedyCatalog: <span class="hljs-type">MovieCatalog</span>)</span></span> {
+        <span class="hljs-keyword">this</span>.comedyCatalog = comedyCatalog
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>接下来，提供候选bean定义的信息。开发者可以添加<code>&lt;qualifier/&gt;</code>标签作为<code>&lt;bean/&gt;</code>标签的子元素，然后指定 <code>type</code>类型和<code>value</code>值来匹配自定义的qualifier注解。 type是自定义注解的权限定类名(包路径+类名）。如果没有重名的注解，那么可以使用类名(不含包路径）。 以下示例演示了两种方法：</p>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">"http://www.springframework.org/schema/context"</span>
+    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">context:annotation-config</span>/&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"Genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Action"</span>/&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"example.Genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Comedy"</span>/&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"movieRecommender"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.MovieRecommender"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</code></pre>
+<p>在 <a href="#beans-classpath-scanning">类路径扫描和组件管理</a>,将展示一个基于注解的替代方法，可以在XML中提供qualifier元数据, 请参阅<a href="#beans-scanning-qualifiers">使用注解提供限定符元数据。</a></p>
+<p>在某些情况下，使用没有值的注解可能就足够了。当注解用于更通用的目的并且可以应用在多种不同类型的依赖上时，这是很有用的。 例如，您可以提供可在没有Internet连接时搜索的Offline目录。 首先，定义简单注解，如以下示例所示：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Target</span>({ElementType.FIELD, ElementType.PARAMETER})
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Offline {
+
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)</span>
+<span class="hljs-meta">@Retention(AnnotationRetention.RUNTIME)</span>
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">annotation</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Offline</span></span>
+</code></pre>
+<p>然后将注解添加到需要自动注入的字段或属性中:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Offline</span> (<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog offlineCatalog;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@Offline</span> 
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> offlineCatalog: MovieCatalog
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p><strong>1</strong>、此行添加<code>@Offline</code>注解</p>
+<p>现在bean定义只需要一个限定符类型，如下例所示：:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"Offline"</span>/&gt;</span> (1)
+    <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><strong>1</strong>、此元素指定限定符。</p>
+<p>开发者还可以为自定义限定名qualifier注解增加属性，用于替代简单的<code>value</code>属性。如果在要自动注入的字段或参数上指定了多个属性值，则bean的定义必须全部匹配这些属性值才能被视为自动注入候选者。 例如，请考虑以下注解定义：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Target</span>({ElementType.FIELD, ElementType.PARAMETER})
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MovieQualifier {
+
+    <span class="hljs-function">String <span class="hljs-title">genre</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-function">Format <span class="hljs-title">format</span><span class="hljs-params">()</span></span>;
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)</span>
+<span class="hljs-meta">@Retention(AnnotationRetention.RUNTIME)</span>
+<span class="hljs-meta">@Qualifier</span>
+<span class="hljs-keyword">annotation</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieQualifier</span></span>(<span class="hljs-keyword">val</span> genre: String, <span class="hljs-keyword">val</span> format: Format)
+</code></pre>
+<p>在这种情况下， <code>Format</code>是一个枚举类型，定义如下:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Format {
+    VHS, DVD, BLURAY
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-keyword">enum</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Format</span> </span>{
+    VHS, DVD, BLURAY
+}
+</code></pre>
+<p>要自动装配的字段使用自定义限定符进行注解，并包含两个属性的值：<code>genre</code> 和 <code>format</code>，如以下示例所示:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier</span>(format=Format.VHS, genre=<span class="hljs-string">"Action"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog actionVhsCatalog;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier</span>(format=Format.VHS, genre=<span class="hljs-string">"Comedy"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog comedyVhsCatalog;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier</span>(format=Format.DVD, genre=<span class="hljs-string">"Action"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog actionDvdCatalog;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier</span>(format=Format.BLURAY, genre=<span class="hljs-string">"Comedy"</span>)
+    <span class="hljs-keyword">private</span> MovieCatalog comedyBluRayCatalog;
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier(format = Format.VHS, genre = <span class="hljs-meta-string">"Action"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> actionVhsCatalog: MovieCatalog
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier(format = Format.VHS, genre = <span class="hljs-meta-string">"Comedy"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> comedyVhsCatalog: MovieCatalog
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier(format = Format.DVD, genre = <span class="hljs-meta-string">"Action"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> actionDvdCatalog: MovieCatalog
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-meta">@MovieQualifier(format = Format.BLURAY, genre = <span class="hljs-meta-string">"Comedy"</span>)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> comedyBluRayCatalog: MovieCatalog
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>最后，bean定义应包含匹配的限定符值。此示例还演示了可以使用bean meta属性而不是使用<code>&lt;qualifier/&gt;</code>子元素。如果可行，<code>&lt;qualifier/&gt;</code>元素及其属性优先， 但如果不存在此类限定符，那么自动注入机制会使用 <code>&lt;meta/&gt;</code> 标签中提供的值，如以下示例中的最后两个bean定义：</p>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">"http://www.springframework.org/schema/context"</span>
+    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">context:annotation-config</span>/&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"MovieQualifier"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">attribute</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"format"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"VHS"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">attribute</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Action"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">qualifier</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">qualifier</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"MovieQualifier"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">attribute</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"format"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"VHS"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">attribute</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Comedy"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">qualifier</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"format"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"DVD"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Action"</span>/&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"example.SimpleMovieCatalog"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"format"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"BLURAY"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"genre"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Comedy"</span>/&gt;</span>
+        <span class="hljs-comment">&lt;!-- inject any dependencies required by this bean --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</code></pre>
+<p><a id="beans-generics-as-qualifiers"></a></p>
+<h4><a href="#beans-generics-as-qualifiers"></a>1.9.5. 使用泛型作为自动装配限定符</h4>
+<p>除了<code>@Qualifier</code> 注解之外，您还可以使用Java泛型类型作为隐式的限定形式。 例如，假设您具有以下配置：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyConfiguration</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> StringStore <span class="hljs-title">stringStore</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> StringStore();
+    }
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> IntegerStore <span class="hljs-title">integerStore</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> IntegerStore();
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyConfiguration</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">stringStore</span><span class="hljs-params">()</span></span> = StringStore()
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">integerStore</span><span class="hljs-params">()</span></span> = IntegerStore()
+}
+</code></pre>
+<p>假设上面的bean都实现了泛型接口,即 <code>Store&lt;String&gt;</code>和<code>Store&lt;Integer&gt;</code>,那么可以用<code>@Autowire</code>来注解<code>Store</code> 接口, 并将泛型用作限定符，如下例所示：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> Store&lt;String&gt; s1; <span class="hljs-comment">// &lt;String&gt; qualifier, injects the stringStore bean</span>
+
+<span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> Store&lt;Integer&gt; s2; <span class="hljs-comment">// &lt;Integer&gt; qualifier, injects the integerStore bean</span>
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> s1: Store&lt;String&gt; <span class="hljs-comment">// &lt;String&gt; qualifier, injects the stringStore bean</span>
+
+<span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> s2: Store&lt;Integer&gt; <span class="hljs-comment">// &lt;Integer&gt; qualifier, injects the integerStore bean</span>
+</code></pre>
+<p>通用限定符也适用于自动装配列表，<code>Map</code>实例和数组。 以下示例自动装配通用<code>List</code>：</p>
+<pre><code class="language-java"><span class="hljs-comment">// Inject all Store beans as long as they have an &lt;Integer&gt; generic</span>
+<span class="hljs-comment">// Store&lt;String&gt; beans will not appear in this list</span>
+<span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> List&lt;Store&lt;Integer&gt;&gt; s;
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-comment">// Inject all Store beans as long as they have an &lt;Integer&gt; generic</span>
+<span class="hljs-comment">// Store&lt;String&gt; beans will not appear in this list</span>
+<span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> s: List&lt;Store&lt;Integer&gt;&gt;
+</code></pre>
+<p><a id="beans-custom-autowire-configurer"></a></p>
+<h4><a href="#beans-custom-autowire-configurer"></a>1.9.6. <code>CustomAutowireConfigurer</code></h4>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/beans/factory/annotation/CustomAutowireConfigurer.html"><code>CustomAutowireConfigurer</code></a> 是一个<code>BeanFactoryPostProcessor</code>，它允许开发者注册自定义的qualifier注解类型，而无需指定<code>@Qualifier</code>注解，以下示例显示如何使用<code>CustomAutowireConfigurer</code>:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"customAutowireConfigurer"</span>
+        <span class="hljs-attr">class</span>=<span class="hljs-string">"org.springframework.beans.factory.annotation.CustomAutowireConfigurer"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"customQualifierTypes"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">set</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>example.CustomQualifier<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">set</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span>
+</code></pre>
+<p><code>AutowireCandidateResolver</code> 通过以下方式确定自动注入的候选者:</p>
+<ul>
+<li>
+<p>每个bean定义的<code>autowire-candidate</code>值</p>
+</li>
+<li>
+<p>在<code>&lt;beans/&gt;</code>元素上使用任何可用的 <code>default-autowire-candidates</code> 模式</p>
+</li>
+<li>
+<p>存在 <code>@Qualifier</code> 注解以及使用<code>CustomAutowireConfigurer</code>注册的任何自定义注解</p>
+</li>
+</ul>
+<p>当多个bean有资格作为自动注入的候选项时，“primary”的确定如下：如果候选者中只有一个bean定义的 <code>primary</code>属性设置为<code>true</code>，则选择它。</p>
+<p><a id="beans-resource-annotation"></a></p>
+<h4><a href="#beans-resource-annotation"></a>1.9.7. <code>@Resource</code></h4>
+<p>Spring还通过在字段或bean属性setter方法上使用JSR-250 <code>@Resource(javax.annotation.Resource)</code>注解来支持注入。 这是Java EE 中的常见模式（例如，JSF-managed beans 和JAX-WS 端点中）。 Spring也为Spring管理对象提供这种模式。</p>
+<p><code>@Resource</code> 接受一个name属性.。默认情况下，Spring将该值解释为要注入的bean名称。 换句话说，它遵循按名称语义，如以下示例所示:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Resource</span>(name=<span class="hljs-string">"myMovieFinder"</span>) (<span class="hljs-number">1</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Resource(name=<span class="hljs-meta-string">"myMovieFinder"</span>)</span> 
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder:MovieFinder
+}
+</code></pre>
+<p><strong>1</strong>、这行注入一个<code>@Resource</code>.</p>
+<p>如果未明确指定名称，则默认名称是从字段名称或setter方法派生的。 如果是字段，则采用字段名称。 在setter方法的情况下，它采用bean属性名称。 下面的例子将把名为<code>movieFinder</code>的bean注入其setter方法：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMovieFinder</span><span class="hljs-params">(MovieFinder movieFinder)</span> </span>{
+        <span class="hljs-keyword">this</span>.movieFinder = movieFinder;
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleMovieLister</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> movieFinder: MovieFinder
+
+}
+</code></pre>
+<p><code>ApplicationContext</code>若使用了<code>CommonAnnotationBeanPostProcessor</code>，注解提供的name名字将被解析为bean的name名字。 如果配置了Spring的 <a href="https://docs.spring.io/spring-framework/docs/5.1.3.BUILD-SNAPSHOT/javadoc-api/org/springframework/jndi/support/SimpleJndiBeanFactory.html"><code>SimpleJndiBeanFactory</code></a>，这些name名称就可以通过JNDI解析。但是，推荐使用默认的配置，简单地使用Spring的JNDI，这样可以保持逻辑引用。而不是直接引用。</p>
+<p>@Resource在没有明确指定name时，其行为类似于<code>@Autowired</code>，对于特定bean(Spring API内的bean）， <code>@Resource</code> 找到主要类型匹配而不是特定的命名bean， 并解析众所周知的可解析依赖项：<code>ApplicationContext</code>, <code>ResourceLoader</code>, <code>ApplicationEventPublisher</code>, 和 <code>MessageSource</code>接口。</p>
+<p>因此，在以下示例中，<code>customerPreferenceDao</code>字段首先查找名为customerPreferenceDao的bean，如果未找到，则会使用类型匹配<code>CustomerPreferenceDao</code>类的实例：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> CustomerPreferenceDao customerPreferenceDao;
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> ApplicationContext context; (<span class="hljs-number">1</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> customerPreferenceDao: CustomerPreferenceDao
+
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> context: ApplicationContext 
+
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p><strong>1</strong>、<code>context</code>域将会注入<code>ApplicationContext</code></p>
+<p><a id="beans-value-annotations"></a></p>
+<h4><a href="#beans-value-annotations"></a>1.9.8. 使用<code>@Value</code></h4>
+<p><code>@Value</code>通常用于注入外部属性：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String catalog;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(@Value(<span class="hljs-string">"${catalog.name}"</span>)</span> String catalog) </span>{
+        <span class="hljs-keyword">this</span>.catalog = catalog;
+    }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Component</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span></span>(<span class="hljs-meta">@Value(<span class="hljs-meta-string">"\${catalog.name}"</span>)</span> <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> catalog: String)
+</code></pre>
+<p>使用以下配置：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@PropertySource</span>(<span class="hljs-string">"classpath:application.properties"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{ }
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@PropertySource(<span class="hljs-meta-string">"classpath:application.properties"</span>)</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span></span>
+</code></pre>
+<p>以及以下application.properties文件：</p>
+<pre><code class="language-xml">catalog.name=MovieCatalog
+</code></pre>
+<p>在这种情况下，catalog参数和字段将等于MovieCatalog值。</p>
+<p>Spring提供了一个默认的宽松内嵌值解析器。 它将尝试解析属性值，如果无法解析，则将属性名称（例如<code>$ {catalog.name}</code>）作为值注入。 如果要严格控制不存在的值，则应声明一个<code>PropertySourcesPlaceholderConfigurer</code> bean，如以下示例所示：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
+
+     <span class="hljs-meta">@Bean</span>
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> PropertySourcesPlaceholderConfigurer <span class="hljs-title">propertyPlaceholderConfigurer</span><span class="hljs-params">()</span> </span>{
+           <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PropertySourcesPlaceholderConfigurer();
+     }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">propertyPlaceholderConfigurer</span><span class="hljs-params">()</span></span> = PropertySourcesPlaceholderConfigurer()
+}
+</code></pre>
+<p>使用JavaConfig配置PropertySourcesPlaceholderConfigurer时，@ Bean方法必须是静态的。</p>
+<p>如果无法解析任何<code>$ {}</code>占位符，则使用上述配置可确保Spring初始化失败。 也可以使用setPlaceholderPrefix，setPlaceholderSuffix或setValueSeparator之类的方法来自定义占位符。</p>
+<p>Spring Boot默认配置一个<code>PropertySourcesPlaceholderConfigurer</code> bean，它将从<code>application.properties和application.yml</code>文件获取属性。</p>
+<p>Spring提供的内置转换器支持允许自动处理简单的类型转换（例如，转换为Integer或int）。 多个逗号分隔的值可以自动转换为String数组，而无需付出额外的努力。</p>
+<p>可以提供如下默认值：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String catalog;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(@Value(<span class="hljs-string">"${catalog.name:defaultCatalog}"</span>)</span> String catalog) </span>{
+        <span class="hljs-keyword">this</span>.catalog = catalog;
+    }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Component</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span></span>(<span class="hljs-meta">@Value(<span class="hljs-meta-string">"\${catalog.name:defaultCatalog}"</span>)</span> <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> catalog: String)
+</code></pre>
+<p>Spring <code>BeanPostProcessor</code>在后台使用<code>ConversionService</code>处理将<code>@Value</code>中的String值转换为目标类型的过程。 如果要为自己的自定义类型提供转换支持，则可以提供自己的<code>ConversionService</code> bean实例，如以下示例所示：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ConversionService <span class="hljs-title">conversionService</span><span class="hljs-params">()</span> </span>{
+        DefaultFormattingConversionService conversionService = <span class="hljs-keyword">new</span> DefaultFormattingConversionService();
+        conversionService.addConverter(<span class="hljs-keyword">new</span> MyCustomConverter());
+        <span class="hljs-keyword">return</span> conversionService;
+    }
+}
+</code></pre>
+<p>kotlin</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">conversionService</span><span class="hljs-params">()</span></span>: ConversionService {
+            <span class="hljs-keyword">return</span> DefaultFormattingConversionService().apply {
+            addConverter(MyCustomConverter())
+        }
+    }
+}
+</code></pre>
+<p>当@Value包含SpEL表达式时，该值将在运行时动态计算，如以下示例所示：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String catalog;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(@Value(<span class="hljs-string">"#{systemProperties['user.catalog'] + 'Catalog' }"</span>)</span> String catalog) </span>{
+        <span class="hljs-keyword">this</span>.catalog = catalog;
+    }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Component</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span></span>(
+    <span class="hljs-meta">@Value(<span class="hljs-meta-string">"#{systemProperties['user.catalog'] + 'Catalog' }"</span>)</span> <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> catalog: String)
+</code></pre>
+<p>SpEL还可以使用更复杂的数据结构：</p>
+<p>java:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, Integer&gt; countOfMoviesPerCatalog;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MovieRecommender</span><span class="hljs-params">(
+            @Value(<span class="hljs-string">"#{{'Thriller': 100, 'Comedy': 300}}"</span>)</span> Map&lt;String, Integer&gt; countOfMoviesPerCatalog) </span>{
+        <span class="hljs-keyword">this</span>.countOfMoviesPerCatalog = countOfMoviesPerCatalog;
+    }
+}
+</code></pre>
+<p>kotlin:</p>
+<pre><code class="language-kotlin"><span class="hljs-meta">@Component</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MovieRecommender</span></span>(
+    <span class="hljs-meta">@Value(<span class="hljs-meta-string">"#{{'Thriller': 100, 'Comedy': 300}}"</span>)</span> <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> countOfMoviesPerCatalog: Map&lt;String, <span class="hljs-built_in">Int</span>&gt;)
+</code></pre>
+<p><a id="beans-postconstruct-and-predestroy-annotations"></a></p>
+<h4><a href="#beans-postconstruct-and-predestroy-annotations"></a>1.9.9. <code>@PostConstruct</code> 和 <code>@PreDestroy</code></h4>
+<p><code>CommonAnnotationBeanPostProcessor</code> 不仅仅识别<code>@Resource</code> 注解，还识别JSR-250生命周期注解 <code>javax.annotation.PostConstruct</code> 和<code>javax.annotation.PreDestroy</code>. 。，在Spring 2.5中引入了这些注解， 它们提供了另一个替代<a href="#beans-factory-lifecycle-initializingbean">初始化回调</a>和<a href="#beans-factory-lifecycle-disposablebean">销毁回调</a>。 如果<code>CommonAnnotationBeanPostProcessor</code>在Spring <code>ApplicationContext</code>中注册，它会在相应的Spring bean生命周期中调用相应的方法，就像是Spring生命周期接口方法，或者是明确声明的回调函数那样。 在以下示例中，缓存在初始化时预先填充并在销毁时清除：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CachingMovieLister</span> </span>{
+
+    <span class="hljs-meta">@PostConstruct</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">populateMovieCache</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// populates the movie cache upon initialization...</span>
+    }
+
+    <span class="hljs-meta">@PreDestroy</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">clearMovieCache</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// clears the movie cache upon destruction...</span>
+    }
+}
+</code></pre>
+<pre><code class="language-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CachingMovieLister</span> </span>{
+
+    <span class="hljs-meta">@PostConstruct</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">populateMovieCache</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-comment">// populates the movie cache upon initialization...</span>
+    }
+
+    <span class="hljs-meta">@PreDestroy</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">clearMovieCache</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-comment">// clears the movie cache upon destruction...</span>
+    }
+}
+</code></pre>
+<p>有关组合各种生命周期机制的影响的详细信息，请参阅组合<a href="#beans-factory-lifecycle-combined-effects">生命周期机制</a>。</p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/springframework/demo.html" target="_self">Spring Framework</a></dd><dd><a href="/zh-cn/docs/springboot/demo.html" target="_self">SpringBoot</a></dd><dd><a href="/zh-cn/docs/microservices/demo.html" target="_self">Microservices</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/open/index.html" target="_self">开源项目</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2019 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

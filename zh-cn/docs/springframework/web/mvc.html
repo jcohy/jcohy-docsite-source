@@ -30,7 +30,7 @@
 
         <span class="hljs-comment">// Load Spring web application configuration</span>
         AnnotationConfigWebApplicationContext ac = <span class="hljs-keyword">new</span> AnnotationConfigWebApplicationContext();
-        ac.register(AppConfig.class);
+        ac.register(AppConfig<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
         ac.refresh();
 
         <span class="hljs-comment">// Create and register the DispatcherServlet</span>
@@ -84,12 +84,12 @@
 
     <span class="hljs-meta">@Override</span>
     <span class="hljs-keyword">protected</span> Class&lt;?&gt;[] getRootConfigClasses() {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { RootConfig.class };
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { RootConfig<span class="hljs-class">.<span class="hljs-keyword">class</span> }</span>;
     }
 
     <span class="hljs-meta">@Override</span>
     <span class="hljs-keyword">protected</span> Class&lt;?&gt;[] getServletConfigClasses() {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { App1Config.class };
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { App1Config<span class="hljs-class">.<span class="hljs-keyword">class</span> }</span>;
     }
 
     <span class="hljs-meta">@Override</span>
@@ -211,7 +211,7 @@
 
     <span class="hljs-meta">@Override</span>
     <span class="hljs-keyword">protected</span> Class&lt;?&gt;[] getServletConfigClasses() {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { MyWebConfig.class };
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Class&lt;?&gt;[] { MyWebConfig<span class="hljs-class">.<span class="hljs-keyword">class</span> }</span>;
     }
 
     <span class="hljs-meta">@Override</span>
@@ -940,19 +940,19 @@ public void handle(@PathVariable String version, @PathVariable String ext) {
 <h5><a href="#mvc-ann-requestmapping-registration"></a>显式注册</h5>
 <p><a href="web-reactive.html#webflux-ann-requestmapping-registration">Same as in Spring WebFlux</a></p>
 <p>您可以以编程方式注册处理程序方法，您可以将其用于动态注册或高级情况，例如不同URL下的同一处理程序的不同实例。 以下示例注册处理程序方法：</p>
-<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyConfig</span> </span>{
+<pre><code class="language-java">@Configuration
+public class MyConfig {
 
-    <span class="hljs-meta">@Autowired</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setHandlerMapping</span><span class="hljs-params">(RequestMappingHandlerMapping mapping, UserHandler handler)</span> <span class="hljs-params">(<span class="hljs-number">1</span>)</span>
-            <span class="hljs-keyword">throws</span> NoSuchMethodException </span>{
+    @Autowired
+    public void setHandlerMapping(RequestMappingHandlerMapping mapping, UserHandler handler) (1)
+            throws NoSuchMethodException {
 
         RequestMappingInfo info = RequestMappingInfo
-                .paths(<span class="hljs-string">"/user/{id}"</span>).methods(RequestMethod.GET).build(); (<span class="hljs-number">2</span>)
+                .paths("/user/{id}").methods(RequestMethod.GET).build(); (2)
 
-        Method method = UserHandler.class.getMethod(<span class="hljs-string">"getUser"</span>, Long.class); (<span class="hljs-number">3</span>)
+        Method method = UserHandler.class.getMethod("getUser", Long.class); (3)
 
-        mapping.registerMapping(info, handler, method); (<span class="hljs-number">4</span>)
+        mapping.registerMapping(info, handler, method); (4)
     }
 
 }
@@ -1578,8 +1578,8 @@ Content-Transfer-Encoding: 8bit
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>{
 
     <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/user"</span>)
-    <span class="hljs-meta">@JsonView</span>(User.WithoutPasswordView.class)
-    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">getUser</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-meta">@JsonView</span>(User.WithoutPasswordView<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">public</span> <span class="hljs-title">User</span> <span class="hljs-title">getUser</span>() </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User(<span class="hljs-string">"eric"</span>, <span class="hljs-string">"7!jd#h23"</span>);
     }
 }
@@ -1600,13 +1600,13 @@ Content-Transfer-Encoding: 8bit
         <span class="hljs-keyword">this</span>.password = password;
     }
 
-    <span class="hljs-meta">@JsonView</span>(WithoutPasswordView.class)
-    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getUsername</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-meta">@JsonView</span>(WithoutPasswordView<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">public</span> <span class="hljs-title">String</span> <span class="hljs-title">getUsername</span>() </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.username;
     }
 
-    <span class="hljs-meta">@JsonView</span>(WithPasswordView.class)
-    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getPassword</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-meta">@JsonView</span>(WithPasswordView<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">public</span> <span class="hljs-title">String</span> <span class="hljs-title">getPassword</span>() </span>{
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.password;
     }
 }
@@ -1619,7 +1619,7 @@ Content-Transfer-Encoding: 8bit
     <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/user"</span>)
     <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getUser</span><span class="hljs-params">(Model model)</span> </span>{
         model.addAttribute(<span class="hljs-string">"user"</span>, <span class="hljs-keyword">new</span> User(<span class="hljs-string">"eric"</span>, <span class="hljs-string">"7!jd#h23"</span>));
-        model.addAttribute(JsonView.class.getName(), User.WithoutPasswordView.class);
+        model.addAttribute(JsonView<span class="hljs-class">.<span class="hljs-keyword">class</span>.<span class="hljs-title">getName</span>(), <span class="hljs-title">User</span>.<span class="hljs-title">WithoutPasswordView</span>.<span class="hljs-title">class</span>)</span>;
         <span class="hljs-keyword">return</span> <span class="hljs-string">"userView"</span>;
     }
 }
@@ -1687,7 +1687,7 @@ Content-Transfer-Encoding: 8bit
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initBinder</span><span class="hljs-params">(WebDataBinder binder)</span> </span>{
         SimpleDateFormat dateFormat = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"yyyy-MM-dd"</span>);
         dateFormat.setLenient(<span class="hljs-keyword">false</span>);
-        binder.registerCustomEditor(Date.class, <span class="hljs-keyword">new</span> CustomDateEditor(dateFormat, <span class="hljs-keyword">false</span>));
+        binder.registerCustomEditor(Date<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">new</span> <span class="hljs-title">CustomDateEditor</span>(<span class="hljs-title">dateFormat</span>, <span class="hljs-title">false</span>))</span>;
     }
 
     <span class="hljs-comment">// ...</span>
@@ -1725,14 +1725,14 @@ Content-Transfer-Encoding: 8bit
 <p>该异常可能与顶级异常（即抛出直接<code>IOException</code>）或顶级包装器中的异常（例如，包含在 <code>IllegalStateException</code>内的<code>IOException</code>）相匹配。</p>
 <p>对于匹配的异常类型，最好将目标异常声明为方法参数，如前面的示例所示。当多个异常方法匹配时，根(root)异常匹配通常优先于原因(cause )异常匹配。 更具体地说，<code>ExceptionDepthComparator</code> 用于根据抛出的异常类型的深度对异常进行排序。</p>
 <p>注解声明可以缩小要匹配的异常类型，如以下示例所示：</p>
-<pre><code class="language-java"><span class="hljs-meta">@ExceptionHandler</span>({FileSystemException.class, RemoteException.class})
-<span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity&lt;String&gt; <span class="hljs-title">handle</span><span class="hljs-params">(IOException ex)</span> </span>{
+<pre><code class="language-java"><span class="hljs-meta">@ExceptionHandler</span>({FileSystemException<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">RemoteException</span>.<span class="hljs-title">class</span>})
+<span class="hljs-title">public</span> <span class="hljs-title">ResponseEntity</span>&lt;<span class="hljs-title">String</span>&gt; <span class="hljs-title">handle</span>(<span class="hljs-title">IOException</span> <span class="hljs-title">ex</span>) </span>{
     <span class="hljs-comment">// ...</span>
 }
 </code></pre>
 <p>您甚至可以使用特定异常类型列表中的非常通用的参数签名，如以下示例所示：:</p>
-<pre><code class="language-java"><span class="hljs-meta">@ExceptionHandler</span>({FileSystemException.class, RemoteException.class})
-<span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity&lt;String&gt; <span class="hljs-title">handle</span><span class="hljs-params">(Exception ex)</span> </span>{
+<pre><code class="language-java"><span class="hljs-meta">@ExceptionHandler</span>({FileSystemException<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">RemoteException</span>.<span class="hljs-title">class</span>})
+<span class="hljs-title">public</span> <span class="hljs-title">ResponseEntity</span>&lt;<span class="hljs-title">String</span>&gt; <span class="hljs-title">handle</span>(<span class="hljs-title">Exception</span> <span class="hljs-title">ex</span>) </span>{
     <span class="hljs-comment">// ...</span>
 }
 </code></pre>
@@ -1874,16 +1874,16 @@ Content-Transfer-Encoding: 8bit
 <p>在启动时， <code>@RequestMapping</code>和<code>@ExceptionHandler</code>方法的基础结构类检测 <code>@ControllerAdvice</code> 类型的Spring bean，然后在运行时应用它们的方法。 全局<code>@ExceptionHandler</code>方法（来自<code>@ControllerAdvice</code>）在本地方法之后（来自 <code>@Controller</code>）应用。 相比之下，全局<code>@ModelAttribute</code>和<code>@InitBinder</code>方法在本地方法之前应用。</p>
 <p>默认情况下，<code>@ControllerAdvice</code>方法适用于每个请求（即所有控制器），但您可以通过使用注解上的属性将其缩小到控制器的子集，如以下示例所示：</p>
 <pre><code class="language-java"><span class="hljs-comment">// Target all Controllers annotated with @RestController</span>
-<span class="hljs-meta">@ControllerAdvice</span>(annotations = RestController.class)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExampleAdvice1</span> </span>{}
+<span class="hljs-meta">@ControllerAdvice</span>(annotations = RestController<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">ExampleAdvice1</span> </span>{}
 
 <span class="hljs-comment">// Target all Controllers within specific packages</span>
 <span class="hljs-meta">@ControllerAdvice</span>(<span class="hljs-string">"org.example.controllers"</span>)
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExampleAdvice2</span> </span>{}
 
 <span class="hljs-comment">// Target all Controllers assignable to specific classes</span>
-<span class="hljs-meta">@ControllerAdvice</span>(assignableTypes = {ControllerInterface.class, AbstractController.class})
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExampleAdvice3</span> </span>{}
+<span class="hljs-meta">@ControllerAdvice</span>(assignableTypes = {ControllerInterface<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">AbstractController</span>.<span class="hljs-title">class</span>})
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">ExampleAdvice3</span> </span>{}
 </code></pre>
 <p>前面示例中的选择器在运行时进行评估，如果广泛使用，可能会对性能产生负面影响。 有关更多详细信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.1.3.RELEASE/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html"><code>@ControllerAdvice</code></a> javadoc 。</p>
 <p><a id="mvc-uri-building"></a></p>
@@ -2059,14 +2059,14 @@ ServletUriComponentsBuilder ucb = ServletUriComponentsBuilder.fromServletMapping
 </code></pre>
 <p>您可以通过引用方法名字的办法来准备一个链接，如以下示例所示：</p>
 <pre><code class="language-java">UriComponents uriComponents = MvcUriComponentsBuilder
-    .fromMethodName(BookingController.class, <span class="hljs-string">"getBooking"</span>, <span class="hljs-number">21</span>).buildAndExpand(<span class="hljs-number">42</span>);
+    .fromMethodName(BookingController.class, "getBooking", 21).buildAndExpand(42);
 
 URI uri = uriComponents.encode().toUri();
 </code></pre>
 <p>在前面的示例中，为方法参数准备了填充值（在本例中，long值： <code>21</code>），以用于填充路径变量并插入到URL中。此外，我们提供了值42，来填充任何剩余的URI变量，比如从类层级的请求映射中继承来的hotel变量。 如果方法还有更多的参数，你可以为那些不需要参与URL构造的变量赋予null值。 通常，只有<code>@PathVariable</code>和<code>@RequestParam</code>参数与构造URL相关。</p>
 <p>还有其他方法可以使用<code>MvcUriComponentsBuilder</code>。 例如，例如可以通过类似mock掉测试对象的方法，用代理来避免直接通过名字引用一个控制，如以下示例所示（该示例假设静态导入<code>MvcUriComponentsBuilder.on</code>）：</p>
 <pre><code class="language-java">UriComponents uriComponents = MvcUriComponentsBuilder
-    .fromMethodCall(on(BookingController.class).getBooking(<span class="hljs-number">21</span>)).buildAndExpand(<span class="hljs-number">42</span>);
+    .fromMethodCall(on(BookingController<span class="hljs-class">.<span class="hljs-keyword">class</span>).<span class="hljs-title">getBooking</span>(21)).<span class="hljs-title">buildAndExpand</span>(42)</span>;
 
 URI uri = uriComponents.encode().toUri();
 </code></pre>
@@ -2075,7 +2075,7 @@ URI uri = uriComponents.encode().toUri();
 <p>对于上面所提的场景，开发者可以使用重载过的静态方法<code>fromXxx</code>，它接收一个<code>UriComponentsBuilder</code>参数，然后从中获取基本URL以便使用，或你也可以使用一个基本URL创建一个<code>MvcUriComponentsBuilder</code>对象， 然后使用实例对象的<code>withXxx</code>方法。以下列表使用 <code>withMethodCall</code>:</p>
 <pre><code class="language-java">UriComponentsBuilder base = ServletUriComponentsBuilder.fromCurrentContextPath().path(<span class="hljs-string">"/en"</span>);
 MvcUriComponentsBuilder builder = MvcUriComponentsBuilder.relativeTo(base);
-builder.withMethodCall(on(BookingController.class).getBooking(<span class="hljs-number">21</span>)).buildAndExpand(<span class="hljs-number">42</span>);
+builder.withMethodCall(on(BookingController<span class="hljs-class">.<span class="hljs-keyword">class</span>).<span class="hljs-title">getBooking</span>(21)).<span class="hljs-title">buildAndExpand</span>(42)</span>;
 
 URI uri = uriComponents.encode().toUri();
 </code></pre>
@@ -3438,7 +3438,7 @@ productList.url=/WEB-INF/jsp/productlist.jsp
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserValidator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Validator</span> </span>{
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">supports</span><span class="hljs-params">(Class candidate)</span> </span>{
-        <span class="hljs-keyword">return</span> User.class.isAssignableFrom(candidate);
+        <span class="hljs-keyword">return</span> User<span class="hljs-class">.<span class="hljs-keyword">class</span>.<span class="hljs-title">isAssignableFrom</span>(<span class="hljs-title">candidate</span>)</span>;
     }
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">validate</span><span class="hljs-params">(Object obj, Errors errors)</span> </span>{
@@ -4293,7 +4293,7 @@ public class WebConfig {
             .setPathMatcher(antPathMatcher())
             .setUrlPathHelper(urlPathHelper())
             .addPathPrefix(<span class="hljs-string">"/api"</span>,
-                    HandlerTypePredicate.forAnnotation(RestController.class));
+                    HandlerTypePredicate.forAnnotation(RestController<span class="hljs-class">.<span class="hljs-keyword">class</span>))</span>;
     }
 
     <span class="hljs-meta">@Bean</span>

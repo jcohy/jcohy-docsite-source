@@ -418,8 +418,8 @@ public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)
 </table>
 <p>JCache具有与Spring的<code>CacheResolver</code>接口相同的<code>javax.cache.annotation.CacheResolver</code>，但JCache只支持单个缓存。默认情况下，一个简单的实现是根据注解上声明的名称检索要使用的缓存。 应该注意的是，如果在注解中没有指定缓存名称，则会自动生成默认值，参看<code>@CacheResult#cacheName()</code> 。</p>
 <p><code>CacheResolver</code>实例由<code>CacheResolverFactory</code>检索。 可以为每个缓存操作自定义工厂，如以下示例所示:</p>
-<pre><code class="language-java"><span class="hljs-meta">@CacheResult</span>(cacheNames=<span class="hljs-string">"books"</span>, cacheResolverFactory=MyCacheResolverFactory.class) (<span class="hljs-number">1</span>)
-<span class="hljs-function"><span class="hljs-keyword">public</span> Book <span class="hljs-title">findBook</span><span class="hljs-params">(ISBN isbn)</span>
+<pre><code class="language-java"><span class="hljs-meta">@CacheResult</span>(cacheNames=<span class="hljs-string">"books"</span>, cacheResolverFactory=MyCacheResolverFactory<span class="hljs-class">.<span class="hljs-keyword">class</span>) (1)
+<span class="hljs-title">public</span> <span class="hljs-title">Book</span> <span class="hljs-title">findBook</span>(<span class="hljs-title">ISBN</span> <span class="hljs-title">isbn</span>)
 </span></code></pre>
 <p><strong>1</strong>、为此操作自定义工厂。</p>
 <p>对于所有引用的类，Spring尝试查找具有给定类型的bean。如果存在多个匹配项，则会创建一个新实例，并且可以使用常规bean生命周期回调(如依赖项注入)。</p>
@@ -433,8 +433,8 @@ public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)
 <p>您还可以在操作上指定<code>CacheKeyResolver</code>，类似于指定<code>CacheResolverFactory</code>的方式。</p>
 <p>JCache可以管理由注解的方法引发的异常。这可以防止缓存的更新，但也可以将异常缓存为失败的指示器，而不是再次调用该方法。让我们假设，如果ISBN的结构错误，则抛出<code>InvalidIsbnNotFoundException</code>。这是一个永久性的失败，没有book可以用这样的参数检索。下面抛出缓存异常，以便使用相同的无效ISBN进行进一步调用，直接抛出缓存的异常，而不是再次调用该方法。:</p>
 <pre><code class="language-java"><span class="hljs-meta">@CacheResult</span>(cacheName=<span class="hljs-string">"books"</span>, exceptionCacheName=<span class="hljs-string">"failures"</span>
-            cachedExceptions = InvalidIsbnNotFoundException.class)
-<span class="hljs-function"><span class="hljs-keyword">public</span> Book <span class="hljs-title">findBook</span><span class="hljs-params">(ISBN isbn)</span>
+            cachedExceptions = InvalidIsbnNotFoundException<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">Book</span> <span class="hljs-title">findBook</span>(<span class="hljs-title">ISBN</span> <span class="hljs-title">isbn</span>)
 </span></code></pre>
 <p><a id="enabling-jsr-107-support"></a></p>
 <h4><a href="#enabling-jsr-107-support"></a>8.3.2. 启用 JSR-107 支持</h4>

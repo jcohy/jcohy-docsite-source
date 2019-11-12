@@ -699,7 +699,7 @@ ContextConfiguration {
     }
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isNotificationEnabled</span><span class="hljs-params">(Notification notification)</span> </span>{
-        <span class="hljs-keyword">return</span> AttributeChangeNotification.class.isAssignableFrom(notification.getClass());
+        <span class="hljs-keyword">return</span> AttributeChangeNotification<span class="hljs-class">.<span class="hljs-keyword">class</span>.<span class="hljs-title">isAssignableFrom</span>(<span class="hljs-title">notification</span>.<span class="hljs-title">getClass</span>())</span>;
     }
 
 }

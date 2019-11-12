@@ -100,16 +100,17 @@ class Home extends Language {
         {/*    <img src={getLink(dataSource.introduction.img)} />*/}
         {/*  </div>*/}
         {/*</section>*/}
-        <section className="feature-section">
-          <h3>{dataSource.features.title}</h3>
-          <ul>
-          {
-            dataSource.features.list.map((feature, i) => (
-              <Item feature={feature} key={i} />
-            ))
-          }
-          </ul>
-        </section>
+        {/*<section className="feature-section">*/}
+        {/*  <h3>{dataSource.features.title}</h3>*/}
+        {/*  <ul>*/}
+        {/*  {*/}
+        {/*    dataSource.features.list.map((feature, i) => (*/}
+        {/*      <Item feature={feature} key={i} />*/}
+        {/*    ))*/}
+        {/*  }*/}
+        {/*  </ul>*/}
+        {/*</section>*/}
+
         {/*<section className="start-section">*/}
         {/*  <div className="start-body">*/}
         {/*    <div className="left-part">*/}
@@ -120,6 +121,7 @@ class Home extends Language {
         {/*    <div className="right-part"><img src={getLink('/img/quick_start.png')} /></div>*/}
         {/*  </div>*/}
         {/*</section>*/}
+
         {/*<section className="users-section">*/}
         {/*  <h3>{dataSource.users.title}</h3>*/}
         {/*  <p>{dataSource.users.desc}</p>*/}
@@ -131,6 +133,7 @@ class Home extends Language {
         {/*  }*/}
         {/*  </div>*/}
         {/*</section>*/}
+
         <Footer logo="/img/jcohy.png" language={language} />
       </div>
     );

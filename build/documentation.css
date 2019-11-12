@@ -298,7 +298,7 @@
     padding: 0; } }
 .sidemenu {
   background: #f8f8f8;
-  width: 295px;
+  width: 395px;
   position: relative;
   display: inline-block;
   padding: 20px 0; }
@@ -389,7 +389,7 @@
     .sidemenu .sidemenu-toggle {
       display: inline-block; }
     .sidemenu.sidemenu-open {
-      width: 295px; } }
+      width: 395px; } }
 @charset "UTF-8";
 @font-face {
   font-family: octicons-link;
@@ -3227,7 +3227,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     vertical-align: top;
     box-sizing: border-box;
     padding: 20px 6% 0;
-    width: calc(100% - 295px); }
+    width: calc(100% - 395px); }
 
 @media screen and (max-width: 640px) {
   .documentation-page .content-section {
