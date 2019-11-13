@@ -6,13 +6,14 @@ import path from 'path';
 import Language from '../../components/language';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
-import Sidemenu from '../../components/sidemenu';
 import Footer from '../../components/footer';
-import docsConfig from '../../../site_config/docs';
+import springConfig from '../../../site_config/springframework';
 import { Menu, Icon } from 'antd';
 import './index.scss';
 import 'antd/dist/antd.css';
+import classnames from 'classnames';
 import { getLink } from '../../../utils';
+
 // 锚点正则
 const anchorReg = /^#[^/]/;
 // 相对地址正则，包括./、../、直接文件夹名称开头、直接文件开头
@@ -30,32 +31,33 @@ class Documentation extends Language {
   }
   componentWillMount(){
     const language = this.getLanguage();
-    const menuTreeNode = this.renderMenu(docsConfig[language].sidemenu);
+    const menuTreeNode = this.renderMenu(springConfig[language].sidemenu);
     this.setState({
       menuTreeNode:menuTreeNode
     })
   }
-  componentDidMount() {
-    // 通过请求获取生成好的json数据，静态页和json文件在同一个目录下
-    fetch(window.location.pathname.replace(/\.html$/i, '.json'))
-    .then(res => res.json())
-    .then((md) => {
-      this.setState({
-        __html: md && md.__html ? md.__html : '',
-      });
-    });
-    // this.markdownContainer.addEventListener('click', (e) => {
-    //   const isAnchor = e.target.nodeName.toLowerCase() === 'a' && e.target.getAttribute('href') && anchorReg.test(e.target.getAttribute('href'));
-    //   if (isAnchor) {
-    //     e.preventDefault();
-    //     const id = e.target.getAttribute('href').slice(1);
-    //     scroller.scrollTo(id, {
-    //       duration: 1000,
-    //       smooth: 'easeInOutQuint',
-    //     });
-    //   }
-    // });
-  }
+
+  // componentDidMount() {
+  //   // 通过请求获取生成好的json数据，静态页和json文件在同一个目录下
+  //   fetch(window.location.pathname.replace(/\.html$/i, '.json'))
+  //   .then(res => res.json())
+  //   .then((md) => {
+  //     this.setState({
+  //       __html: md && md.__html ? md.__html : '',
+  //     });
+  //   });
+  //   this.markdownContainer.addEventListener('click', (e) => {
+  //     const isAnchor = e.target.nodeName.toLowerCase() === 'a' && e.target.getAttribute('href') && anchorReg.test(e.target.getAttribute('href'));
+  //     if (isAnchor) {
+  //       e.preventDefault();
+  //       const id = e.target.getAttribute('href').slice(1);
+  //       scroller.scrollTo(id, {
+  //         duration: 1000,
+  //         smooth: 'easeInOutQuint',
+  //       });
+  //     }
+  //   });
+  // }
 
   componentDidUpdate() {
     this.handleRelativeLink();
@@ -77,23 +79,7 @@ class Documentation extends Language {
       }
     });
   }
-  renderMenu = (data)=>{
-    return data.map((item)=>{
-      if(item.children){//当有子集存在的时候，需要再次调用遍历
-        this.rootSubmenuKeys.push(item.key)
-        return (
-            <SubMenu title={item.title} key={item.key}>
-              {this.renderMenu(item.children)}
-            </SubMenu>
-        )
-      }
-      return (
-          <Menu.Item title={item.title} key={item.key}>
-            <a href={getLink(item.link)} target={item.target}>{item.title}</a>
-           </Menu.Item>
-      )
-    })
-  }
+
   handleRelativeImg() {
     const language = this.getLanguage();
     // 获取当前文档所在文件系统中的路径
@@ -111,9 +97,24 @@ class Documentation extends Language {
     });
   }
 
+  renderMenu = (data)=>{
+    return data.map((item)=>{
+      if(item.children){//当有子集存在的时候，需要再次调用遍历
+        this.rootSubmenuKeys.push(item.key)
+        return (
+            <SubMenu title={item.title} key={item.key}>
+              {this.renderMenu(item.children)}
+            </SubMenu>
+        )
+      }
+      return (
+          <Menu.Item title={item.title} key={item.key}>{item.title}</Menu.Item>
+      )
+    })
+  }
   render() {
     const language = this.getLanguage();
-    const dataSource = docsConfig[language];
+    const dataSource = springConfig[language].sidemenu;
     const __html = this.props.__html || this.state.__html;
     return (
       <div className="documentation-page">
@@ -125,11 +126,10 @@ class Documentation extends Language {
           onLanguageChange={this.onLanguageChange}
         />
         <Bar img="/img/system/docs.png" text={dataSource.barText} />
-        <section className="content-section">
-          {/*<Sidemenu dataSource={dataSource.sidemenu} />*/}
+        <section className="contents-section">
           <Menu
               onClick={this.handleClick}
-              style={{  width: 350,display:'inline-block'  }}
+              style={{  width: 350  }}
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               mode="inline"
@@ -138,7 +138,7 @@ class Documentation extends Language {
           </Menu>
           <div
             className="doc-content markdown-body"
-            // ref={(node) => { this.markdownContainer = node; }}
+            ref={(node) => { this.markdownContainer = node; }}
             dangerouslySetInnerHTML={{ __html }}
           />
         </section>

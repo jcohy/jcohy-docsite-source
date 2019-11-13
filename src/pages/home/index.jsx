@@ -82,7 +82,6 @@ class Home extends Language {
                   return (
                         <TabPane tab={cardItem.title} key={i}>
                           <CardItem cardItem={cardItem} key={i}
-
                           />
                         </TabPane>
                   )

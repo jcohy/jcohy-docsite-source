@@ -1,5 +1,4 @@
 import React from 'react';
-import { getLink } from '../../../utils';
 import { Card, Icon,Divider,Button,Rate, Col, Row,Typography,Tabs} from 'antd';
 import 'antd/dist/antd.css';
 
@@ -43,7 +42,6 @@ const Item = (props) => {
                           {
                               itemList.categories.map((category) => {
                                   return (
-
                                       <span>
                                       <Divider/>
                                   <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />&nbsp;&nbsp;

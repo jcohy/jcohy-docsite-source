@@ -49,6 +49,7 @@
     "react-dom": "^16.5.2",
     "react-scroll": "^1.7.9",
     "react-tilt": "^0.1.4",
+    "tocbot": "^4.9.1",
     "whatwg-fetch": "^2.0.4"
   }
 }

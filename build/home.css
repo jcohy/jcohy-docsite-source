@@ -1803,7 +1803,8 @@ h1, h2, h3, h4, h5, h6 {
       .home-page .top-section .button-area .button:last-child {
         margin-right: 0; }
   .home-page .card-section {
-    background: #F9FAFA; }
+    background: #ffffff;
+    margin-left: 10px; }
     .home-page .card-section .card-body {
       max-width: 1280px;
       box-sizing: border-box;
