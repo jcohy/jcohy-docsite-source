@@ -160,85 +160,84 @@ export default {
                         ],
                     },
                     {
-                title: '测试',
-                children: [
+                        title: '测试',
+                        children: [],
+                    },
+                    // {
+                    //     title: 'Web Servlet',
+                    //     children: [
+                    //         {
+                    //             title: '全部章节一览',
+                    //             link: '/zh-cn/docs/springframework/web/overview.html',
+                    //         },
+                    //         {
+                    //             title: 'Spring Web MVC',
+                    //             link: '/zh-cn/docs/springframework/web/mvc.html',
+                    //         },
+                    //         {
+                    //             title: 'REST 客户端',
+                    //             link: '/zh-cn/docs/springframework/web/appendix.html',
+                    //         },
+                    //         {
+                    //             title: '附录',
+                    //             link: '/zh-cn/docs/springframework/web/appendix.html',
+                    //         },
+                    //     ],
+                    // },
+                    // {
+                    //     title: 'Web Reactive框架',
+                    //     children: [{}],
+                    // },
+                    // {
+                    //     title: '集成',
+                    //     children: [
+                    //         {
+                    //             title: '全部章节一览',
+                    //             link: '/zh-cn/docs/springframework/integration/overview.html',
+                    //         },
+                    //         {
+                    //             title: 'Spring的远程处理和Web服务',
+                    //             link: '/zh-cn/docs/springframework/integration/remoting.html',
+                    //         },
+                    //         {
+                    //             title: '企业级JavaBean(EJB) 集成',
+                    //             link: '/zh-cn/docs/springframework/integration/ejb.html',
+                    //         },
+                    //         {
+                    //             title: ' JMS (Java 消息服务 )',
+                    //             link: '/zh-cn/docs/springframework/integration/jms.html',
+                    //         },
+                    //         {
+                    //             title: 'JMX',
+                    //             link: '/zh-cn/docs/springframework/integration/jmx.html',
+                    //         },
+                    //         {
+                    //             title: 'JCA CCI',
+                    //             link: '/zh-cn/docs/springframework/integration/cci.html',
+                    //         },
+                    //         {
+                    //             title: '电子邮件',
+                    //             link: '/zh-cn/docs/springframework/integration/mail.html',
+                    //         },
+                    //         {
+                    //             title: '执行任务和计划任务',
+                    //             link: '/zh-cn/docs/springframework/integration/scheduling.html',
+                    //         },
+                    //         {
+                    //             title: '缓存抽象',
+                    //             link: '/zh-cn/docs/springframework/integration/cache.html',
+                    //         },
+                    //         {
+                    //             title: '附录',
+                    //             link: '/zh-cn/docs/springframework/integration/appendix.html',
+                    //         },
+                    //     ],
+                    // },
+                    // {
+                    //     title: '语言',
+                    //     children: [{}],
+                    // },
                 ],
-            },
-            // {
-            //     title: 'Web Servlet',
-            //     children: [
-            //         {
-            //             title: '全部章节一览',
-            //             link: '/zh-cn/docs/springframework/web/overview.html',
-            //         },
-            //         {
-            //             title: 'Spring Web MVC',
-            //             link: '/zh-cn/docs/springframework/web/mvc.html',
-            //         },
-            //         {
-            //             title: 'REST 客户端',
-            //             link: '/zh-cn/docs/springframework/web/appendix.html',
-            //         },
-            //         {
-            //             title: '附录',
-            //             link: '/zh-cn/docs/springframework/web/appendix.html',
-            //         },
-            //     ],
-            // },
-            // {
-            //     title: 'Web Reactive框架',
-            //     children: [{}],
-            // },
-            // {
-            //     title: '集成',
-            //     children: [
-            //         {
-            //             title: '全部章节一览',
-            //             link: '/zh-cn/docs/springframework/integration/overview.html',
-            //         },
-            //         {
-            //             title: 'Spring的远程处理和Web服务',
-            //             link: '/zh-cn/docs/springframework/integration/remoting.html',
-            //         },
-            //         {
-            //             title: '企业级JavaBean(EJB) 集成',
-            //             link: '/zh-cn/docs/springframework/integration/ejb.html',
-            //         },
-            //         {
-            //             title: ' JMS (Java 消息服务 )',
-            //             link: '/zh-cn/docs/springframework/integration/jms.html',
-            //         },
-            //         {
-            //             title: 'JMX',
-            //             link: '/zh-cn/docs/springframework/integration/jmx.html',
-            //         },
-            //         {
-            //             title: 'JCA CCI',
-            //             link: '/zh-cn/docs/springframework/integration/cci.html',
-            //         },
-            //         {
-            //             title: '电子邮件',
-            //             link: '/zh-cn/docs/springframework/integration/mail.html',
-            //         },
-            //         {
-            //             title: '执行任务和计划任务',
-            //             link: '/zh-cn/docs/springframework/integration/scheduling.html',
-            //         },
-            //         {
-            //             title: '缓存抽象',
-            //             link: '/zh-cn/docs/springframework/integration/cache.html',
-            //         },
-            //         {
-            //             title: '附录',
-            //             link: '/zh-cn/docs/springframework/integration/appendix.html',
-            //         },
-            //     ],
-            // },
-            // {
-            //     title: '语言',
-            //     children: [{}],
-            // },
-        ],
             },
         ],
         barText: 'Spring Framework 中文文档',

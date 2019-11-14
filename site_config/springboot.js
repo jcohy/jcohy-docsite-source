@@ -18,7 +18,7 @@ export default {
                         link: '/en-us/docs/springboot/demo.html',
                     },
                 ],
-            }
+            },
         ],
         barText: 'Spring Boot',
     },
