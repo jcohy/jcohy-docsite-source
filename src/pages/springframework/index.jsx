@@ -12,23 +12,23 @@ import { Menu, Icon } from 'antd';
 import './index.scss';
 import 'antd/dist/antd.css';
 import classnames from 'classnames';
-import { getLink } from '../../../utils';
+import { getLink} from '../../../utils';
+import DocsItem from '../documentation/docsItem';
 
 // 锚点正则
-const anchorReg = /^#[^/]/;
-// 相对地址正则，包括./、../、直接文件夹名称开头、直接文件开头
-const relativeReg = /^((\.{1,2}\/)|([\w-]+[/.]))/;
 const { SubMenu } = Menu;
-class Documentation extends Language {
+class SpringFramework extends Language {
   rootSubmenuKeys=[]
+  rootSubOpenKeys = ['概述', 'Spring Framework'];
   constructor(props) {
     super(props);
     this.state = {
-      __html: '',
-      length: 2,
-      openKeys: [],
+      __html: '/zh-cn/docs/Overview.html',
+      openKeys: ['概述'],
+      current:'概述',
     };
   }
+
   componentWillMount(){
     const language = this.getLanguage();
     const menuTreeNode = this.renderMenu(springConfig[language].sidemenu);
@@ -37,81 +37,55 @@ class Documentation extends Language {
     })
   }
 
-  // componentDidMount() {
-  //   // 通过请求获取生成好的json数据，静态页和json文件在同一个目录下
-  //   fetch(window.location.pathname.replace(/\.html$/i, '.json'))
-  //   .then(res => res.json())
-  //   .then((md) => {
-  //     this.setState({
-  //       __html: md && md.__html ? md.__html : '',
-  //     });
-  //   });
-  //   this.markdownContainer.addEventListener('click', (e) => {
-  //     const isAnchor = e.target.nodeName.toLowerCase() === 'a' && e.target.getAttribute('href') && anchorReg.test(e.target.getAttribute('href'));
-  //     if (isAnchor) {
-  //       e.preventDefault();
-  //       const id = e.target.getAttribute('href').slice(1);
-  //       scroller.scrollTo(id, {
-  //         duration: 1000,
-  //         smooth: 'easeInOutQuint',
-  //       });
-  //     }
-  //   });
-  // }
-
-  componentDidUpdate() {
-    this.handleRelativeLink();
-    this.handleRelativeImg();
-  }
-
-  handleRelativeLink() {
-    const language = this.getLanguage();
-    // 获取当前文档所在文件系统中的路径
-    // rootPath/en-us/docs/dir/hello.html => /docs/en-us/dir
-    const splitPart = window.location.pathname.replace(`${window.rootPath}/${language}`, '').split('/').slice(0, -1);
-    const filePath = splitPart.join('/');
-    const alinks = Array.from(this.markdownContainer.querySelectorAll('a'));
-    alinks.forEach((alink) => {
-      const href = alink.getAttribute('href');
-      if (relativeReg.test(href)) {
-        // 文档之间有中英文之分，md的相对地址要转换为对应HTML的地址
-        alink.href = `${path.join(`${window.rootPath}/${language}`, filePath, href.replace(/\.(md|markdown)$/, '.html'))}`;
-      }
-    });
-  }
-
-  handleRelativeImg() {
-    const language = this.getLanguage();
-    // 获取当前文档所在文件系统中的路径
-    // rootPath/en-us/docs/dir/hello.html => /docs/en-us/dir
-    const splitPart = window.location.pathname.replace(`${window.rootPath}/${language}`, '').split('/').slice(0, -1);
-    splitPart.splice(2, 0, language);
-    const filePath = splitPart.join('/');
-    const imgs = Array.from(this.markdownContainer.querySelectorAll('img'));
-    imgs.forEach((img) => {
-      const src = img.getAttribute('src');
-      if (relativeReg.test(src)) {
-        // 图片无中英文之分
-        img.src = `${path.join(window.rootPath, filePath, src)}`;
-      }
-    });
+  componentDidMount() {
+    this.getHtml(this.state.__html)
   }
 
   renderMenu = (data)=>{
     return data.map((item)=>{
       if(item.children){//当有子集存在的时候，需要再次调用遍历
-        this.rootSubmenuKeys.push(item.key)
+        this.rootSubmenuKeys.push(item.title)
         return (
-            <SubMenu title={item.title} key={item.key}>
+            <SubMenu title={item.title} key={item.title}>
               {this.renderMenu(item.children)}
             </SubMenu>
         )
       }
       return (
-          <Menu.Item title={item.title} key={item.key}>{item.title}</Menu.Item>
+          <Menu.Item title={item.link} key={item.title}>{item.title}</Menu.Item>
       )
     })
   }
+
+  getHtml = (pathName) =>{
+    fetch(pathName.replace(/\.html$/i, '.json'))
+       .then(res => res.json())
+       .then((md) => {
+         this.setState({
+           __html: md && md.__html ? md.__html : '',
+         });
+       });
+  }
+
+  handleClick = (e) => {
+    this.setState({
+      current: e.key,
+      link: e.item.props.title,
+      __html: this.getHtml(e.item.props.title)
+    })
+  }
+
+  onOpenChange = openKeys => {
+    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    if (this.rootSubOpenKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openKeys });
+    } else {
+      this.setState({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+    }
+  };
+
   render() {
     const language = this.getLanguage();
     const dataSource = springConfig[language].sidemenu;
@@ -129,18 +103,26 @@ class Documentation extends Language {
         <section className="contents-section">
           <Menu
               onClick={this.handleClick}
-              style={{  width: 350  }}
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              style={{  width: 350,display:'inline-block'   }}
+              defaultSelectedKeys={[this.state.current]}
+              onOpenChange={this.onOpenChange}
+              openKeys={this.state.openKeys}
               mode="inline"
           >
             {this.state.menuTreeNode}
           </Menu>
+          {/*<div*/}
+          {/*  className="doc-content markdown-body"*/}
+          {/*  ref={(node) => { this.markdownContainer = node; }}*/}
+          {/*  dangerouslySetInnerHTML={{ __html }}*/}
+          {/*/>*/}
+          {/*<DocsItem link={this.state.link}></DocsItem>*/}
           <div
-            className="doc-content markdown-body"
-            ref={(node) => { this.markdownContainer = node; }}
-            dangerouslySetInnerHTML={{ __html }}
-          />
+              className="doc-content markdown-body"
+                dangerouslySetInnerHTML={{ __html }}
+          >
+           {/*{{ __html }}*/}
+          </div>
         </section>
         <Footer logo="/img/jcohy.png" language={language} />
       </div>
@@ -148,6 +130,6 @@ class Documentation extends Language {
   }
 }
 
-document.getElementById('root') && ReactDOM.render(<Documentation />, document.getElementById('root'));
+document.getElementById('root') && ReactDOM.render(<SpringFramework />, document.getElementById('root'));
 
-export default Documentation;
+export default SpringFramework;

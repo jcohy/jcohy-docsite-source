@@ -101,7 +101,7 @@ export default {
         link: '/zh-cn/open/index.html',
       },
       {
-        key: 'resource.js',
+        key: 'resource',
         text: '资源',
         link: '/zh-cn/resource/index.html',
       },
