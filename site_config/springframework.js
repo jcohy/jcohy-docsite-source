@@ -19,33 +19,6 @@ export default {
                     },
                 ],
             },
-            {
-                title: 'SpringBoot',
-                children: [
-                    {
-                        title: 'SpringBoot',
-                        link: '/en-us/docs/springboot/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'nginx',
-                children: [
-                    {
-                        title: 'nginx',
-                        link: '/en-us/docs/nginx/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'Microservices',
-                children: [
-                    {
-                        title: 'Microservices',
-                        link: '/en-us/docs/microservices/demo.html',
-                    },
-                ],
-            },
         ],
         barText: 'Spring Framework',
     },
@@ -267,35 +240,7 @@ export default {
             // },
         ],
             },
-            // {
-            //     title: 'SpringBoot',
-            //     children: [
-            //         {
-            //             title: 'SpringBoot',
-            //             link: '/zh-cn/docs/springboot/demo.html',
-            //         },
-            //     ],
-            // },
-            // {
-            //     title: 'nginx',
-            //     children: [
-            //         {
-            //             title: 'nginx',
-            //             link: '/zh-cn/docs/nginx/demo.html',
-            //         },
-            //     ],
-            // },
-            // {
-            //     title: 'Microservices',
-            //     children:
-            //         [
-            //             {
-            //                 title: 'Microservices',
-            //                 link: '/zh-cn/docs/microservices/demo.html',
-            //             },
-            //         ],
-            // },
         ],
-        barText: 'Spring Framework文档',
+        barText: 'Spring Framework 中文文档',
     },
 };

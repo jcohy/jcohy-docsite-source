@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Icon,Divider,Button,Rate, Col, Row,Typography,Tabs} from 'antd';
 import 'antd/dist/antd.css';
+import { getLink } from '../../../utils';
 
 const Item = (props) => {
   const { cardItem } = props;
@@ -19,9 +20,10 @@ const Item = (props) => {
               }
                   return (<Col span={8} >
                       <Card
-                          style={{ width: 300 ,marginBottom:'20px',marginLeft:'20px'}}
+                          style={{ width: 380 ,marginBottom:'20px',marginLeft:'20px'}}
                           cover={
                               <img
+                                  style={{ width: '50%',margin:'10px auto'}}
                                   alt={itemList.img.alt}
                                   src={itemList.img.src}
                               />
@@ -35,7 +37,7 @@ const Item = (props) => {
                                       href={itemList.buttons[2].href}/>,
                           ]}
                       >
-                          <Divider style={{ padding: '10px 0' }}>{itemList.title}</Divider>
+                          <Divider>{itemList.title}</Divider>
                           <Paragraph>
                               {itemList.description}
                           </Paragraph>
@@ -45,7 +47,7 @@ const Item = (props) => {
                                       <span>
                                       <Divider/>
                                   <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />&nbsp;&nbsp;
-                                          <a href={category.link}>{category.title}</a>
+                                          <a href={getLink(category.link)} target={category.target || '_self'}>{category.title}</a>
                                   </span>
                                   )
                               })

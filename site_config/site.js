@@ -13,11 +13,6 @@ export default {
         link: '/en-us/index.html',
       },
       {
-        key: 'docs',
-        text: 'DOCS',
-        link: '/en-us/docs/Overview.html',
-      },
-      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog/index.html',
@@ -47,19 +42,19 @@ export default {
       list: [
         {
           text: 'Spring Framework',
-          link: '/en-us/docs/springframework/demo.html',
+          link: '/en-us/springframework',
         },
         {
           text: 'SpringBoot',
-          link: '/en-us/docs/springboot/demo.html',
+          link: '/en-us/springboot',
         },
         {
           text: 'Nginx',
-          link: '/en-us/docs/dir/nginx/demo.html',
+          link: '/en-us/nginx',
         },
         {
           text: 'Microservices',
-          link: '/en-us/docs/microservices/demo.html',
+          link: '/en-us/microservices',
         },
       ],
     },
@@ -84,11 +79,6 @@ export default {
         key: 'home',
         text: '首页',
         link: '/zh-cn/index.html',
-      },
-      {
-        key: 'docs',
-        text: '文档',
-        link: '/zh-cn/docs/Overview.html',
       },
       {
         key: 'blog',
@@ -120,15 +110,19 @@ export default {
       list: [
         {
           text: 'Spring Framework',
-          link: '/zh-cn/docs/springframework/demo.html',
+          link: '/zh-cn/springframework',
         },
         {
           text: 'SpringBoot',
-          link: '/zh-cn/docs/springboot/demo.html',
+          link: '/zh-cn/springboot',
+        },
+        {
+          text: 'Nginx',
+          link: '/zh-cn/nginx',
         },
         {
           text: 'Microservices',
-          link: '/zh-cn/docs/microservices/demo.html',
+          link: '/zh-cn/microservices',
         },
       ],
     },

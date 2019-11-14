@@ -88,7 +88,7 @@ class SpringFramework extends Language {
 
   render() {
     const language = this.getLanguage();
-    const dataSource = springConfig[language].sidemenu;
+    const dataSource = springConfig[language];
     const __html = this.props.__html || this.state.__html;
     return (
       <div className="documentation-page">
@@ -111,17 +111,10 @@ class SpringFramework extends Language {
           >
             {this.state.menuTreeNode}
           </Menu>
-          {/*<div*/}
-          {/*  className="doc-content markdown-body"*/}
-          {/*  ref={(node) => { this.markdownContainer = node; }}*/}
-          {/*  dangerouslySetInnerHTML={{ __html }}*/}
-          {/*/>*/}
-          {/*<DocsItem link={this.state.link}></DocsItem>*/}
           <div
               className="doc-content markdown-body"
                 dangerouslySetInnerHTML={{ __html }}
           >
-           {/*{{ __html }}*/}
           </div>
         </section>
         <Footer logo="/img/jcohy.png" language={language} />
