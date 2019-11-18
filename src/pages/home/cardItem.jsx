@@ -1,14 +1,11 @@
 import React from 'react';
-import { Card, Icon,Divider,Button,Rate, Col, Row,Typography,Tabs} from 'antd';
+import { Card, Icon,Divider,Button, Col, Row,Typography} from 'antd';
 import 'antd/dist/antd.css';
 import { getLink } from '../../../utils';
 
 const Item = (props) => {
   const { cardItem } = props;
-  const { Title, Paragraph, Text } = Typography;
-  const gridStyle = {
-        marginTop: '10px',
-  };
+  const { Paragraph } = Typography;
   return(
       <Row type="flex">
       {

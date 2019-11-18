@@ -1,0 +1,10 @@
+{
+  "filename": "JavaDoc.md",
+  "__html": "<h2>javadoc的HTML5支持</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>224: HTML5 Javadoc</li>\n<li>225: Javadoc Search\njdk 8 ：生成的java帮助文档是在HTML 4 中，而HTML 4 已经是很久的标准了。\njdk 9 ：javadoc的输出，现在符合兼容HTML 5 标准。</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\JavaDoc.html",
+  "meta": {
+    "title": "javadoc的HTML5支持",
+    "keywords": "docs,jcohy-docs,java9,javadoc的HTML5支持",
+    "description": "javadoc的HTML5支持"
+  }
+}

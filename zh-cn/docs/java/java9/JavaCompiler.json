@@ -1,0 +1,10 @@
+{
+  "filename": "JavaCompiler.md",
+  "__html": "<h2>智能Java编译工具</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>139: Enhance javac to Improve Build Speed.</li>\n<li>199: Smart Java Compilation, Phase Two\n智能java编译工具( sjavac )的第一个阶段始于JEP139这个项目，用于在多核处理器情况下提升JDK的编译速度。如今，这个项目已经进入第二阶段，即JEP199，其目的是改进Java编译工具，并取代目前JDK编译工具javac，继而成为Java环境默认的通用的智能编译工具。\nJDK 9 还更新了javac 编译器以便能够将 java 9 代码编译运行在低版本 Java 中。</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\JavaCompiler.html",
+  "meta": {
+    "title": "智能Java编译工具",
+    "keywords": "docs,jcohy-docs,java9,智能Java编译工具",
+    "description": "智能Java编译工具"
+  }
+}

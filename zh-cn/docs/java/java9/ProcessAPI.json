@@ -1,0 +1,10 @@
+{
+  "filename": "ProcessAPI.md",
+  "__html": "<h2>进程 API</h2>\n<p>Java 9 增加了 ProcessHandle 接口，可以对原生进程进行管理，尤其适合于管理长时间运行的进程。在使用 P rocessBuilder 来启动一个进程之后，可以通过 Process.toHandle()方法来得到一个 ProcessHandl e 对象的实例。通过 ProcessHandle 可以获取到由 <a href=\"http://ProcessHandle.Info\">ProcessHandle.Info</a> 表 示的进程的基本信息，如命令行参数、可执行文件路径和启动时间等。ProcessHandle 的 onExit()方法返回一个 C ompletableFuture<ProcessHandle>对象，可以在进程结束时执行自定义的动作。 下面代码 中给出了进程 API 的使用示例。</p>\n<pre><code class=\"language-java\"><span class=\"hljs-keyword\">final</span> ProcessBuilder processBuilder = <span class=\"hljs-keyword\">new</span> ProcessBuilder(<span class=\"hljs-string\">\"top\"</span>) \n    .inheritIO(); \n<span class=\"hljs-keyword\">final</span> ProcessHandle processHandle = processBuilder.start().toHandle(); \nprocessHandle.onExit().whenCompleteAsync((handle, throwable) -&gt; { \n    <span class=\"hljs-keyword\">if</span> (throwable == <span class=\"hljs-keyword\">null</span>) { \n        System.out.println(handle.pid()); \n    } <span class=\"hljs-keyword\">else</span> { \n        throwable.printStackTrace(); \n    } \n});\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\ProcessAPI.html",
+  "meta": {
+    "title": "进程 API",
+    "keywords": "docs,jcohy-docs,java9,进程 API",
+    "description": "进程 API"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "SHA-3HashAlgorithms.md",
+  "__html": "<h2>改进应用安全性能</h2>\n<p>Java 9 新增了 4 个 SHA- 3 哈希算法，SHA3-224、SHA3-256、SHA3-384 和 S HA3-512。另外也增加了通过 java.security.SecureRandom 生成使用 DRBG 算法的强随机数。 如下代码中给出了 SHA-3 哈希算法的使用示例</p>\n<pre><code class=\"language-java\"><span class=\"hljs-keyword\">import</span> org.apache.commons.codec.binary.Hex; \n<span class=\"hljs-keyword\">public</span> <span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">SHA3</span> </span>{ \n    <span class=\"hljs-function\"><span class=\"hljs-keyword\">public</span> <span class=\"hljs-keyword\">static</span> <span class=\"hljs-keyword\">void</span> <span class=\"hljs-title\">main</span><span class=\"hljs-params\">(<span class=\"hljs-keyword\">final</span> String[] args)</span> <span class=\"hljs-keyword\">throws</span> NoSuchAlgorithmException </span>{ \n        <span class=\"hljs-keyword\">final</span> MessageDigest instance = MessageDigest.getInstance(<span class=\"hljs-string\">\"SHA3-224\"</span>); \n        <span class=\"hljs-keyword\">final</span> <span class=\"hljs-keyword\">byte</span>[] digest = instance.digest(<span class=\"hljs-string\">\"\"</span>.getBytes()); \n        System.out.println(Hex.encodeHexString(digest)); \n    } \n}\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\SHA-3HashAlgorithms.html",
+  "meta": {
+    "title": "改进应用安全性能",
+    "keywords": "docs,jcohy-docs,java9,改进应用安全性能",
+    "description": "改进应用安全性能"
+  }
+}

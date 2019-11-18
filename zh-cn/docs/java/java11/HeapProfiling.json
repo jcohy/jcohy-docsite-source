@@ -1,0 +1,10 @@
+{
+  "filename": "HeapProfiling.md",
+  "__html": "<h2>低开销的 Heap Profiling</h2>\n<p>Java 11 中提供一种低开销的 Java 堆分配采样方法，能够得到堆分配的 Java 对象信息，并且能够通过 JVMTI 访问堆信息。</p>\n<p>引入这个低开销内存分析工具是为了达到如下目的：</p>\n<ul>\n<li>足够低的开销，可以默认且一直开启</li>\n<li>能通过定义好的程序接口访问</li>\n<li>能够对所有堆分配区域进行采样</li>\n<li>能给出正在和未被使用的 Java 对象信息\n对用户来说，了解它们堆里的内存分布是非常重要的，特别是遇到生产环境中出现的高 CPU、高内存占用率的情况。目前有一些已经开源的工具，允许用户分析应用程序中的堆使用情况，比如：Java Flight Recorder、jmap、YourKit 以及 VisualVM tools.。但是这些工具都有一个明显的不足之处：无法得到对象的分配位置，headp dump 以及 heap histogram 中都没有包含对象分配的具体信息，但是这些信息对于调试内存问题至关重要，因为它能够告诉开发人员他们的代码中发生的高内存分配的确切位置，并根据实际源码来分析具体问题，这也是 Java 11 中引入这种低开销堆分配采样方法的原因。</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\HeapProfiling.html",
+  "meta": {
+    "title": "低开销的 Heap Profiling",
+    "keywords": "docs,jcohy-docs,低开销的 Heap Profiling,java11",
+    "description": "低开销的 Heap Profiling"
+  }
+}

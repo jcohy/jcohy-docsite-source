@@ -5,7 +5,7 @@ description: Spring  Framework 中文文档
 ---
 
 # Spring  Framework 中文文档
-> #### Version 5.1.3.BUILD-SNAPSHOT
+> #### Version 5.2.1.RELEASE
 >
 > 最新特性, 更新日志, 支持的版本, 以及其他话题，项目的发布追踪，都在项目的 [Github Wiki](https://github.com/spring-projects/spring-framework/wiki).进行维护
 

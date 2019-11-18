@@ -1,0 +1,10 @@
+{
+  "filename": "SUMMARY.md",
+  "__html": "<h1>Java8新特性</h1>\n<blockquote>\n<ul>\n<li><a href=\"#Lambda\">Lambda表达式</a></li>\n<li><a href=\"#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3\">函数式接口</a></li>\n<li><a href=\"#%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E4%B8%8E%E6%9E%84%E9%80%A0%E5%99%A8%E5%BC%95%E7%94%A8\">方法引用与构造器引用</a></li>\n<li><a href=\"#StreamAPI\">Stream API</a></li>\n<li><a href=\"#Optional%E5%AE%B9%E5%99%A8\">Optional容器</a></li>\n<li><a href=\"#%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95%E4%B8%8E%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95\">接口中的默认方法与静态方法</a></li>\n<li><a href=\"#%E6%96%B0%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9FAPI\">新时间日期API</a></li>\n<li><a href=\"#%E5%85%B6%E4%BB%96%E6%96%B0%E7%89%B9%E6%80%A7\">其他新特性</a></li>\n</ul>\n</blockquote>\n<ul>\n<li>速度更快</li>\n<li>代码更少（增加了新的语法Lambda 表达式）</li>\n<li>强大的Stream API</li>\n<li>便于并行</li>\n<li>最大化减少空指针异常Optional</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java8\\SUMMARY.html",
+  "meta": {
+    "title": "Java8新特性",
+    "keywords": "docs,jcohy-docs,java8,feature",
+    "description": "Java8 中文文档"
+  }
+}

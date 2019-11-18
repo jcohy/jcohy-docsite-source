@@ -1,0 +1,10 @@
+{
+  "filename": "PlatformLoggingAPIandService.md",
+  "__html": "<h2>平台日志 API 和 服务</h2>\n<p>Java 9 允许为 JDK 和应用配置同样的日志实现。新增的 System.LoggerFinder 用来管理 JDK 使 用的日志记录器实现。JVM 在运行时只有一个系统范围的 LoggerFinder 实例。LoggerFinder 通 过服务查找机制来加载日志记录器实现。默认情况下，JDK 使用 java.logging 模块中的 java.util.logging 实现。通过 LoggerFinder 的 getLogger()方法就可以获取到表示日志记录器的 System.Logger 实现。应用同样可以使用 System.Logger 来记录日志。这样就保证了 JDK 和应用使用同样的日志实现。我们也可以通过添加自己的 System.LoggerFinder 实现来让 JDK 和应用使用 SLF4J 等其他日志记录框架。 如下代码中给出了平台日志 API 的使用示例。</p>\n<pre><code class=\"language-java\"><span class=\"hljs-keyword\">public</span> <span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">Main</span> </span>{ \n    <span class=\"hljs-keyword\">private</span> <span class=\"hljs-keyword\">static</span> <span class=\"hljs-keyword\">final</span> System.Logger LOGGER = System.getLogger(<span class=\"hljs-string\">\"Main\"</span>); \n    <span class=\"hljs-function\"><span class=\"hljs-keyword\">public</span> <span class=\"hljs-keyword\">static</span> <span class=\"hljs-keyword\">void</span> <span class=\"hljs-title\">main</span><span class=\"hljs-params\">(<span class=\"hljs-keyword\">final</span> String[] args)</span> </span>{ \n        LOGGER.log(Level.INFO, <span class=\"hljs-string\">\"Run!\"</span>);\n    } \n}\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\PlatformLoggingAPIandService.html",
+  "meta": {
+    "title": "平台日志 API 和 服务",
+    "keywords": "docs,jcohy-docs,java9,平台日志 API 和 服务",
+    "description": "平台日志 API 和 服务"
+  }
+}

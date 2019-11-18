@@ -1,0 +1,10 @@
+{
+  "filename": "LaunchSingleFile.md",
+  "__html": "<h2>简化启动单个源代码文件</h2>\n<p>Java 11 版本中最令人兴奋的功能之一是增强 Java 启动器，使之能够运行单一文件的 Java 源代码。此功能允许使用 Java 解释器直接执行 Java 源代码。源代码在内存中编译，然后由解释器执行。唯一的约束在于所有相关的类必须定义在同一个 Java 文件中。</p>\n<p>此功能对于开始学习 Java 并希望尝试简单程序的人特别有用，并且能与 jshell 一起使用，将成为任何初学者学习语言的一个很好的工具集。不仅初学者会受益，专业人员还可以利用这些工具来探索新的语言更改或尝试未知的 API。</p>\n<p>如今单文件程序在编写小实用程序时很常见，特别是脚本语言领域。从中开发者可以省去用 Java 编译程序等不必要工作，以及减少新手的入门障碍。在基于 Java 10 的程序实现中可以通过三种方式启动：</p>\n<ul>\n<li>作为 * .class 文件</li>\n<li>作为 * .jar 文件中的主类</li>\n<li>作为模块中的主类\n而在最新的 Java 11 中新增了一个启动方式，即可以在源代码中声明类，例如：如果名为 HelloWorld.java 的文件包含一个名为 hello.World 的类，那么该命令：</li>\n</ul>\n<pre><code class=\"language-shell\">java HelloWorld.java\n</code></pre>\n<p>也等同于：</p>\n<pre><code class=\"language-shell\"><span class=\"hljs-meta\">$</span><span class=\"bash\"> javac HelloWorld.java</span>\n<span class=\"hljs-meta\">$</span><span class=\"bash\"> java -cp . hello.World</span>\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\LaunchSingleFile.html",
+  "meta": {
+    "title": "简化启动单个源代码文件",
+    "keywords": "docs,jcohy-docs,简化启动单个源代码文件,java11",
+    "description": "简化启动单个源代码文件"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "ThreadLocalHandshakes.md",
+  "__html": "<h2>线程-局部管控</h2>\n<p>在已有的 Java 版本中，JVM 线程只能全部启用或者停止，没法做到对单独某个线程的操作。为了能够对单独的某个线程进行操作，Java 10 中线程管控引入 JVM 安全点的概念，将允许在不运行全局 JVM 安全点的情况下实现线程回调，由线程本身或者 JVM 线程来执行，同时保持线程处于阻塞状态，这种方式使得停止单个线程变成可能，而不是只能启用或停止所有线程。通过这种方式显著地提高了现有 JVM 功能的性能开销，并且改变了到达 JVM 全局安全点的现有时间语义。</p>\n<p>增加的参数为：-XX:ThreadLocalHandshakes (默认为开启)，将允许用户在支持的平台上选择安全点。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\ThreadLocalHandshakes.html",
+  "meta": {
+    "title": "线程-局部管控",
+    "keywords": "docs,jcohy-docs,java10,线程-局部管控",
+    "description": "线程-局部管控"
+  }
+}

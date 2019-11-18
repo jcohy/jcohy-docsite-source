@@ -1,0 +1,10 @@
+{
+  "filename": "Desktop.md",
+  "__html": "<h2>用户界面</h2>\n<p>类 java.awt.Desktop 增加了新的与桌面进行互动的能力。可以使用 addAppEventListener 方法来添加不同应用事件的监听器，包括应用变为前台应用、应用隐藏或显示、屏幕和系统进入休眠与唤醒、以及 用户会话的开始和终止等。还可以在显示关于窗口和配置窗口时，添加自定义的逻辑。在用户要求退出应用时，可以通过自定义处理器来接受或拒绝退出请求。在 A WT 图像支持方面，可以在应用中使用多分辨率图像。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\Desktop.html",
+  "meta": {
+    "title": "用户界面",
+    "keywords": "docs,jcohy-docs,java9,用户界面",
+    "description": "用户界面"
+  }
+}

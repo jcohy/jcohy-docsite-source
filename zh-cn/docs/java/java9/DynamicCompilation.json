@@ -1,0 +1,10 @@
+{
+  "filename": "DynamicCompilation.md",
+  "__html": "<h2>java的动态编译器</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>\n<p>243: Java-Level JVM Compiler Interface</p>\n</li>\n<li>\n<p>295: Ahead-of-Time Compilation</p>\n<p>Oracle 一直在努力提高 Java 启动和运行时性能，希望其能够在更广泛的场景达到或接近本地语言的性能。但是，直到今天，谈到 Java，很多 C/C++ 开发者还是会不屑地评价为启动慢，吃内存。\n简单说，这主要是因为 Java 编译产生的类文件是 Java 虚拟机可以理解的二进制代码，而不是真正的可执行的本地代码，需要 Java 虚拟机进行解释和编译，这带来了额外的开销。\nJIT（Just-in-time）编译器可以在运行时将热点编译成本地代码，速度很快。但是 Java 项目现在变得很大很复杂，因此 JIT 编译器需要花费较长时间才能热身完，而且有些 Java 方法还没法编译，性能方面也会下降。AoT 编译就是为了解决这些问题而生的。\n在 JDK 9 中， AOT（JEP 295: Ahead-of-Time Compilation）作为实验特性被引入进来，开发者可以利用新的 jaotc 工具将重点代码转换成类似类库一样的文件。虽然仍处于试验阶段，但这个功能使得 Java 应用在被虚拟机启动之前能够先将 Java 类编译为原生代码。此功能旨在改进小型和大型应用程序的启动时间，同时对峰值性能的影响很小。\n但是 Java 技术供应商 Excelsior 的营销总监 Dmitry Leskov 担心 AoT 编译技术不够成熟，希望 Oracle 能够等到 Java 10 时有个更稳定版本才发布。\n另外 JVMCI （JEP 243: Java-Level JVM Compiler Interface）等特性，对于整个编程语言的发展，可能都具有非常重要的意义，虽然未必引起了广泛关注。目前 Graal Core API 已经被集成进入 Java 9，虽然还只是初始一小步，但是完全用 Java 语言来实现的可靠的、高性能的动态编译器，似乎不再是遥不可及，这是 Java 虚拟机开发工程师的福音。\n与此同时，随着 Truffle 框架和 Substrate VM 的发展，已经让个别信心满满的工程师高呼“One VM to Rule Them All!”， 也许就在不远的将来 Ploygot 以一种另类的方式成为现实。</p>\n</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\DynamicCompilation.html",
+  "meta": {
+    "title": "java的动态编译器",
+    "keywords": "docs,jcohy-docs,java9,java的动态编译器",
+    "description": "java的动态编译器"
+  }
+}

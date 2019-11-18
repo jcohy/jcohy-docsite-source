@@ -1,0 +1,10 @@
+{
+  "filename": "Reactor.md",
+  "__html": "<h2>反应式流</h2>\n<p>反应式编程的思想最近得到了广泛的流行。 在 Java 平台上有流行的反应式 库 RxJava 和 R eactor。反应式流规范的出发点是提供一个带非阻塞负压（ non-blocking backpressure ） 的异步流处理规范。反应式流规范的核心接口已经添加到了 Java9 中的 java.util.concurrent.Flow 类中。</p>\n<p>Flow 中包含了 Flow.Publisher、Flow.Subscriber、Flow.Subscription 和 F low.Processor 等 4 个核心接口。Java 9 还提供了 SubmissionPublisher 作为 Flow.Publisher 的一个实现。RxJava 2 和 Reactor 都可以很方便的 与 Flow 类的核心接口进行互操作。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\Reactor.html",
+  "meta": {
+    "title": "反应式流",
+    "keywords": "docs,jcohy-docs,java9,反应式流",
+    "description": "反应式流"
+  }
+}

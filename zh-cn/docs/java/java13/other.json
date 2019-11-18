@@ -1,0 +1,10 @@
+{
+  "filename": "other.md",
+  "__html": "<h2>其他特性</h2>\n<p>上面列出的是大方面的特性，除此之外还有一些api的更新及废弃，主要见 <a href=\"https://jdk.java.net/13/release-notes\">https://jdk.java.net/13/release-notes</a>，这里举几个例子</p>\n<h3>增加项</h3>\n<ul>\n<li>添加FileSystems.newFileSystem(Path, Map&lt;String, ?&gt;) Method</li>\n<li>新的java.nio.ByteBuffer Bulk get/put Methods Transfer Bytes Without Regard to Buffer Position</li>\n<li>支持Unicode 12.1</li>\n<li>添加-XX:SoftMaxHeapSize Flag，目前仅仅对ZGC起作用</li>\n<li>ZGC的最大heap大小增大到16TB</li>\n</ul>\n<h3>移除项</h3>\n<ul>\n<li>移除awt.toolkit System Property</li>\n<li>移除Runtime Trace Methods</li>\n<li>移除-XX:+AggressiveOpts</li>\n<li>移除Two Comodo Root CA Certificates、Two DocuSign Root CA Certificates</li>\n<li>移除内部的com.sun.net.ssl包</li>\n</ul>\n<h3>废弃项</h3>\n<ul>\n<li>废弃-Xverify:none及-noverify</li>\n<li>废弃rmic Tool并准备移除</li>\n<li>废弃javax.security.cert并准备移除</li>\n</ul>\n<h3>已知问题</h3>\n<ul>\n<li>不再支持Windows 2019 Core Server</li>\n<li>使用ZIP File System (zipfs) Provider来更新包含Uncompressed Entries的ZIP或JAR可能造成文件损坏</li>\n</ul>\n<h3>其他事项</h3>\n<ul>\n<li>GraphicsEnvironment.getCenterPoint()及getMaximumWindowBounds()已跨平台统一</li>\n<li>增强了JAR Manifest的Class-Path属性处理</li>\n<li>针对Negatively Sized Argument，StringBuffer(CharSequence)及StringBuilder(CharSequence)会抛出NegativeArraySizeException</li>\n<li>linux的默认进程启动机制已经使用posix_spawn</li>\n<li>Lookup.unreflectSetter(Field)针对static final fields会抛出IllegalAccessException</li>\n<li>使用了java.net.Socket.setSocketImplFactory及java.net.ServerSocket.setSocketFactory方法的要注意，要求客户端及服务端要一致，不能一端使用自定义的factory一端使用默认的factory</li>\n<li>SocketImpl的supportedOptions, getOption及setOption方法的默认实现发生了变化，默认的supportedOptions返回空，而默认的getOption,及setOption方法抛出UnsupportedOperationException</li>\n<li>JNI NewDirectByteBuffer创建的Direct Buffer为java.nio.ByteOrder.BIG_ENDIAN</li>\n<li>Base64.Encoder及Base64.Decoder可能抛出OutOfMemoryError</li>\n<li>改进了Serial GC Young pause time report</li>\n<li>改进了MaxRAM及UseCompressedOops参数的行为</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java13\\other.html",
+  "meta": {
+    "title": "其他特性",
+    "keywords": "docs,jcohy-docs,其他特性,java13",
+    "description": "其他特性"
+  }
+}
