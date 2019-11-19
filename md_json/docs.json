@@ -1114,6 +1114,24 @@
       }
     },
     {
+      "filename": "resources-introduction.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-introduction.html",
+      "meta": {
+        "title": "基于注解的容器配置",
+        "keywords": "keywords: docs，jcohy-docs，spring,基于注解的容器配置",
+        "description": "Spring  Framework 中文文档 》 简介"
+      }
+    },
+    {
+      "filename": "resources-resource.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-resource.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
       "filename": "resources.md",
       "link": "\\zh-cn\\docs\\springframework\\core\\resources.html",
       "meta": {}

@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { scroller } from 'react-scroll';
 import 'whatwg-fetch'; // fetch polyfill
-import path from 'path';
 import Language from '../../components/language';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
@@ -11,14 +9,11 @@ import springConfig from '../../../site_config/springframework';
 import { Menu, Icon } from 'antd';
 import './index.scss';
 import 'antd/dist/antd.css';
-import classnames from 'classnames';
-import { getLink} from '../../../utils';
-import DocsItem from '../documentation/docsItem';
 
 // 锚点正则
 const { SubMenu } = Menu;
 class SpringFramework extends Language {
-  rootSubmenuKeys=[]
+  rootSubmenuKeys=[];
   rootSubOpenKeys = ['概述', 'Spring Framework'];
   constructor(props) {
     super(props);
@@ -44,7 +39,7 @@ class SpringFramework extends Language {
   renderMenu = (data)=>{
     return data.map((item)=>{
       if(item.children){//当有子集存在的时候，需要再次调用遍历
-        this.rootSubmenuKeys.push(item.title)
+        this.rootSubmenuKeys.push(item.title);
         return (
             <SubMenu title={item.title} key={item.title}>
               {this.renderMenu(item.children)}
@@ -55,7 +50,7 @@ class SpringFramework extends Language {
           <Menu.Item title={item.link} key={item.title}>{item.title}</Menu.Item>
       )
     })
-  }
+  };
 
   getHtml = (pathName) =>{
     fetch(pathName.replace(/\.html$/i, '.json'))
@@ -65,7 +60,7 @@ class SpringFramework extends Language {
            __html: md && md.__html ? md.__html : '',
          });
        });
-  }
+  };
 
   handleClick = (e) => {
     this.setState({
@@ -73,7 +68,7 @@ class SpringFramework extends Language {
       link: e.item.props.title,
       __html: this.getHtml(e.item.props.title)
     })
-  }
+  };
 
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);

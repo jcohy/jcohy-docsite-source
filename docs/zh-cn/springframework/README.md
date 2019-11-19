@@ -12,13 +12,7 @@ description: Spring  Framework 中文文档
 
 为依赖注入，事务管理，Web应用程序，数据访问，消息传递等提供核心支持。
 
-该项目为 Spring Framework文档翻译项目，基于 [Spring 5.2.0](https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/) 的官方文档进行翻译。
-
-## 阅读方式
-
-* [Github](https://github.com/DocsHome/spring-docs/blob/master/SUMMARY.md) 
-* [Gitbook](https://www.gitbook.com/book/docshome/spring-docs)
-* [Jcohy-docs](https://docs.jcohy.com//zh-cn/docs/springframework/README.html)
+该项目为 Spring Framework文档翻译项目，基于 [Spring 5.2.1](https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/) 的官方文档进行翻译。
 
 ## 项目状态
 

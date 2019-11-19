@@ -57,7 +57,6 @@ export default {
                             },
                             {
                                 title: 'IOC容器',
-                                // link: '/zh-cn/docs/springframework/core/IoC-container.html',
                                 children: [
                                     {
                                         title: 'Spring IoC容器和 bean 的介绍',
@@ -127,7 +126,12 @@ export default {
                             },
                             {
                                 title: '资源',
-                                link: '/zh-cn/docs/springframework/core/resources.html',
+                                children: [
+                                    {
+                                        title: '全部章节一览',
+                                        link: '/zh-cn/docs/springframework/core/overview.html',
+                                    },
+                                ],
                             },
                             {
                                 title: '验证, 数据绑定, 和类型转换',

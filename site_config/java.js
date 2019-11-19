@@ -356,7 +356,7 @@ export default {
                 title: 'Java 8 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 8特性一览',
                         link: '/zh-cn/docs/java/java8/SUMMARY.html',
                     },
                     {
@@ -388,7 +388,7 @@ export default {
                         link: '/zh-cn/docs/java/java8/Date.html',
                     },
                     {
-                        title: '其他新特性',
+                        title: 'Java 8 其他新特性',
                         link: '/zh-cn/docs/java/java8/Other.html',
                     },
                 ],
@@ -397,7 +397,7 @@ export default {
                 title: 'Java 9 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 9 特性一览',
                         link: '/zh-cn/docs/java/java9/SUMMARY.html',
                     },
                     {
@@ -498,7 +498,7 @@ export default {
                 title: 'Java 10 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 10 特性一览',
                         link: '/zh-cn/docs/java/java10/SUMMARY.html',
                     },
                     {
@@ -555,7 +555,7 @@ export default {
                 title: 'Java 11 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 11 特性一览',
                         link: '/zh-cn/docs/java/java11/SUMMARY.html',
                     },
                     {
@@ -624,7 +624,7 @@ export default {
                 title: 'Java 12 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 12 特性一览',
                         link: '/zh-cn/docs/java/java12/SUMMARY.html',
                     },
                     {
@@ -660,7 +660,7 @@ export default {
                         link: '/zh-cn/docs/java/java12/G11.html',
                     },
                     {
-                        title: '其他特性',
+                        title: 'Java 12 其他特性',
                         link: '/zh-cn/docs/java/java12/other.html',
                     },
                 ],
@@ -669,7 +669,7 @@ export default {
                 title: 'Java 13 新特性',
                 children: [
                     {
-                        title: '特性一览',
+                        title: 'Java 13 特性一览',
                         link: '/zh-cn/docs/java/java13/SUMMARY.html',
                     },
                     {
@@ -693,7 +693,7 @@ export default {
                         link: '/zh-cn/docs/java/java13/socket.html',
                     },
                     {
-                        title: '其他特性',
+                        title: 'Java 13 其他特性',
                         link: '/zh-cn/docs/java/java13/other.html',
                     },
                 ],
