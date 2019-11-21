@@ -1114,6 +1114,33 @@
       }
     },
     {
+      "filename": "resources-app-ctx.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-app-ctx.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
+      "filename": "resources-as-dependencies.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-as-dependencies.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
+      "filename": "resources-implementations.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-implementations.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
       "filename": "resources-introduction.md",
       "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-introduction.html",
       "meta": {
@@ -1125,6 +1152,24 @@
     {
       "filename": "resources-resource.md",
       "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-resource.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
+      "filename": "resources-resourceloade.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-resourceloade.html",
+      "meta": {
+        "title": "",
+        "keywords": "docs，jcohy-docs,",
+        "description": ""
+      }
+    },
+    {
+      "filename": "resources-resourceloaderaware.md",
+      "link": "\\zh-cn\\docs\\springframework\\core\\resources\\resources-resourceloaderaware.html",
       "meta": {
         "title": "",
         "keywords": "docs，jcohy-docs,",
