@@ -1,7 +1,7 @@
 ---
-title: 
-keywords: docs，jcohy-docs,
-description: 
+title: 如何接入SpringCloud Gateway
+keywords: docs，jcohy-docs,如何接入SpringCloud Gateway
+description: 如何接入SpringCloud Gateway
 ---
 
 # 1. 如何接入SpringCloud Gateway

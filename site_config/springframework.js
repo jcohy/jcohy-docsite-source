@@ -20,7 +20,7 @@ export default {
                 ],
             },
         ],
-        barText: 'Spring Framework',
+        barText: 'Spring Framework 5.2.1.RELEASE',
     },
     'zh-cn': {
         sidemenu: [
@@ -244,6 +244,6 @@ export default {
                 ],
             },
         ],
-        barText: 'Spring Framework 中文文档',
+        barText: 'Spring Framework 5.2.1.RELEASE 中文文档',
     },
 };

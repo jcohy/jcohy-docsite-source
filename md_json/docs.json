@@ -922,6 +922,141 @@
       }
     },
     {
+      "filename": "actuator_api.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\actuator_api.html",
+      "meta": {
+        "title": "Actuator API",
+        "keywords": "docs，jcohy-docs,Actuator API,actuator,api,gateway",
+        "description": "Actuator API"
+      }
+    },
+    {
+      "filename": "building_a_simple_gateway.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\building_a_simple_gateway.html",
+      "meta": {
+        "title": "使用Spring MVC或 Webflux 构建简单的网关",
+        "keywords": "docs，jcohy-docs,gateway,webflux,spring mvc",
+        "description": "使用Spring MVC或 Webflux 构建简单的网关"
+      }
+    },
+    {
+      "filename": "configuration.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\configuration.html",
+      "meta": {
+        "title": "配置",
+        "keywords": "docs，jcohy-docs,gateway,配置",
+        "description": "配置"
+      }
+    },
+    {
+      "filename": "cors_configuration.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\cors_configuration.html",
+      "meta": {
+        "title": "跨域配置",
+        "keywords": "docs，jcohy-docs,跨域配置,CORS",
+        "description": "跨域配置"
+      }
+    },
+    {
+      "filename": "developer_guide.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\developer_guide.html",
+      "meta": {
+        "title": "开发指南",
+        "keywords": "docs，jcohy-docs,开发指南.guide",
+        "description": "开发指南"
+      }
+    },
+    {
+      "filename": "gateway-how-it-works.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\gateway-how-it-works.html",
+      "meta": {
+        "title": "它是如何工作的",
+        "keywords": "docs，jcohy-docs,gateway,work",
+        "description": "它是如何工作的"
+      }
+    },
+    {
+      "filename": "gateway-request-predicates-factories.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\gateway-request-predicates-factories.html",
+      "meta": {
+        "title": "路由断言工厂",
+        "keywords": "docs，jcohy-docs,gateway,route,predicates",
+        "description": "路由断言工厂"
+      }
+    },
+    {
+      "filename": "gateway-starter.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\gateway-starter.html",
+      "meta": {
+        "title": "如何接入SpringCloud Gateway",
+        "keywords": "docs，jcohy-docs,如何接入SpringCloud Gateway",
+        "description": "如何接入SpringCloud Gateway"
+      }
+    },
+    {
+      "filename": "gatewayfilter_factories.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\gatewayfilter_factories.html",
+      "meta": {
+        "title": "网关过滤器工厂",
+        "keywords": "docs，jcohy-docs,gateway,filter",
+        "description": "网关过滤器工厂"
+      }
+    },
+    {
+      "filename": "global_filters.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\global_filters.html",
+      "meta": {
+        "title": "全局过滤器",
+        "keywords": "docs，jcohy-docs,全局过滤器,filter,GlobalFilter,gateway",
+        "description": "全局过滤器"
+      }
+    },
+    {
+      "filename": "glossary.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\glossary.html",
+      "meta": {
+        "title": "概念",
+        "keywords": "docs，jcohy-docs,概念,glossary",
+        "description": "概念"
+      }
+    },
+    {
+      "filename": "reactor_netty_access_logs.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\reactor_netty_access_logs.html",
+      "meta": {
+        "title": "Reactor Netty 访问日志",
+        "keywords": "docs，jcohy-docs,gateway,log",
+        "description": "Reactor Netty 访问日志"
+      }
+    },
+    {
+      "filename": "SUMMARY.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\SUMMARY.html",
+      "meta": {
+        "title": "摘要",
+        "keywords": "docs，jcohy-docs，spring cloud gateway,summary",
+        "description": "Spring  Cloud  Gateway 中文文档"
+      }
+    },
+    {
+      "filename": "tls_ssl.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\tls_ssl.html",
+      "meta": {
+        "title": "TLS / SSL",
+        "keywords": "docs，jcohy-docs,gateway,tls,ssl",
+        "description": "TLS / SSL"
+      }
+    },
+    {
+      "filename": "troubleshooting.md",
+      "link": "\\zh-cn\\docs\\spring-cloud\\gateway\\troubleshooting.html",
+      "meta": {
+        "title": "故障排除",
+        "keywords": "docs，jcohy-docs,故障排除",
+        "description": "故障排除"
+      }
+    },
+    {
       "filename": "demo.md",
       "link": "\\zh-cn\\docs\\springboot\\demo.html",
       "meta": {

@@ -9,8 +9,8 @@ description: Spring  Cloud  Gateway 中文文档
 >
 
 * 1. 如何接入SpringCloud Gateway
-* 2. 词汇
-* 3. 如何运行
+* 2. 概念
+* 3. 如何工作的
 * 4. 路由断言工厂（Route Predicate Factory）
     *    4.1. After 路由断言工厂
     *    4.2. Before 路由断言工厂
@@ -53,7 +53,7 @@ description: Spring  Cloud  Gateway 中文文档
 	*	5.28. Modify Response Body 过滤器工厂
 	*	5.29. Default Filters  	
 * 6. 全局过滤器（Global Filters）
-	*  6.1.  Global Filter 和 GatewayFilter 结合
+	*  6.1. 过滤器的执行顺序
 	*  6.2. Forward Routing Filter
 	*  6.3. LoadBalancerClient Filter
 	*  6.4. Netty Routing Filter
@@ -63,26 +63,26 @@ description: Spring  Cloud  Gateway 中文文档
 	*  6.8. Gateway Metrics Filter
 	*  6.9. Marking An Exchange As Routed
 * 7. TLS / SSL
-	*  7.1. TLS Handshake	
-* 8. Configuration
+	*  7.1. TLS 握手机制（Handshake	）
+* 8. 配置
 	*	8.1. Fluent Java Routes API 
 	*	8.2. DiscoveryClient Route Definition Locator
-* 9. Reactor Netty Access Logs
-* 10. CORS Configuration
+* 9. Reactor Netty 访问日志
+* 10. CORS 配置
 * 11. Actuator API
-	*	11.1. Verbose Actuator Format
-	*	11.2. Retrieving route filters
-	*	11.3. Refreshing the route cache
-	*	11.4. Retrieving the routes defined in the gateway
-	*	11.5. Retrieving information about a particular route
-	*	11.6. Creating and deleting a particular route
-	*	11.7. Recap: list of all endpoints 
-* 12. Troubleshooting
-	*	12.1. Log Levels
-	*	12.2. Wiretap 
-* 13. Developer Guide
-	*	13.1. Writing Custom Route Predicate Factories
-	*	13.2. Writing Custom GatewayFilter Factories
-	*	13.3. Writing Custom Global Filters
-	*	13.4. Writing Custom Route Locators and Writers 
-* 14. Building a Simple Gateway Using Spring MVC or Webflux
+	*	11.1. 详细的监控格式
+	*	11.2. 路由过滤器
+	*	11.3. 刷新路由
+	*	11.4. 查看路由定义信息
+	*	11.5. 查看指定路由信息
+	*	11.6. 创建和删除指定路由
+	*	11.7. Actuator API汇总
+* 12. 故障排除
+	*	12.1. 日志
+	*	12.2. 监听 
+* 13. 开发指南
+	*	13.1. 自定义 Route Predicate Factories
+	*	13.2. 自定义 GatewayFilter Factories
+	*	13.3. 自定义 Global Filters
+	*	13.4. 自定义 Route Locators and Writers 
+* 14. 使用Spring MVC或 Webflux 构建简单的网关

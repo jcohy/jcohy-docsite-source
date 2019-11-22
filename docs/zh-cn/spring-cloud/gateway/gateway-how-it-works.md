@@ -1,7 +1,7 @@
 ---
-title: 
-keywords: docs，jcohy-docs,
-description: 
+title: 它是如何工作的
+keywords: docs，jcohy-docs,gateway,work
+description: 它是如何工作的
 ---
 
 # 3. 它是如何工作的
