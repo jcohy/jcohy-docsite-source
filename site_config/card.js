@@ -14,86 +14,56 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/',
+                            href: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],
                     categories: [
                         {
                             title: 'Spring Framework Docs',
-                            link: '/zh-cn/springframework',
+                            link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
                     ],
                 },
-                // {
-                //     title: 'Spring Boot',
-                //     description: 'Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible.',
-                //     img: {
-                //         alt: 'Spring Boot',
-                //         src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Boot',
-                //             link: '/zh-cn/spring-boot',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
-                // {
-                //     title: 'Spring Security',
-                //     img: {
-                //         alt: 'Spring Security',
-                //         src: 'https://spring.io/img/homepage/icon-spring-security.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://spring.io/projects/spring-security',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Security Docs',
-                //             link: '/zh-cn/spring-security',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
+                {
+                    title: 'Spring Security',
+                    img: {
+                        alt: 'Spring Security',
+                        src: 'https://spring.io/img/homepage/icon-spring-security.svg',
+                    },
+                    buttons: [
+                        {
+                            href: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            icon: 'link',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'edit',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'star',
+                        },
+                    ],
+                    categories: [
+                        {
+                            title: 'Spring Security Docs',
+                            link: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            target: '_blank',
+                            description: '',
+                        },
+                    ],
+                },
                 {
                     title: 'Spring Cloud',
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
@@ -107,11 +77,11 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],
@@ -123,53 +93,6 @@ export default {
                         },
                     ],
                 },
-                // {
-                //     title: 'Spring Data',
-                //     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
-                //     img: {
-                //         alt: 'Spring Data',
-                //         src: 'https://spring.io/img/homepage/icon-spring-data.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://spring.io/projects/spring-data',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Data JDBC Docs',
-                //             link: '/zh-cn/springframework/jdbc',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data Jpa Docs',
-                //             link: '/zh-cn/springframework/jpa',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data LDAP Docs',
-                //             link: '/zh-cn/springframework/ldap',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data Redis Docs',
-                //             link: '/zh-cn/spring-data',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
             ],
         },
         {
@@ -184,15 +107,15 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'setting',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],
@@ -247,95 +170,68 @@ export default {
                     description: 'Provides core support for dependency injection, transaction management, web apps, data access, messaging and more.',
                     img: {
                         alt: 'Spring Framework',
+                        width:'50%',
                         src: 'https://spring.io/img/homepage/icon-spring-framework.svg',
                     },
                     buttons: [
                         {
-                            href: 'https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/',
+                            href: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],
                     categories: [
                         {
                             title: 'Spring Framework Docs',
-                            link: '/zh-cn/springframework',
+                            link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
                     ],
                 },
-                // {
-                //     title: 'Spring Boot',
-                //     description: 'Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible.',
-                //     img: {
-                //         alt: 'Spring Boot',
-                //         src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://docs.spring.io/spring-boot/docs/2.2.1.RELEASE/reference/html/',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Boot',
-                //             link: '/zh-cn/spring-boot',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
-                // {
-                //     title: 'Spring Security',
-                //     img: {
-                //         alt: 'Spring Security',
-                //         src: 'https://spring.io/img/homepage/icon-spring-security.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://spring.io/projects/spring-security',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Security Docs',
-                //             link: '/zh-cn/spring-security',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
+                {
+                    title: 'Spring Security',
+                    img: {
+                        alt: 'Spring Security',
+                        width:'100%',
+                        src: 'https://www.springcloud.cc/images/spring-cloud-security.png',
+                    },
+                    buttons: [
+                        {
+                            href: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            icon: 'link',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'edit',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'star',
+                        },
+                    ],
+                    categories: [
+                        {
+                            title: 'Spring Security Docs',
+                            link: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            target: '_blank',
+                            description: '',
+                        },
+                    ],
+                },
                 {
                     title: 'Spring Cloud',
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
                     img: {
                         alt: 'Spring Cloud',
+                        width:'50%',
                         src: 'https://spring.io/img/homepage/icon-spring-cloud.svg',
                     },
                     buttons: [
@@ -344,11 +240,11 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],
@@ -360,53 +256,6 @@ export default {
                         },
                     ],
                 },
-                // {
-                //     title: 'Spring Data',
-                //     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
-                //     img: {
-                //         alt: 'Spring Data',
-                //         src: 'https://spring.io/img/homepage/icon-spring-data.svg',
-                //     },
-                //     buttons: [
-                //         {
-                //             href: 'https://spring.io/projects/spring-data',
-                //             icon: 'link',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'edit',
-                //         },
-                //         {
-                //             href: 'http://www.baidu.com',
-                //             icon: 'star',
-                //         },
-                //     ],
-                //     categories: [
-                //         {
-                //             title: 'Spring Data JDBC Docs',
-                //             link: '/zh-cn/springframework/jdbc',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data Jpa Docs',
-                //             link: '/zh-cn/springframework/jpa',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data LDAP Docs',
-                //             link: '/zh-cn/springframework/ldap',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //         {
-                //             title: 'Spring Data Redis Docs',
-                //             link: '/zh-cn/spring-data',
-                //             target: '_blank',
-                //             description: '',
-                //         },
-                //     ],
-                // },
             ],
         },
         {
@@ -417,19 +266,19 @@ export default {
                     description: 'Java新特性',
                     img: {
                         alt: 'Java',
-                        src: '/img/java.png',
+                        src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
                     },
                     buttons: [
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'setting',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'edit',
                         },
                         {
-                            href: 'http://www.baidu.com',
+                            href: 'https://github.com/jiachao23',
                             icon: 'star',
                         },
                     ],

@@ -44,18 +44,6 @@ export default {
                     text: 'Spring Framework',
                     link: '/en-us/springframework',
                 },
-                {
-                    text: 'SpringBoot',
-                    link: '/en-us/springboot',
-                },
-                {
-                    text: 'Nginx',
-                    link: '/en-us/nginx',
-                },
-                {
-                    text: 'Microservices',
-                    link: '/en-us/microservices',
-                },
             ],
         },
         resources: {
@@ -110,19 +98,13 @@ export default {
             list: [
                 {
                     text: 'Spring Framework',
-                    link: '/zh-cn/springframework',
+                    link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
+                    target: '_blank',
                 },
                 {
-                    text: 'SpringBoot',
-                    link: '/zh-cn/springboot',
-                },
-                {
-                    text: 'Nginx',
-                    link: '/zh-cn/nginx',
-                },
-                {
-                    text: 'Microservices',
-                    link: '/zh-cn/microservices',
+                    text: 'Spring Security',
+                    link: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                    target: '_blank',
                 },
             ],
         },
