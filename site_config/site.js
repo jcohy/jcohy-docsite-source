@@ -97,13 +97,18 @@ export default {
             title: '文档',
             list: [
                 {
-                    text: 'Spring Framework',
-                    link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.2.RELEASE/index.html',
+                    text: 'Spring Framework 中文参考文档',
+                    link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
                     target: '_blank',
                 },
                 {
-                    text: 'Spring Security',
-                    link: 'https://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                    text: 'Spring Boot 中文参考文档',
+                    link: 'http://document.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                    target: '_blank',
+                },
+                {
+                    text: 'Spring Security 中文参考文档',
+                    link: 'http://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
                     target: '_blank',
                 },
             ],
