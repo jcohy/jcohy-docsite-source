@@ -23,6 +23,13 @@ export default {
                 desc: 'Linux下常用软件安装',
                 link: '/zh-cn/blog/install.html',
             },
+            {
+                title: '如何构建SpringBoot源码',
+                author: 'jiac',
+                dateStr: '01 19，2020',
+                desc: '如何构建SpringBoot源码',
+                link: '/zh-cn/blog/Spring-build.html',
+            },
         ],
     },
 };

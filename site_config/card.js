@@ -113,7 +113,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -128,7 +128,7 @@ export default {
                     categories: [
                         {
                             title: 'Spring Framework 5.2.3 中文参考文档',
-                            link: 'http://document.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
@@ -145,7 +145,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://document.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -160,7 +160,7 @@ export default {
                     categories: [
                         {
                             title: 'Spring Boot 2.2.2 中文参考文档',
-                            link: 'http://document.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
@@ -177,7 +177,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -192,7 +192,7 @@ export default {
                     categories: [
                         {
                             title: 'Spring Security 5.2.1 中文参考文档',
-                            link: 'http://document.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
                             target: '_blank',
                             description: 'sss',
                         },
@@ -224,7 +224,7 @@ export default {
                     categories: [
                         {
                             title: 'Spring Date Jpa 2.2.4 中文参考文档',
-                            link: 'http://document.jcohy.com/zh-cn/spring-data-jpa/2.2.4.RELEASE/index.html',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-data-jpa/2.2.4.RELEASE/index.html',
                             description: '',
                             target: '_blank',
                         }
