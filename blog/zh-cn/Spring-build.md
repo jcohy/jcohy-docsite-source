@@ -43,35 +43,35 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
 
 - 修改pom文件。在 repositories 标签和 pluginRepositories 分别加入
   
-```xml
-  <repository>
-      <id>spring-release</id>
-      <name>Spring Release</name>
-      <url>https://repo.spring.io/release</url>
-  </repository>
-```
-
-  ```xml
-  <pluginRepository>
-      <id>aliyunmaven</id>
-      <name>aliyunmaven Release</name>
-      <url>https://maven.aliyun.com/nexus/content/groups/public</url>
-  </pluginRepository>
-  ```
-
-  修改后的部分pom如下：
-
-  ```xml
-  <repositories>
-      <!-- Repositories to allow snapshot and milestone BOM imports during development.
-     This section is stripped by the flatten plugin during install/deploy. -->
-  
+    ```xml
       <repository>
           <id>spring-release</id>
           <name>Spring Release</name>
           <url>https://repo.spring.io/release</url>
       </repository>
-  
+    ```
+
+    ```xml
+    <pluginRepository>
+      <id>aliyunmaven</id>
+      <name>aliyunmaven Release</name>
+      <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+    </pluginRepository>
+    ```
+
+  修改后的部分pom如下：
+
+    ```xml
+    <repositories>
+      <!-- Repositories to allow snapshot and milestone BOM imports during development.
+     This section is stripped by the flatten plugin during install/deploy. -->
+    
+      <repository>
+          <id>spring-release</id>
+          <name>Spring Release</name>
+          <url>https://repo.spring.io/release</url>
+      </repository>
+    
       <repository>
           <id>central</id>
           <url>https://repo.maven.apache.org/maven2</url>
@@ -103,14 +103,14 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
               <enabled>false</enabled>
           </snapshots>
       </repository>
-  </repositories>
-  <pluginRepositories>
+    </repositories>
+    <pluginRepositories>
       <pluginRepository>
           <id>aliyunmaven</id>
           <name>aliyunmaven Release</name>
           <url>https://maven.aliyun.com/nexus/content/groups/public</url>
       </pluginRepository>
-  
+    
       <pluginRepository>
           <id>central</id>
           <url>https://repo.maven.apache.org/maven2</url>
@@ -139,8 +139,8 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
               <enabled>true</enabled>
           </snapshots>
       </pluginRepository>
-  </pluginRepositories>
-  ```
+    </pluginRepositories>
+    ```
 
   
 
