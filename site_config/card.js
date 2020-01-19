@@ -28,13 +28,46 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Framework Reference Documentation',
+                            title: 'Spring Framework 5.2.3 Reference Documentation',
                             link: 'https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/',
                             target: '_blank',
                             description: '',
                         },
                     ],
                 },
+
+                {
+                    title: 'Spring Boot',
+                    description: 'Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible.',
+                    img: {
+                        alt: 'Spring Boot',
+                        width: '50%',
+                        src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
+                    },
+                    buttons: [
+                        {
+                            href: 'https://docs.spring.io/spring-boot/docs/2.2.3.RELEASE/reference/html/',
+                            icon: 'link',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'edit',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'star',
+                        },
+                    ],
+                    categories: [
+                        {
+                            title: 'Spring Boot 2.2.3  Reference Documentation',
+                            link: 'https://docs.spring.io/spring-boot/docs/2.2.3.RELEASE/reference/html/',
+                            target: '_blank',
+                            description: '',
+                        },
+                    ],
+                },
+
                 {
                     title: 'Spring Security',
                     description: 'Protects your application with comprehensive and extensible authentication and authorization support.',
@@ -58,7 +91,7 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Security Reference Documentation',
+                            title: 'Spring Security 5.2.1 Reference Documentation',
                             link: 'https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/',
                             target: '_blank',
                             description: '',
@@ -67,7 +100,39 @@ export default {
                 },
 
                 {
-                    title: 'Spring Cloud',
+                    title: 'Spring Data Moore-SR4',
+                    description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
+                    img: {
+                        alt: 'Spring Data',
+                        width: '50%',
+                        src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                    },
+                    buttons: [
+                        {
+                            href: 'https://spring.io/projects/spring-data/',
+                            icon: 'link',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'edit',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'star',
+                        },
+                    ],
+                    categories: [
+                        {
+                            title: 'Spring Date Jpa 2.2.4 Reference Documentation',
+                            link: 'https://docs.spring.io/spring-data/jpa/docs/2.2.4.RELEASE/reference/html/',
+                            description: '',
+                            target: '_blank',
+                        }
+                    ],
+                },
+
+                {
+                    title: 'Spring Cloud Hoxton',
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
                     img: {
                         alt: 'Spring Cloud',
@@ -89,8 +154,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Cloud Gateway Docs',
-                            link: '/zh-cn/spring-cloud-gateway',
+                            title: 'Spring Cloud 2.2.1 Reference Documentation',
+                            link: 'https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/',
                             description: '',
                         },
                     ],
@@ -108,7 +173,7 @@ export default {
                     description: '为依赖项注入，事务管理，Web应用程序，数据访问，消息传递等提供核心支持。',
                     img: {
                         alt: 'Spring Framework',
-                        width:'50%',
+                        width: '50%',
                         src: 'https://spring.io/img/homepage/icon-spring-framework.svg',
                     },
                     buttons: [
@@ -139,13 +204,13 @@ export default {
                     title: 'Spring Boot',
                     description: '对快速的构建，启动和运行Spring应用程序持坚决态度。',
                     img: {
-                        alt: 'Spring Framework',
-                        width:'50%',
+                        alt: 'Spring Boot',
+                        width: '50%',
                         src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
                     },
                     buttons: [
                         {
-                            href: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.3.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -159,8 +224,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Boot 2.2.2 中文参考文档',
-                            link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                            title: 'Spring Boot 2.2.3 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.3.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
@@ -172,7 +237,7 @@ export default {
                     description: '通过全面且可扩展的身份验证和授权支持保护您的应用程序。',
                     img: {
                         alt: 'Spring Security',
-                        width:'100%',
+                        width: '100%',
                         src: 'http://www.springcloud.cc/images/spring-cloud-security.png',
                     },
                     buttons: [
@@ -200,11 +265,11 @@ export default {
                 },
 
                 {
-                    title: 'Spring Data',
+                    title: 'Spring Data Moore-SR4',
                     description: '提供一致的数据访问方法-关系型，非关系型，map-reduce等。',
                     img: {
                         alt: 'Spring Data',
-                        width:'50%',
+                        width: '50%',
                         src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
                     },
                     buttons: [
@@ -232,11 +297,11 @@ export default {
                 },
 
                 {
-                    title: 'Spring Cloud',
+                    title: 'Spring Cloud Hoxton',
                     description: '提供一组用于分布式系统中常见模式的工具。 对于构建和部署微服务很有用。',
                     img: {
                         alt: 'Spring Cloud',
-                        width:'50%',
+                        width: '50%',
                         src: 'http://spring.io/img/homepage/icon-spring-cloud.svg',
                     },
                     buttons: [
@@ -255,8 +320,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Cloud Gateway Docs',
-                            link: '/zh-cn/spring-cloud-gateway',
+                            title: 'Spring Cloud Gateway 2.2.1 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-cloud-gateway/2.2.1.RELEASE/index.html',
                             description: '',
                             target: '_blank',
                         },

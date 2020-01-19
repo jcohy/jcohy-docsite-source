@@ -28,24 +28,6 @@ export default {
                     },
                 ],
             },
-            {
-                title: 'nginx',
-                children: [
-                    {
-                        title: 'nginx',
-                        link: '/en-us/docs/nginx/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'Microservices',
-                children: [
-                    {
-                        title: 'Microservices',
-                        link: '/en-us/docs/microservices/demo.html',
-                    },
-                ],
-            },
         ],
         barText: 'Documentation',
     },
@@ -75,24 +57,6 @@ export default {
                     {
                         title: 'SpringBoot',
                         link: '/en-us/docs/springboot/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'nginx',
-                children: [
-                    {
-                        title: 'nginx',
-                        link: '/en-us/docs/nginx/demo.html',
-                    },
-                ],
-            },
-            {
-                title: 'Microservices',
-                children: [
-                    {
-                        title: 'Microservices',
-                        link: '/en-us/docs/microservices/demo.html',
                     },
                 ],
             },

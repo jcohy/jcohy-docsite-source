@@ -103,7 +103,7 @@ export default {
                 },
                 {
                     text: 'Spring Boot 中文参考文档',
-                    link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.2.RELEASE/index.html',
+                    link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.3.RELEASE/index.html',
                     target: '_blank',
                 },
                 {
