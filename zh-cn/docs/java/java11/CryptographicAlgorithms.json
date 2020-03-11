@@ -1,0 +1,10 @@
+{
+  "filename": "CryptographicAlgorithms.md",
+  "__html": "<h2>ChaCha20 和 Poly1305 加密算法</h2>\n<p>实现 RFC 7539的ChaCha20 and ChaCha20-Poly1305加密算法\nRFC 7539定义的秘钥协商方案更高效, 更安全. JDK增加两个新的接口\nXECPublicKey 和 XECPrivateKey</p>\n<pre><code class=\"language-java\">KeyPairGenerator kpg = KeyPairGenerator.getInstance(“XDH”);\nNamedParameterSpec paramSpec = <span class=\"hljs-keyword\">new</span> NamedParameterSpec(“X25519”);\nkpg.initialize(paramSpec);\nKeyPair kp = kgp.generateKeyPair();\n\nKeyFactory kf = KeyFactory.getInstance(“XDH”);\nBigInteger u = <span class=\"hljs-keyword\">new</span> BigInteger(“xxx”);\nXECPublicKeySpec pubSpec = <span class=\"hljs-keyword\">new</span> XECPublicKeySpec(paramSpec, u);\nPublicKey pubKey = kf.generatePublic(pubSpec);\n\nKeyAgreement ka = KeyAgreement.getInstance(“XDH”);\nka.init(kp.getPrivate());\nka.doPhase(pubKey, <span class=\"hljs-keyword\">true</span>);\n<span class=\"hljs-keyword\">byte</span>[] secret = ka.generateSecret();\n\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\CryptographicAlgorithms.html",
+  "meta": {
+    "title": "ChaCha20 和 Poly1305 加密算法",
+    "keywords": "docs,jcohy-docs,ChaCha20,Poly1305,java11",
+    "description": "ChaCha20 和 Poly1305 加密算法"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "Nashorn.md",
+  "__html": "<h2>Javascript引擎升级：Nashorn</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>236: Parser API for Nashorn</li>\n<li>292: Implement Selected ECMAScript 6 Features in Nashorn\nNashorn 项目在 JDK 9 中得到改进，它为 Java 提供轻量级的 Javascript 运行时。Nashorn 项目跟随 Netscape 的 Rhino 项目，目的是为了在 Java 中实现一个高性能但轻量级的 Javascript 运行时。Nashorn 项目使得 Java 应用能够嵌入 Javascript。它在 JDK 8 中为 Java 提供一个 Javascript 引擎。\nJDK 9 包含一个用来解析 Nashorn 的 ECMAScript 语法树的 API。这个 API 使得 IDE 和服务端框架不需要依赖 Nashorn 项目的内部实现类，就能够分析 ECMAScript 代码。</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\Nashorn.html",
+  "meta": {
+    "title": "Nashorn",
+    "keywords": "docs,jcohy-docs,java9,Nashorn",
+    "description": "Nashorn"
+  }
+}

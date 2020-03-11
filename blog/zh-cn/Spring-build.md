@@ -276,3 +276,51 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
 
 #### 1、下载源码
 
+
+```java
+https://github.com/spring-io/sagan
+```
+
+#### 2、进入 sagan-client ,修改 webpack.config.js
+
+找到下面这句
+
+```json
+            {
+                test: /.*\/fonts\/.*/,
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[name].[ext]',
+                },
+            },
+```
+
+修改为：
+
+```text
+
+            {
+                test: /\.(ttf|eot|woff|woff2|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[name].[ext]',
+                },
+            },
+```
+
+#### 3、添加阿里云镜像，加速构建
+
+在 sagan-common,sagan-renderer,sagan-site 模块中找到 repositories 标签添加阿里云仓库
+
+	maven {url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+	
+#### 4、构建
+
+```shell
+    
+    //windowns
+    gradlew.bat build
+    
+    ./gradlew :sagan-site:bootRun
+
+```

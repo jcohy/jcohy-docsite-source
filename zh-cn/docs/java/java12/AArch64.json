@@ -1,0 +1,10 @@
+{
+  "filename": "AArch64.md",
+  "__html": "<h2>改进 AArch64 实现</h2>\n<h3>现状</h3>\n<p>当前 Java 11 及之前版本JDK中存在两个64位ARM端口。这些文件的主要来源位于src/hotspot/cpu/arm 和open/src/hotspot/cpu/aarch64 目录中。尽管两个端口都产生了aarch64 实现，我们将前者（由Oracle贡献）称为arm64 ，将后者称为aarch64 。</p>\n<h3>新特性</h3>\n<p>Java 12 中将删除由 Oracle 提供的 arm64端口相关的所有源码，即删除目录open/src/hotspot/cpu/arm 中关于64-bit 的这套实现，只保留其中有关 32-bit ARM端口的实现，余下目录的 open/src/hotspot/cpu/aarch64 代码部分就成了 AArch64 的默认实现。</p>\n<h3>目的</h3>\n<p>这将使开发贡献者将他们的精力集中在单个 64 位 ARM 实现上，并消除维护两套实现所需的重复工作。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java12\\AArch64.html",
+  "meta": {
+    "title": "改进 AArch64 实现",
+    "keywords": "docs,jcohy-docs,AArch64，java12",
+    "description": "改进 AArch64 实现"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "DynamicClassFile.md",
+  "__html": "<h2>动态类文件常量</h2>\n<p>为了使 JVM 对动态语言更具吸引力，Java 的第七个版本已将 invokedynamic 引入其指令集。</p>\n<p>过 Java 开发人员通常不会注意到此功能，因为它隐藏在 Java 字节代码中。通过使用 invokedynamic，可以延迟方法调用的绑定，直到第一次调用。例如，Java 语言使用该技术来实现 Lambda 表达式，这些表达式仅在首次使用时才显示出来。这样做，invokedynamic 已经演变成一种必不可少的语言功能。</p>\n<p>Java 11 引入了类似的机制，扩展了 Java 文件格式，以支持新的常量池：CONSTANT_Dynamic，它在初始化的时候，像 invokedynamic</p>\n<p>令生成代理方法一样，委托给 bootstrap 方法进行初始化创建，对上层软件没有很大的影响，降低开发新形式的可实现类文件约束带来的成本和干扰。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\DynamicClassFile.html",
+  "meta": {
+    "title": "动态类文件常量",
+    "keywords": "docs,jcohy-docs,动态类文件常量,java11",
+    "description": "动态类文件常量"
+  }
+}

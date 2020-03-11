@@ -1,0 +1,10 @@
+{
+  "filename": "ZGC.md",
+  "__html": "<h2>ZGC：可伸缩低延迟垃圾收集器</h2>\n<p>ZGC 即 Z Garbage Collector（垃圾收集器或垃圾回收器），这应该是 Java 11 中最为瞩目的特性，没有之一。ZGC 是一个可伸缩的、低延迟的垃圾收集器，主要为了满足如下目标进行设计：</p>\n<ul>\n<li>GC 停顿时间不超过 10ms</li>\n<li>即能处理几百 MB 的小堆，也能处理几个 TB 的大堆</li>\n<li>应用吞吐能力不会下降超过 15%（与 G1 回收算法相比）</li>\n<li>方便在此基础上引入新的 GC 特性和利用 colord</li>\n<li>针以及 Load barriers 优化奠定基础</li>\n<li>当前只支持 Linux/x64 位平台\n停顿时间在 10ms 以下，10ms 其实是一个很保守的数据，即便是 10ms 这个数据，也是 GC 调优几乎达不到的极值。根据 SPECjbb 2015 的基准测试，128G 的大堆下最大停顿时间才 1.68ms，远低于 10ms，和 G1 算法相比，改进非常明显。</li>\n</ul>\n<p>不过目前 ZGC 还处于实验阶段，目前只在 Linux/x64 上可用，如果有足够的需求，将来可能会增加对其他平台的支持。同时作为实验性功能的 ZGC 将不会出现在 JDK 构建中，除非在编译时使用 configure 参数：--with-jvm-features=zgc 显式启用。</p>\n<p>在实验阶段，编译完成之后，已经迫不及待的想试试 ZGC，需要配置以下 JVM 参数，才能使用 ZGC，具体启动 ZGC 参数如下：</p>\n<pre><code class=\"language-shell\">-XX：+ UnlockExperimentalVMOptions -XX：+ UseZGC -Xmx10g\n</code></pre>\n<p>其中参数：-Xmx 是 ZGC 收集器中最重要的调优选项，大大解决了程序员在 JVM 参数调优上的困扰。ZGC 是一个并发收集器，必须要设置一个最大堆的大小，应用需要多大的堆，主要有下面几个考量：</p>\n<ul>\n<li>对象的分配速率，要保证在 GC 的时候，堆中有足够的内存分配新对象。</li>\n<li>一般来说，给 ZGC 的内存越多越好，但是也不能浪费内存，所以要找到一个平衡。</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\ZGC.html",
+  "meta": {
+    "title": "ZGC：可伸缩低延迟垃圾收集器",
+    "keywords": "docs,jcohy-docs,zgc,可伸缩低延迟垃圾收集器,java11",
+    "description": "ZGC：可伸缩低延迟垃圾收集器"
+  }
+}

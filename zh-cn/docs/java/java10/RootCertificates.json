@@ -1,0 +1,10 @@
+{
+  "filename": "RootCertificates.md",
+  "__html": "<h2>根证书认证</h2>\n<p>自 Java 9 起在 keytool 中加入参数 -cacerts，可以查看当前 JDK 管理的根证书。而 Java 9 中 cacerts 目录为空，这样就会给开发者带来很多不便。从 Java 10 开始，将会在 JDK 中提供一套默认的 CA 根证书。</p>\n<p>作为 JDK 一部分的 cacerts 密钥库旨在包含一组能够用于在各种安全协议的证书链中建立信任的根证书。但是，JDK 源代码中的 cacerts 密钥库至目前为止一直是空的。因此，在 JDK 构建中，默认情况下，关键安全组件（如 TLS）是不起作用的。要解决此问题，用户必须使用一组根证书配置和 cacerts 密钥库下的 CA 根证书。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\RootCertificates.html",
+  "meta": {
+    "title": "根证书认证",
+    "keywords": "docs,jcohy-docs,java10,根证书认证",
+    "description": "根证书认证"
+  }
+}

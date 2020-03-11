@@ -1,0 +1,10 @@
+{
+  "filename": "CDS.md",
+  "__html": "<h2>默认类数据共享（CDS）存档</h2>\n<h3>概述</h3>\n<p>我们知道在同一个物理机／虚拟机上启动多个JVM时，如果每个虚拟机都单独装载自己需要的所有类，启动成本和内存占用是比较高的。所以Java团队引入了类数据共享机制 (Class Data Sharing ，简称 CDS) 的概念，通过把一些核心类在每个JVM间共享，每个JVM只需要装载自己的应用类即可。好处是：启动时间减少了，另外核心类是共享的，所以JVM的内存占用也减少了。</p>\n<h3>历史版本</h3>\n<ul>\n<li>JDK5引入了Class-Data Sharing可以用于多个JVM共享class，提升启动速度，最早只支持system classes及serial GC。</li>\n<li>JDK9对其进行扩展以支持application classes及其他GC算法。</li>\n<li>java10的新特性JEP 310: Application Class-Data Sharing扩展了JDK5引入的Class-Data Sharing，支持application的Class-Data Sharing并开源出来(以前是commercial feature)\n<ul>\n<li>CDS 只能作用于 BootClassLoader 加载的类，不能作用于 AppClassLoader 或者自定义的 ClassLoader加载的类。在 Java 10 中，则将 CDS 扩展为 AppCDS，顾名思义，AppCDS 不止能够作用于BootClassLoader了，AppClassLoader 和自定义的 ClassLoader 也都能够起作用，大大加大了 CDS 的适用范围。也就说开发自定义的类也可以装载给多个JVM共享了。</li>\n</ul>\n</li>\n<li>JDK11将-Xshare:off改为默认-Xshare:auto，以更加方便使用CDS特性</li>\n</ul>\n<h3>迭代效果</h3>\n<p>可以说，自 Java 8 以来，在基本 CDS 功能上进行了许多增强、改进，启用 CDS 后应用的启动时间和内存占用量显着减少。使用 Java 11 早期版本在 64 位 Linux 平台上运行 HelloWorld 进行测试，测试结果显示启动时间缩短有 32％，同时在其他 64 位平台上，也有类似或更高的启动性能提升。</p>\n<h3>Java12新特性</h3>\n<p>JDK 12之前，想要利用CDS的用户，即使仅使用JDK中提供的默认类列表，也必须java -Xshare:dump 作为额外的步骤来运行。</p>\n<p>Java 12 针对 64 位平台下的 JDK 构建过程进行了增强改进，使其默认生成类数据共享（CDS）归档，以进一步达到改进应用程序的启动时间的目的，同时也避免了需要手动运行：java -Xshare:dump 的需要，修改后的 JDK 将在${JAVA_HOME}/lib/server 目录中生成一份名为classes.jsa的默认archive文件(大概有18M)方便大家使用。</p>\n<p>当然如果需要，也可以添加其他 GC 参数，来调整堆大小等，以获得更优的内存分布情况，同时用户也可以像之前一样创建自定义的 CDS 存档文件。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java12\\CDS.html",
+  "meta": {
+    "title": "默认类数据共享（CDS）存档",
+    "keywords": "docs,jcohy-docs,cds，java12",
+    "description": "默认类数据共享（CDS）存档"
+  }
+}

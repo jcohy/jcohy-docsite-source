@@ -18,7 +18,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -41,7 +41,6 @@ export default {
                     description: 'Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible.',
                     img: {
                         alt: 'Spring Boot',
-                        width: '50%',
                         src: '/img/projects/spring-boot.svg',
                     },
                     buttons: [
@@ -50,7 +49,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -81,7 +80,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -104,7 +103,6 @@ export default {
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
                     img: {
                         alt: 'Spring Data',
-                        width: '50%',
                         src: '/img/projects/spring-data.svg',
                     },
                     buttons: [
@@ -113,7 +111,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -144,7 +142,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -173,7 +171,6 @@ export default {
                     description: '为依赖项注入，事务管理，Web应用程序，数据访问，消息传递等提供核心支持。',
                     img: {
                         alt: 'Spring Framework',
-                        width: '50%',
                         src: '/img/projects/spring-framework.svg',
                     },
                     buttons: [
@@ -182,7 +179,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -205,7 +202,6 @@ export default {
                     description: '对快速的构建，启动和运行Spring应用程序持坚决态度。',
                     img: {
                         alt: 'Spring Boot',
-                        width: '50%',
                         src: '/img/projects/spring-boot.svg',
                     },
                     buttons: [
@@ -214,7 +210,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -237,7 +233,6 @@ export default {
                     description: '通过全面且可扩展的身份验证和授权支持保护您的应用程序。',
                     img: {
                         alt: 'Spring Security',
-                        width: '100%',
                         src: '/img/projects/spring-security.svg',
                     },
                     buttons: [
@@ -246,7 +241,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -269,7 +264,6 @@ export default {
                     description: '提供一致的数据访问方法-关系型，非关系型，map-reduce等。',
                     img: {
                         alt: 'Spring Data',
-                        width: '50%',
                         src: '/img/projects/spring-data.svg',
                     },
                     buttons: [
@@ -278,7 +272,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -301,7 +295,6 @@ export default {
                     description: '提供一组用于分布式系统中常见模式的工具。 对于构建和部署微服务很有用。',
                     img: {
                         alt: 'Spring Cloud',
-                        width: '50%',
                         src: '/img/projects/spring-cloud.svg',
                     },
                     buttons: [
@@ -310,7 +303,7 @@ export default {
                             icon: 'link',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {
@@ -345,7 +338,7 @@ export default {
                             icon: 'setting',
                         },
                         {
-                            href: 'https://github.com/jiachao23',
+                            href: 'https://github.com/jcohy/jcohy-issues',
                             icon: 'edit',
                         },
                         {

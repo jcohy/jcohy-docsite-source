@@ -16,7 +16,7 @@ const Item = (props) => {
                                     style={{width: 380, marginBottom: '20px', marginLeft: '20px'}}
                                     cover={
                                         <img
-                                            style={{width: itemList.img.width, margin: '10px auto',height:'170px'}}
+                                            style={{margin: '10px auto',height:'170px'}}
                                             alt={itemList.img.alt}
                                             src={itemList.img.src}
                                         />

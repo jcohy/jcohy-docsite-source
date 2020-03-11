@@ -1,0 +1,10 @@
+{
+  "filename": "NativeHeader.md",
+  "__html": "<h2>移除Native-Header自动生成工具</h2>\n<p>自 Java 9 以来便开始了一些对 JDK 的调整，用户每次调用 javah 工具时会被警告该工具在未来的版本中将会执行的删除操作。当编译 JNI 代码时，已不再需要单独的 Native-Header 工具来生成头文件，因为这可以通过 Java 8（JDK-7150368）中添加的 javac 来完成。在未来的某一时刻，JNI 将会被 Panama 项目的结果取代，但是何时发生还没有具体时间表。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\NativeHeader.html",
+  "meta": {
+    "title": "移除Native-Header自动生成工具",
+    "keywords": "docs,jcohy-docs,java10,移除Native-Header自动生成工具",
+    "description": "移除Native-Header自动生成工具"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "Local-VariableTypeInference.md",
+  "__html": "<h2>局部变量类型推断</h2>\n<p>局部变量类型推断是 Java 10 中最值得开发人员注意的新特性，这是 Java 语言开发人员为了简化 Java 应用程序的编写而进行的又一重要改进。</p>\n<p>这一新功能将为 Java 增加一些新语法，允许开发人员省略通常不必要的局部变量类型初始化声明。新的语法将减少 Java 代码的冗长度，同时保持对静态类型安全性的承诺。局部变量类型推断主要是向 Java 语法中引入在其他语言（比如 C#、JavaScript）中很常见的保留类型名称 var。但需要特别注意的是：var 不是一个关键字，而是一个保留字。只要编译器可以推断此种类型，开发人员不再需要专门声明一个局部变量的类型，也就是可以随意定义变量而不必指定变量的类型。这种改进对于链式表达式来说，也会很方便。以下是一个简单的例子：</p>\n<pre><code class=\"language-java\"><span class=\"hljs-keyword\">var</span> list = <span class=\"hljs-keyword\">new</span> ArrayList&lt;String&gt;(); <span class=\"hljs-comment\">// ArrayList&lt;String&gt;</span>\n<span class=\"hljs-keyword\">var</span> stream = list.stream(); <span class=\"hljs-comment\">// Stream&lt;String&gt;</span>\n</code></pre>\n<p>看着是不是有点 JS 的感觉？有没有感觉越来越像 JS 了？虽然变量类型的推断在 Java 中不是一个崭新的概念，但在局部变量中确是很大的一个改进。说到变量类型推断，从 Java 5 中引进泛型，到 Java 7 的 &lt;&gt; 操作符允许不绑定类型而初始化 List，再到 Java 8 中的 Lambda 表达式，再到现在 Java 10 中引入的局部变量类型推断，Java 类型推断正大刀阔斧地向前进步、发展。</p>\n<p>但这种 var 变量类型推断的使用也有局限性，仅局限于具有初始化器的局部变量、增强型 for 循环中的索引变量以及在传统 for 循环中声明的局部变量，而不能用于推断方法的参数类型，不能用于构造函数参数类型推断，不能用于推断方法返回类型，也不能用于字段类型推断，同时还不能用于捕获表达式（或任何其他类型的变量声明）。</p>\n<p>不过对于开发者而言，变量类型显式声明会提供更加全面的程序语言信息，对于理解和维护代码有很大的帮助。Java 10 中新引入的局部变量类型推断能够帮助我们快速编写更加简洁的代码，但是局部变量类型推断的保留字 var 的使用势必会引起变量类型可视化缺失，并不是任何时候使用 var 都能容易、清晰的分辨出变量的类型。一旦 var 被广泛运用，开发者在没有 IDE 的支持下阅读代码，势必会对理解程序的执行流程带来一定的困难。所以还是建议尽量显式定义变量类型，在保持代码简洁的同时，也需要兼顾程序的易读性、可维护性。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\Local-VariableTypeInference.html",
+  "meta": {
+    "title": "局部变量类型推断",
+    "keywords": "docs,jcohy-docs,java10,局部变量类型推断",
+    "description": "局部变量类型推断"
+  }
+}

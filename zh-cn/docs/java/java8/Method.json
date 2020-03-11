@@ -1,0 +1,10 @@
+{
+  "filename": "Method.md",
+  "__html": "<h2>3.方法引用与构造器引用</h2>\n<h4>方法引用</h4>\n<p>当要传递给Lambda体的操作，已经有实现的方法了，可以使用方法引用！（<strong>实现抽象方法的参数列表，必须与方法引用方法的参数列表保持一致！</strong>）方法引用：使用操作符“::” 将方法名和对象或类的名字分隔开来。\n如下三种主要使用情况：</p>\n<ul>\n<li>对象::实例方法</li>\n<li>类::静态方法</li>\n<li>类::实例方法</li>\n</ul>\n<pre><code class=\"language-java\"><span class=\"hljs-comment\">//例如</span>\n\tConsumer&lt;String&gt; com = (x) -&gt; System.out.println(x);\n<span class=\"hljs-comment\">//等同于</span>\n\tConsumer&lt;String&gt; com = System.out::println\n\n<span class=\"hljs-comment\">//例如：</span>\n\tBinaryOperator&lt;Double&gt; bo = (x,y) -&gt;Math.pow(x,y);\n<span class=\"hljs-comment\">//等同于：</span>\n\tBinaryOperator&lt;Double&gt; bo = Math::pow;\n\t\n<span class=\"hljs-comment\">//例如：</span>\n\tComparator&lt;Integer&gt; com = (x, y) -&gt; Integer.compare(x, y);\t\n<span class=\"hljs-comment\">//等同于</span>\n\tComparator&lt;Integer&gt; com2 = Integer::compare;\n</code></pre>\n<h4>构造器引用</h4>\n<p><strong>格式：ClassName::new</strong>\n与函数式接口相结合，自动与函数式接口中方法兼容。\n<strong>可以把构造器引用赋值给定义的方法，与构造器参数列表要与接口中抽象方法的参数列表一致！</strong></p>\n<pre><code class=\"language-java\"><span class=\"hljs-comment\">//例如：</span>\n\t Function&lt;Integer,MyClass&gt; fun = (n) -&gt; <span class=\"hljs-keyword\">new</span> MyClass(n);\n<span class=\"hljs-comment\">//等同于</span>\n\tFunction&lt;Integer,MyClass&gt; fun = (n) -&gt; MyClass::<span class=\"hljs-keyword\">new</span>;\n</code></pre>\n<h4>数组引用</h4>\n<p><strong>格式：type[] :: new</strong></p>\n<pre><code class=\"language-java\">例如：\n\t Function&lt;Integer,Integer[]&gt; fun = (n) -&gt; <span class=\"hljs-keyword\">new</span> Integer[n];\n等同于\n\tFunction&lt;Integer,Integer[]&gt; fun = Integer[]::<span class=\"hljs-keyword\">new</span>;\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java8\\Method.html",
+  "meta": {
+    "title": "Java8新特性",
+    "keywords": "docs,jcohy-docs,java8,方法引用与构造器引用",
+    "description": "方法引用与构造器引用"
+  }
+}

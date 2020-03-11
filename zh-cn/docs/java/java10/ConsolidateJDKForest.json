@@ -1,0 +1,10 @@
+{
+  "filename": "ConsolidateJDKForest.md",
+  "__html": "<h2>整合JDK代码仓库</h2>\n<p>为了简化开发流程，Java 10 中会将多个代码库合并到一个代码仓库中。</p>\n<p>在已发布的 Java 版本中，JDK 的整套代码根据不同功能已被分别存储在多个 Mercurial 存储库，这八个 Mercurial 存储库分别是：root、corba、hotspot、jaxp、jaxws、jdk、langtools、nashorn。</p>\n<p>虽然以上八个存储库之间相互独立以保持各组件代码清晰分离，但同时管理这些存储库存在许多缺点，并且无法进行相关联源代码的管理操作。其中最重要的一点是，涉及多个存储库的变更集无法进行原子提交 （atomic commit）。例如，如果一个 bug 修复时需要对独立存储两个不同代码库的代码进行更改，那么必须创建两个提交：每个存储库中各一个。这种不连续性很容易降低项目和源代码管理工具的可跟踪性和加大复杂性。特别是，不可能跨越相互依赖的变更集的存储库执行原子提交这种多次跨仓库的变化是常见现象。</p>\n<p>为了解决这个问题，JDK 10 中将所有现有存储库合并到一个 Mercurial 存储库中。这种合并的一个次生效应是，单一的 Mercurial 存储库比现有的八个存储库要更容易地被镜像(作为一个 Git 存储库)，并且使得跨越相互依赖的变更集的存储库运行原子提交成为可能，从而简化开发和管理过程。虽然在整合过程中，外部开发人员有一些阻力，但是 JDK 开发团队已经使这一更改成为 JDK 10 的一部分。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\ConsolidateJDKForest.html",
+  "meta": {
+    "title": "整合JDK代码仓库",
+    "keywords": "docs,jcohy-docs,java10,整合JDK代码仓库",
+    "description": "整合JDK代码仓库"
+  }
+}

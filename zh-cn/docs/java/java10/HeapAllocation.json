@@ -1,0 +1,10 @@
+{
+  "filename": "HeapAllocation.md",
+  "__html": "<h2>备用存储装置上的堆分配</h2>\n<p>硬件技术在持续进化，现在可以使用与传统 DRAM 具有相同接口和类似性能特点的非易失性 RAM。Java 10 中将使得 JVM 能够使用适用于不同类型的存储机制的堆，在可选内存设备上进行堆内存分配。</p>\n<p>一些操作系统中已经通过文件系统提供了使用非 DRAM 内存的方法。例如：NTFS DAX 模式和 ext4 DAX。这些文件系统中的内存映射文件可绕过页面缓存并提供虚拟内存与设备物理内存的相互映射。与 DRAM 相比，NV-DIMM 可能具有更高的访问延迟，低优先级进程可以为堆使用 NV-DIMM 内存，允许高优先级进程使用更多 DRAM。</p>\n<p>要在这样的备用设备上进行堆分配，可以使用堆分配参数 -XX：AllocateHeapAt = <path>，这个参数将指向文件系统的文件并使用内存映射来达到在备用存储设备上进行堆分配的预期结果。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\HeapAllocation.html",
+  "meta": {
+    "title": "备用存储装置上的堆分配",
+    "keywords": "docs,jcohy-docs,java10,备用存储装置上的堆分配",
+    "description": "备用存储装置上的堆分配"
+  }
+}

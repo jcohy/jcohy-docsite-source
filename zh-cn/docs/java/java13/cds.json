@@ -1,0 +1,10 @@
+{
+  "filename": "cds.md",
+  "__html": "<h2>动态CDS档案（动态类数据共享归档）</h2>\n<p>CDS，是java 12的特性了，可以让不同 Java 进程之间共享一份类元数据，减少内存占用，它还能加快应用的启动速度。而JDK13的这个特性支持在Java application执行之后进行动态archive。存档类将包括默认的基础层CDS存档中不存在的所有已加载的应用程序和库类。也就是说，在Java 13中再使用AppCDS的时候，就不再需要这么复杂了。</p>\n<p>该提案处于目标阶段，旨在提高AppCDS的可用性，并消除用户进行试运行以创建每个应用程序的类列表的需要。</p>\n<p>使用示例：</p>\n<pre><code class=\"language-java\"># JVM退出时动态创建共享归档文件：导出jsa\njava -XX:ArchiveClassesAtExit=hello.jsa -cp hello.jar Hello\n# 用动态创建的共享归档文件运行应用:使用jsa\njava -XX:SharedArchiveFile=hello.jsa -cp hello.jar Hello\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java13\\cds.html",
+  "meta": {
+    "title": "动态CDS档案（动态类数据共享归档）",
+    "keywords": "docs,jcohy-docs,动态CDS档案（动态类数据共享归档）,java13",
+    "description": "动态CDS档案（动态类数据共享归档）"
+  }
+}

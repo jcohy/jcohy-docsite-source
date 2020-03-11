@@ -1,0 +1,10 @@
+{
+  "filename": "JIT.md",
+  "__html": "<h2>基于Java的实验性JIT编译器</h2>\n<p>Java 10 中开启了基于 Java 的 JIT 编译器 Graal，并将其用作 Linux/x64 平台上的实验性 JIT 编译器开始进行测试和调试工作，另外 Graal 将使用 Java 9 中引入的 JVM 编译器接口（JVMCI）。</p>\n<p>Graal 是一个以 Java 为主要编程语言、面向 Java bytecode 的编译器。与用 C++实现的 C1 及 C2 相比，它的模块化更加明显，也更加容易维护。Graal 既可以作为动态编译器，在运行时编译热点方法；亦可以作为静态编译器，实现 AOT 编译。在 Java 10 中，Graal 作为试验性 JIT 编译器一同发布（JEP 317）。将 Graal 编译器研究项目引入到 Java 中，或许能够为 JVM 性能与当前 C++ 所写版本匹敌（或有幸超越）提供基础。</p>\n<p>Java 10 中默认情况下 HotSpot 仍使用的是 C2 编译器，要启用 Graal 作为 JIT 编译器，请在 Java 命令行上使用以下参数：</p>\n<pre><code class=\"language-java\">-XX：+ UnlockExperimentalVMOptions -XX：+ UseJVMCICompiler\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java10\\JIT.html",
+  "meta": {
+    "title": "基于Java的实验性JIT编译器",
+    "keywords": "docs,jcohy-docs,java10,基于Java的实验性JIT编译器",
+    "description": "基于Java的实验性JIT编译器"
+  }
+}

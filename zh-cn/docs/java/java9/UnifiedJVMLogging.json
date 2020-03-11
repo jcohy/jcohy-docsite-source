@@ -1,0 +1,10 @@
+{
+  "filename": "UnifiedJVMLogging.md",
+  "__html": "<h2>统一的JVM日志系统</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>\n<p>158: Unified JVM Logging</p>\n</li>\n<li>\n<p>271: Unified GC Logging\n日志是解决问题的唯一有效途径：曾经很难知道导致JVM性能问题和导致JVM崩溃的根本原因。不同的JVM日志的碎片化和日志选项（例如：JVM组件对于日志使用的是不同的机制和规则），这使得JVM难以进行调试。\n解决该问题最佳方法：对所有的JVM组件引入一个单一的系统，这些JVM组件支持细粒度的和易配置的JVM日志。</p>\n<blockquote>\n<p>Java 9 中 ，JVM 有了统一的日志记录系统，可以使用新的命令行选项-Xlog 来控制 JVM 上 所有组件的日志记录。该日志记录系统可以设置输出的日志消息的标签、级别、修饰符和输出目标等。Java 9 移除了在 Java 8 中 被废弃的垃圾回收器配置组合，同时 把 G1 设为默认的垃圾回收器实现。另外，CMS 垃圾回收器已经被声明为废弃。Java 9 也增加了很多可以通过 jcmd 调用的诊断命令。</p>\n</blockquote>\n</li>\n</ul>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\UnifiedJVMLogging.html",
+  "meta": {
+    "title": "统一的JVM日志系统",
+    "keywords": "docs,jcohy-docs,java9,统一的JVM日志系统",
+    "description": "统一的JVM日志系统"
+  }
+}

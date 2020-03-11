@@ -1,0 +1,10 @@
+{
+  "filename": "Concurrency.md",
+  "__html": "<h2>并发</h2>\n<p>在并发方面，类 CompletableFuture 中增加了几个新的方法。completeAsync 使用一个异步任务来获取结果并完成该 CompletableFuture。orTimeout 在 CompletableFuture 没有在给定的超时时间之前完成，使用 TimeoutException 异常来完成 CompletableFuture。completeOnTimeout 与 o rTimeout 类似，只不过它在超时时使用给定的值来完成 CompletableFuture。新的 Thread.onSpinWai t 方法在当前线程需要使用忙循环来等待时，可以提高等待的效率。</p>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\Concurrency.html",
+  "meta": {
+    "title": "并发",
+    "keywords": "docs,jcohy-docs,java9,并发",
+    "description": "并发"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "CollectionFactory.md",
+  "__html": "<h2>集合工厂方法</h2>\n<h3>官方Feature</h3>\n<ul>\n<li>269: Convenience Factory Methods for Collections\n在集合上，Java 9 增加 了 List.of()、Set.of()、Map.of() 和 M ap.ofEntries()等工厂方法来创建不可变集合 ，如 下 所示。</li>\n</ul>\n<pre><code class=\"language-java\">List.of(); \nList.of(<span class=\"hljs-string\">\"Hello\"</span>, <span class=\"hljs-string\">\"World\"</span>); \nList.of(<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">2</span>, <span class=\"hljs-number\">3</span>);\nSet.of(); \nSet.of(<span class=\"hljs-string\">\"Hello\"</span>, <span class=\"hljs-string\">\"World\"</span>); \nSet.of(<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">2</span>, <span class=\"hljs-number\">3</span>);\nMap.of();\nMap.of(<span class=\"hljs-string\">\"Hello\"</span>, <span class=\"hljs-number\">1</span>, <span class=\"hljs-string\">\"World\"</span>, <span class=\"hljs-number\">2</span>);\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\java\\java9\\CollectionFactory.html",
+  "meta": {
+    "title": "集合工厂方法",
+    "keywords": "docs,jcohy-docs,java9,集合工厂方法",
+    "description": "集合工厂方法"
+  }
+}

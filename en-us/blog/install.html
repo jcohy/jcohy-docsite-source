@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="linux, java, install" />
+	<meta name="description" content="Linux下常用软件安装" />
+	<!-- 网页标签标题 -->
+	<title>Linux下常用软件安装</title>
+	<link rel="shortcut icon" href="/img/jcohy.ico"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/jcohy_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html" target="_self">HOME</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/blog/index.html" target="_self">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/open/index.html" target="_self">OPEN RESOURCE</a></li><li class="menu-item menu-item-normal"><a href="/en-us/resource/index.html" target="_self">RESOURCE</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community/index.html" target="_self">COMMUNITY</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Linux下常用软件安装</h1>
+<blockquote>
+<h3>PS:待开发中。。。。</h3>
+<h3>作者：jiac</h3>
+</blockquote>
+<h2>安装目录</h2>
+<blockquote>
+<ul>
+<li><a href="#%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83">软硬件环境</a></li>
+<li><a href="#jdk">JDK</a></li>
+<li><a href="#tomcat">Tomcat</a></li>
+<li><a href="#mysql">Mysql</a></li>
+<li><a href="#redis">Redis</a></li>
+<li><a href="#nginx">Nginx</a></li>
+<li><a href="#git">git</a></li>
+<li><a href="#gitlab">gitlab</a></li>
+<li><a href="#node">node</a></li>
+<li><a href="#yapi">yapi</a></li>
+<li><a href="#mongodb">mongodb</a></li>
+<li><a href="#docker">docker</a></li>
+<li><a href="#jenkins">Jenkins</a></li>
+</ul>
+</blockquote>
+<p id ="软硬件环境">
+<h2>软硬件环境</h2>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>相关软件包或版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>CentOS Linux release 7.6.1810</td>
+</tr>
+<tr>
+<td>jdk</td>
+<td>jdk-8u221-linux-x64.tar.gz</td>
+</tr>
+<tr>
+<td>tomcat</td>
+<td>apache-tomcat-7.0.94.tar.gz</td>
+</tr>
+<tr>
+<td>mysql</td>
+<td>mysql-8.0.16-2.el7.x86_64.rpm-bundle.tar</td>
+</tr>
+<tr>
+<td>redis</td>
+<td>redis-5.0.5.tar.gz</td>
+</tr>
+<tr>
+<td>nginx</td>
+<td>nginx-1.6.2.build.tar.gz</td>
+</tr>
+<tr>
+<td>git</td>
+<td>release</td>
+</tr>
+<tr>
+<td>gitlab</td>
+<td>release</td>
+</tr>
+<tr>
+<td>node</td>
+<td>node-v10.16.0.tar.gz</td>
+</tr>
+<tr>
+<td>yapi</td>
+<td>release</td>
+</tr>
+<tr>
+<td>mongodb</td>
+<td>release</td>
+</tr>
+<tr>
+<td>docker</td>
+<td>release</td>
+</tr>
+<tr>
+<td>jenkins</td>
+<td>release</td>
+</tr>
+<tr>
+<td>gcc</td>
+<td>gcc-8.3.0.tar.gz</td>
+</tr>
+</tbody>
+</table>
+<p id ="jdk">
+<h2>JDK</h2>
+<h3>下载地址</h3>
+<p><a href="http://software.jcohy.com/linux/jdk-8u221-linux-x64.tar.gz">http://software.jcohy.com/linux/jdk-8u221-linux-x64.tar.gz</a></p>
+<h3>常规安装</h3>
+<p>1、用FileZilla或其他工具将下载好的安装包上传至Linux服务器。放置在 <strong>/opt/software/</strong> 目录下。这里使用的是 <strong>jdk-8u221-linux-x64.tar.gz</strong></p>
+<p>2、解压jdk到/usr/local目录</p>
+<pre><code class="language-shell">tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/
+</code></pre>
+<p>3、设置环境变量，在/etc/profile文件最后追加相关内容</p>
+<pre><code class="language-shell">vi /etc/profile
+
+export JAVA_HOME=/usr/local/jdk1.8.0_221
+export PATH=$PATH:$JAVA_HOME/bin
+</code></pre>
+<p>4、刷新环境变量</p>
+<pre><code class="language-shell">source /etc/profile
+</code></pre>
+<p>5、测试java命令是否可用</p>
+<pre><code class="language-shell">java -version
+</code></pre>
+<p id ="tomcat">
+<h2>Tomcat</h2>
+<h3>下载地址</h3>
+<p><a href="http://software.jcohy.com/linux/apache-tomcat-7.0.94.tar.gz">http://software.jcohy.com/linux/apache-tomcat-7.0.94.tar.gz</a></p>
+<h3>常规安装</h3>
+<p>1、用FileZilla或其他工具将下载好的安装包上传至Linux服务器。放置在 <strong>/opt/software/</strong> 目录下。这里使用的是 <strong>apache-tomcat-7.0.94.tar.gz</strong></p>
+<p>2、解压tomcat</p>
+<pre><code class="language-shell">tar -zxvf apache-tomcat-7.0.94.tar.gz -C /usr/local/
+</code></pre>
+<p>3、启动tomcat</p>
+<pre><code class="language-shell">/usr/local/apache-tomcat-7.0.94/bin/startup.sh
+</code></pre>
+<p>4、查看tomcat进程是否启动</p>
+<pre><code class="language-shell">jps
+</code></pre>
+<p>5、查看tomcat进程端口</p>
+<pre><code class="language-shell">netstat -anpt | grep 2465
+</code></pre>
+<p>6、通过浏览器访问tomcat</p>
+<p><a href="http://192.168.11.231:8080/">http://192.168.11.231:8080/</a></p>
+<p id ="mysql">
+<h2>mysql</h2>
+<h3>下载地址</h3>
+<p><a href="https://pan.baidu.com/s/1iP5QDXSYHQ5q61cBFQvs-A">https://pan.baidu.com/s/1iP5QDXSYHQ5q61cBFQvs-A</a></p>
+<h3>常规安装</h3>
+<ol>
+<li>
+<p>用FileZilla或其他工具将下载好的安装包上传至Linux服务器。放置在 <strong>/opt/software/</strong> 目录下。这里使用的是 <strong>mysql-8.0.16-2.el7.x86_64.rpm-bundle.tar</strong></p>
+</li>
+<li>
+<p>解压mysql</p>
+</li>
+</ol>
+<pre><code class="language-shell">	mkdir -p /usr/local/mysql
+	tar -xvf mysql-8.0.16-2.el7.x86_64.rpm-bundle.tar
+</code></pre>
+<ol start="3">
+<li>centos7默认集成了MariaDB，而安装mysql的话会和mariadb的文件冲突，所以需要先卸载掉mariadb</li>
+</ol>
+<pre><code class="language-shell">	yum remove mariadb
+	rpm -qa|grep mariadb-libs
+	rpm -e mariadb-libs-5.5.60-1.el7_5.x86_64 --nodeps
+</code></pre>
+<ol start="4">
+<li>安装相关依赖</li>
+</ol>
+<pre><code class="language-shell">yum search libaio  # 检索相关信息
+yum install -y libaio # 安装依赖包
+
+yum search net-tools
+yum install -y net-tools
+
+yum search perl
+yum install -y perl 
+
+yum install -y numactl
+</code></pre>
+<ol start="5">
+<li>mysql rpm 安装顺序</li>
+</ol>
+<pre><code class="language-xml">rpm -ivh mysql-community-common-8.0.16-2.el7.x86_64.rpm   
+rpm -ivh mysql-community-libs-8.0.16-2.el7.x86_64.rpm   
+rpm -ivh mysql-community-client-8.0.16-2.el7.x86_64.rpm  
+rpm -ivh mysql-community-server-8.0.16-2.el7.x86_64.rpm 
+</code></pre>
+<p>6.设置开机启动</p>
+<pre><code class="language-shell">systemctl enable mysqld
+</code></pre>
+<p>7.启动mysql</p>
+<pre><code class="language-shell">systemctl start mysqld
+</code></pre>
+<p>8、mysql安装完成之后，在/var/log/mysqld.log文件中给root生成了一个默认密码。通过下面的方式找到root默认密码，然后登录mysql进行修改：</p>
+<pre><code class="language-shell">grep 'temporary password' /var/log/mysqld.log
+
+mysql -uroot -p
+</code></pre>
+<p>9、登录上去后，使用下列语句更新密码</p>
+<pre><code class="language-shell"> ALTER USER 'root'@'localhost' IDENTIFIED BY 'jia_chao23@126.com';
+</code></pre>
+<p>mysql 5.8 修改密码加密方式，改成mysql_native_password,然后修改密码</p>
+<pre><code class="language-shell"><span class="hljs-meta"> #</span><span class="bash">查看密码加密方式</span>
+ use mysql
+ select host,user,plugin  from mysql.user;
+ 
+
+ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'jia_chao23@126.com';
+ ALTER USER 'root'@'%' IDENTIFIED BY 'jia_chao23@126.com';
+ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'jia_chao23@126.com';
+ ALTER USER 'root'@'localhost' IDENTIFIED BY 'jia_chao23@126.com';
+ flush privileges;
+
+</code></pre>
+<p>10、修改密码策略</p>
+<p>mysql5.8默认安装了密码安全检查插件（validate_password），默认密码检查策略要求密码必须包含：大小写字母、数字和特殊符号，并且长度不能少于8位。否则会提示ERROR 1819 (HY000): Your
+password does not satisfy the current policy requirements错误，如下图所示：</p>
+<p><img src="https://github.com/jiachao23/jcohy-study-sample/blob/master/jcohy-study-linux/images/1.jpg" alt=""></p>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">查看密码策略的相关信息</span>
+show variables like '%password%';
+</code></pre>
+<p>validate_password_policy：密码策略，默认为MEDIUM策略
+validate_password_dictionary_file：密码策略文件，策略为STRONG才需要
+validate_password_length：密码最少长度
+validate_password_mixed_case_count：大小写字符长度，至少1个
+validate_password_number_count ：数字至少1个
+validate_password_special_char_count：特殊字符至少1个
+<em>上述参数是默认策略<strong>MEDIUM</strong>的密码检查规则</em></p>
+<pre><code class="language-shell">set global validate_password_policy=0;
+select @@validate_password_length;
+set global validate_password_length=1;
+</code></pre>
+<p>11、添加远程登录用户</p>
+<pre><code class="language-shell">GRANT ALL PRIVILEGES ON *.* TO 'jiac'@'%' IDENTIFIED BY 'jiac0917!' WITH GRANT OPTION;
+</code></pre>
+<p>12、配置默认编码为utf8</p>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">修改/etc/my.cnf配置文件，在[mysqld]下添加编码配置，如下所示：</span>
+[mysqld]
+character_set_server=utf8
+init_connect='SET NAMES utf8'
+</code></pre>
+<p>13、开启端口访问</p>
+<pre><code class="language-shell">firewall-cmd --permanent --zone=public --add-port=3306/tcp
+firewall-cmd --permanent --zone=public --add-port=3306/udp
+firewall-cmd --reload
+firewall-cmd --list-ports  
+</code></pre>
+<p>14、开启远程登录</p>
+<pre><code class="language-shell">CREATE USER 'root'@'%' IDENTIFIED BY 'jiac0917!';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+flush privileges;
+</code></pre>
+<p id ="redis">
+<h2>Redis</h2>
+<h3>下载地址</h3>
+<p><a href="https://pan.baidu.com/s/1iP5QDXSYHQ5q61cBFQvs-A">https://pan.baidu.com/s/1iP5QDXSYHQ5q61cBFQvs-A</a></p>
+<p><a href="https://github.com/MSOpenTech/redis/releases">https://github.com/MSOpenTech/redis/releases</a></p>
+<h3>常规安装</h3>
+<p>1、<a href="https://github.com/MSOpenTech/redis/releases">到官网</a>下载redis安装包</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span>
+<span class="hljs-meta">$</span><span class="bash"> tar xzf redis-5.0.5.tar.gz</span>
+<span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> redis-5.0.5</span>
+<span class="hljs-meta">$</span><span class="bash"> make</span>
+</code></pre>
+<p>2、make完后 redis-2.8.17目录下会出现编译后的redis服务程序redis-server,还有用于测试的客户端程序redis-cli,两个程序位于安装目录 src 目录下：</p>
+<p>下面启动redis服务.</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> src</span>
+<span class="hljs-meta">$</span><span class="bash"> ./redis-server</span>
+</code></pre>
+<p>3、注意这种方式启动redis 使用的是默认配置。也可以通过启动参数告诉redis使用指定配置文件使用下面命令启动。</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> src</span>
+<span class="hljs-meta">$</span><span class="bash"> ./redis-server ../redis.conf</span>
+</code></pre>
+<p>4、<strong>redis.conf</strong> 是一个默认的配置文件。我们可以根据需要使用自己的配置文件。</p>
+<p>启动redis服务进程后，就可以使用测试客户端程序redis-cli和redis服务交互了。 比如：</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> src</span>
+<span class="hljs-meta">$</span><span class="bash"> ./redis-cli</span>
+<span class="hljs-meta">redis&gt;</span><span class="bash"> <span class="hljs-built_in">set</span> foo bar</span>
+OK
+<span class="hljs-meta">redis&gt;</span><span class="bash"> get foo</span>
+"bar"
+</code></pre>
+<h3>docker安装</h3>
+<p>1、使用docker安装<a href="http://www.runoob.com/docker/docker-install-redis.html">redis</a></p>
+<pre><code class="language-shell">docker pull redis
+mkdir -p /docker/redis/conf /docker/redis/data
+docker run --restart=always --privileged=true -p 6379:6379 -v /docker/redis/data:/data -v /docker/redis/conf/redis.conf:/etc/redis/redis.conf --name myredis -d redis redis-server --appendonly yes
+
+</code></pre>
+<p id ="nginx">
+<h2>nginx</h2>
+<h3>下载地址：</h3>
+<p><a href="http://nginx.org/en/linux_packages.html#RHEL-CentOS">http://nginx.org/en/linux_packages.html#RHEL-CentOS</a></p>
+<p><a href="http://software.jcohy.com/linux/nginx-1.6.2.tar.gz">http://software.jcohy.com/linux/nginx-1.6.2.tar.gz</a></p>
+<h3>常规安装</h3>
+<p>1、安装编译工具及库文件</p>
+<pre><code class="language-shell">yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+</code></pre>
+<p>2、首先要安装 PCRE</p>
+<ul>
+<li>下载 PCRE 安装包，下载地址： <a href="http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz">http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz</a></li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# cd /opt/software
+[root@bogon src]# wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
+</code></pre>
+<ul>
+<li>解压安装包:</li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# tar zxvf pcre-8.35.tar.gz
+</code></pre>
+<ul>
+<li>进入安装包目录</li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# cd pcre-8.35
+</code></pre>
+<ul>
+<li>编译安装</li>
+</ul>
+<pre><code class="language-shell">[root@bogon pcre-8.35]# ./configure
+[root@bogon pcre-8.35]# make &amp;&amp; make install
+</code></pre>
+<ul>
+<li>查看pcre版本</li>
+</ul>
+<pre><code class="language-shell">[root@bogon pcre-8.35]# pcre-config --version
+</code></pre>
+<p>3、安装 Nginx</p>
+<ul>
+<li>下载 Nginx，下载地址：<a href="http://nginx.org/download/nginx-1.6.2.tar.gz">http://nginx.org/download/nginx-1.6.2.tar.gz</a></li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# cd /opt/software
+[root@bogon src]# wget http://nginx.org/download/nginx-1.6.2.tar.gz
+</code></pre>
+<ul>
+<li>安装包</li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# tar zxvf nginx-1.6.2.tar.gz
+</code></pre>
+<ul>
+<li>进入安装包目录</li>
+</ul>
+<pre><code class="language-shell">[root@bogon src]# cd nginx-1.6.2
+</code></pre>
+<ul>
+<li>编译安装</li>
+</ul>
+<pre><code class="language-shell">[root@bogon nginx-1.6.2]# ./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=//opt/software/pcre-8.35
+[root@bogon nginx-1.6.2]# make &amp;&amp; make install
+</code></pre>
+<ul>
+<li>查看nginx版本</li>
+</ul>
+<pre><code class="language-shell">[root@bogon nginx-1.6.2]# /usr/local/nginx/sbin/nginx -v
+</code></pre>
+<p>4、启动nginx</p>
+<pre><code class="language-shell">[root@bogon conf]# /usr/local/nginx/sbin/nginx
+</code></pre>
+<p>5、Nginx 其他命令</p>
+<pre><code class="language-shell">/usr/local/webserver/nginx/sbin/nginx -s reload            # 重新载入配置文件
+/usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx
+/usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx
+</code></pre>
+<p>6、错误处理</p>
+<pre><code>src/core/ngx_murmurhash.c: In function ‘ngx_murmur_hash2’:
+
+原因，是将警告当成了错误处理，打开/usr/local/nginx-1.6.2/objs/Makefile，
+去掉CFLAGS中的 -Werror
+再重新make
+</code></pre>
+<h3>docker安装</h3>
+<p>1、使用docker安装<a href="http://www.runoob.com/docker/docker-install-nginx.html">nginx</a></p>
+<pre><code class="language-shell">docker pull nginx
+
+mkdir -p /docker/nginx/www /docker/nginx/logs /docker/nginx/conf
+
+docker run -d -p 80:80 --name nginx -v /docker/nginx/www:/usr/share/nginx/html -v /docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /docker/nginx/logs:/var/log/nginx nginx
+</code></pre>
+<h3>使用编译后软件包安装</h3>
+<p>这里本人将nginx软件进行了编译。使用编译后的文件直接解压使用即可。</p>
+<p><a href="https://software.jcohy.com/linux/nginx-1.6.2.build.tar.gz">https://software.jcohy.com/linux/nginx-1.6.2.build.tar.gz</a></p>
+<pre><code>tar -zxvf nginx-1.6.2.build.tar.gz  -C /usr/local
+</code></pre>
+<p id ="rabbit">
+<h2>RabbitMq</h2>
+<h3>下载地址</h3>
+<h3>常规安装</h3>
+<p>1、由于RabbitMQ依赖Erlang， 所以需要先安装Erlang</p>
+<pre><code class="language-shell">  wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
+  rpm -Uvh erlang-solutions-1.0-1.noarch.rpm
+  yum install erlang
+</code></pre>
+<p>2、安装</p>
+<pre><code class="language-shell">  wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+  yum install rabbitmq-server-3.6.6-1.el7.noarch.rpm
+</code></pre>
+<p>3、启动</p>
+<pre><code class="language-shell">  rabbitmq-server start
+</code></pre>
+<p>4、开启web管理接口</p>
+<pre><code class="language-shell">rabbitmq-plugins enable rabbitmq_management
+</code></pre>
+<p>5、通过浏览器访问</p>
+<pre><code class="language-shell">  http://localhost:15672
+</code></pre>
+<p>6、其他命令</p>
+<pre><code class="language-shell">sudo chkconfig rabbitmq-server on  # 添加开机启动RabbitMQ服务
+/sbin/service rabbitmq-server start # 启动服务
+/sbin/service rabbitmq-server status  # 查看服务状态
+/sbin/service rabbitmq-server stop   # 停止服务
+<span class="hljs-meta">
+#</span><span class="bash"> 查看当前所有用户</span>
+rabbitmqctl list_users
+<span class="hljs-meta">
+#</span><span class="bash"> 查看默认guest用户的权限</span>
+rabbitmqctl list_user_permissions guest
+<span class="hljs-meta">
+#</span><span class="bash"> 由于RabbitMQ默认的账号用户名和密码都是guest。为了安全起见, 先删掉默认用户</span>
+rabbitmqctl delete_user guest
+<span class="hljs-meta">
+#</span><span class="bash"> 添加新用户</span>
+rabbitmqctl add_user username password
+<span class="hljs-meta">
+#</span><span class="bash"> 设置用户tag</span>
+rabbitmqctl set_user_tags username administrator
+<span class="hljs-meta">
+#</span><span class="bash"> 赋予用户默认vhost的全部操作权限</span>
+rabbitmqctl set_permissions -p / username ".*" ".*" ".*"
+<span class="hljs-meta">
+#</span><span class="bash"> 查看用户的权限</span>
+rabbitmqctl list_user_permissions username
+
+</code></pre>
+<h3>docker安装</h3>
+<pre><code>1、在docker官网查找docker镜像，https://hub.docker.com/
+
+2、拉取镜像,我们选择带有“mangement”的版本（包含web管理页面）
+</code></pre>
+<pre><code class="language-shell">  docker pull rabbitmq:3.7.16-management
+
+  docker run --restart=always -d -p 5672:5672 -p 15672:15672 --name myrabbitmq 3f92e6354d11
+</code></pre>
+<p id ="git">
+<h2>git</h2>
+<pre><code class="language-shell">yum -y install git-core
+git --version
+</code></pre>
+<p id ="gitlab">
+<h2>gitlab</h2>
+<h3>下载地址</h3>
+<p><a href="https://about.gitlab.com/install/#centos-7">https://about.gitlab.com/install/#centos-7</a></p>
+<h3>常规安装</h3>
+<p>1、安装依赖</p>
+<pre><code class="language-shell">sudo yum install -y curl policycoreutils-python openssh-server
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo firewall-cmd --permanent --add-service=http
+sudo systemctl reload firewalld
+
+
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+</code></pre>
+<p>2、下载源码并安装</p>
+<pre><code class="language-shell">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash
+
+sudo EXTERNAL_URL="http://192.168.11.231:9090" yum install -y gitlab-ee
+</code></pre>
+<p>3、修改gitlab配置文件指定服务器ip和自定义端口</p>
+<pre><code>vi  /etc/gitlab/gitlab.rb
+
+external_url -&gt; 服务器http://IP:端口
+</code></pre>
+<p>4、执行配置</p>
+<pre><code>gitlab-ctl reconfigure
+</code></pre>
+<p>5、启动：gitlab-ctl start 出现如下说明成功</p>
+<pre><code>ok: run: alertmanager: (pid 7324) 0s 
+ok: run: gitaly: (pid 7334) 0s 
+ok: run: gitlab-monitor: (pid 7355) 1s 
+ok: run: gitlab-workhorse: (pid 7360) 0s 
+ok: run: logrotate: (pid 7373) 1s 
+ok: run: nginx: (pid 7416) 0s 
+ok: run: node-exporter: (pid 7461) 0s 
+ok: run: postgres-exporter: (pid 7467) 1s 
+ok: run: postgresql: (pid 7473) 0s 
+ok: run: prometheus: (pid 7481) 1s 
+ok: run: redis: (pid 7492) 0s 
+ok: run: redis-exporter: (pid 7496) 1s 
+ok: run: sidekiq: (pid 7502) 0s 
+ok: run: unicorn: (pid 7517) 0s
+</code></pre>
+<p>6、修改储存位置</p>
+<pre><code>sudo vi /etc/gitlab/gitlab.rb 
+git_data_dirs -&gt; 修改成目标位置 
+sudo gitlab-ctl reconfigure 配置执行 
+重新启动
+</code></pre>
+<h3>Docker安装中文版</h3>
+<p><a href="https://docs.gitlab.com/omnibus/docker/">https://docs.gitlab.com/omnibus/docker/</a></p>
+<p><a href="https://hub.docker.com/r/twang2218/gitlab-ce-zh">https://hub.docker.com/r/twang2218/gitlab-ce-zh</a></p>
+<p>1、下载镜像</p>
+<pre><code class="language-shell">docker pull twang2218/gitlab-ce-zh
+</code></pre>
+<p>2、运行</p>
+<pre><code class="language-shell">docker run --detach \
+  --hostname 192.168.11.238 \
+  --publish 443:443 --publish 80:80 --publish 222:22 \
+  --name gitlab \
+  --restart always \
+  --volume /opt/gitlab/config:/etc/gitlab  \
+  --volume /opt/gitlab/logs:/var/log/gitlab \
+  --volume /opt/gitlab/data:/var/opt/gitlab \
+  twang2218/gitlab-ce-zh
+  
+  docker run -d \
+    --hostname 192.168.11.238 \
+    -p 80:80 \
+    -p 443:443 \
+    -p 222:22 \
+    --privileged=true \
+    --name gitlab \
+    --restart always \
+    -v /opt/gitlab/gitlab-config:/etc/gitlab \
+    -v /opt/gitlab/gitlab-logs:/var/log/gitlab \
+    -v /opt/gitlab/gitlab-data:/var/opt/gitlab \
+   	twang2218/gitlab-ce-zh
+</code></pre>
+<p>3、数据存储</p>
+<table>
+<thead>
+<tr>
+<th><strong>当地的位置</strong></th>
+<th><strong>docker位置</strong></th>
+<th><strong>用法</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/opt/gitlab/config</td>
+<td>/etc/gitlab</td>
+<td>用于存储应用数据</td>
+</tr>
+<tr>
+<td>/opt/gitlab/logs</td>
+<td>/var/log/gitlab</td>
+<td>用于存储日志</td>
+</tr>
+<tr>
+<td>/srv/gitlab/config</td>
+<td>/var/opt/gitlab</td>
+<td>用于存储GitLab配置文件</td>
+</tr>
+</tbody>
+</table>
+<p>4、配置GitLab</p>
+<pre><code>docker exec -it gitlab /bin/bash
+docker exec -it gitlab vi /etc/gitlab/gitlab.rb
+修改external_url
+
+sudo docker restart gitlab
+</code></pre>
+<p>5、查看log</p>
+<pre><code>docker logs -f gitlab
+</code></pre>
+<p>6、配置邮箱</p>
+<pre><code>gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = &quot;smtp.exmail.qq.com&quot;
+gitlab_rails['smtp_port'] = 465
+gitlab_rails['smtp_user_name'] = &quot;jia_chao23@126.com&quot;
+gitlab_rails['smtp_password'] = &quot;Jia@1203&quot;
+gitlab_rails['smtp_authentication'] = &quot;login&quot;
+gitlab_rails['smtp_enable_starttls_auto'] = true
+gitlab_rails['smtp_tls'] = true
+gitlab_rails['gitlab_email_from'] = 'jia_chao23@126.com'
+gitlab_rails['smtp_domain'] = &quot;exmail.qq.com&quot;
+
+</code></pre>
+<p>7、常用操作</p>
+<pre><code>//外部操作
+docker restart gitlab
+docker stop gitlab
+docker rm gitlab
+
+//内部操作
+//重新配置GitLab以使更改生效
+gitlab-ctl reconfigure
+gitlab-ctl restart
+//验证是否正确配置了所有内容：
+gitlab-rake gitlab:incoming_email:check
+gitlab-rails console
+Notify.test_email('jia_chao23@126.com', 'Message Subject', 'Message Body').deliver_now
+</code></pre>
+<p id ="node">
+<h2>node</h2>
+<h3>下载地址</h3>
+<p><a href="http://software.jcohy.com/linux/node-v10.16.0.tar.gz">http://software.jcohy.com/linux/node-v10.16.0.tar.gz</a></p>
+<p><a href="http://nodejs.org/dist/v10.16.0/node-v10.16.0.tar.gz">http://nodejs.org/dist/v10.16.0/node-v10.16.0.tar.gz</a></p>
+<h3>常规安装</h3>
+<p>1、下载并解压</p>
+<pre><code class="language-shell">// 下载
+wget http://nodejs.org/dist/v10.16.0/node-v10.16.0.tar.gz   
+//解压
+tar -zxvf node-v10.16.0.tar.gz -C /usr/local/   
+</code></pre>
+<p>2、编译</p>
+<pre><code class="language-shell">./configure --prefix=/usr/local/node/v10.16.0 
+</code></pre>
+<p>报错 C++ compiler too old, need g++ 4.9.4 or clang++ 3.4.2 (CXX=g++)</p>
+<pre><code class="language-shell">//1、装bzip2解压工具
+yum -y install bzip2
+//2、下载gcc包
+wget https://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz
+//3、安装依赖，自动下载可能会慢。建议手动下载，然后复制到安装目录下。需要下载以下四个包。下载地址：ftp://gcc.gnu.org/pub/gcc/infrastructure/
+gmp-6.1.0.tar.bz2: 
+mpfr-3.1.4.tar.bz2: 
+mpc-1.0.3.tar.gz: 
+isl-0.16.1.tar.bz2: 
+
+./contrib/download_prerequisites
+
+//3、建立编译输出目录
+
+mkdir gcc-build-7.3.0
+//4、进入下面目录，执行命令，生成Makefile文件
+
+../gcc-7.3.0/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+//5、执行命令进行编译，此处利用4个job，需编译时约40分钟，此值不宜设置过高
+
+make -j4
+
+//6 编译完成之后，需要把原来的GCC卸载，换成7.3.0版本的
+rpm -q gcc 
+rpm -q gcc-c++
+
+删除已经安装低版本 
+rpm -e [包名] 
+包名为上一步中显示的包，形如： 
+gcc-4.8.5-16.el7_4.2.x86_64 
+gcc-c++-4.8.5-16.el7_4.2.x86_64
+
+那就删除吧 
+rpm -e gcc-4.8.5-16.el7_4.2.x86_64 
+rpm -e gcc-c++-4.8.5-16.el7_4.2.x86_64
+
+
+//7、安装 
+make install
+
+//8、验证版本
+which gcc 
+/usr/local/bin/gcc -v
+
+//9、添加环境变量
+//1、直接用export命令： 
+export PATH=$PATH:/usr/local/bin 
+查看是否已经设好，可用命令export查看，或者直接echo $PATH
+
+//2、这个应该更靠谱一点，要不然有时候sudo的时候会提示找不到gcc命令 
+sudo ln -s /usr/local/bin/gcc /usr/bin/gcc 
+(建立/usr/bin/gcc到编译安装gcc的软链接)
+</code></pre>
+<p>报错：</p>
+<pre><code>node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by node)
+node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (required by node)
+node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by node)
+</code></pre>
+<p><code>gcc</code>的动态库还是旧版本的。说明出现这些问题，是因为升级<code>gcc</code>时，生成的动态库没有替换老版本<code>gcc</code>的动态库。</p>
+<pre><code class="language-shell">//1、执行以下命令，查找编译gcc时生成的最新动态库：
+find / -name "libstdc++.so*"
+...
+/opt/software/gcc-build-7.3.0/prev-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24
+/opt/software/gcc-build-7.3.0/prev-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6
+/opt/software/gcc-build-7.3.0/prev-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so
+/opt/software/gcc-build-7.3.0/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24
+...
+
+//2、将上面的最新动态库libstdc++.so.6.0.21复制到/usr/lib64目录下：
+
+cp /opt/software/gcc-build-7.3.0/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24 /usr/lib64
+
+//3、复制后，修改系统默认动态库的指向，即：重建默认库的软连接。
+cd /usr/lib64
+rm -rf libstdc++.so.6
+ln -s libstdc++.so.6.0.21 libstdc++.so.6
+</code></pre>
+<h3>2、淘宝镜像安装</h3>
+<pre><code class="language-shell">.cd  /usr/loacl/node/  
+
+wget https://npm.taobao.org/mirrors/node/v0.10.16/node-v0.10.16-linux-x64.tar.gz
+
+tar -zxvf node-v0.10.16-linux-x64.tar.gz
+
+
+ln -s /usr/local/node/node-v0.10.16-linux-x64/bin/npm /usr/local/bin/npm
+
+
+ln -s /usr/local/node/node-v0.10.16-linux-x64/bin/node /usr/local/bin/node
+
+
+npm -v
+</code></pre>
+<p id ="yapi">
+<h2>yapi</h2>
+<ol>
+<li>确保 node 版本=&gt; 7.6,请运行 node -v 查看版本号</li>
+<li>确保 mongodb 版本 =&gt; 2.6，请运行 mongo --version 查看版本号</li>
+<li>确保安装了 npm, 运行 npm -v 查看版本号</li>
+<li>确保安装了 git,运行 git --version 查看版本号</li>
+<li>确保安装了 node-gyp 环境，<a href="https://github.com/nodejs/node-gyp#on-unix">配置方法</a></li>
+</ol>
+<pre><code class="language-shell">npm install -g yapi-cli --registry https://registry.npm.taobao.org
+yapi server 
+</code></pre>
+<p id ="mongodb">
+<h2>mongodb</h2>
+<pre><code>wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz
+
+</code></pre>
+<p id ="docker">
+<h2>docker</h2>
+<pre><code class="language-shell">yum -y install docker
+systemctl daemon-reload
+systemctl restart docker.service
+</code></pre>
+<p><a href="https://docs.docker.com/install/">https://docs.docker.com/install/</a></p>
+<p>报错：IPv4 forwarding is disabled. Networking will not work.</p>
+<pre><code class="language-shell">vim  /usr/lib/sysctl.d/00-system.conf
+<span class="hljs-meta">#</span><span class="bash">添加下面的内容</span>
+net.ipv4.ip_forward=1
+systemctl restart network &amp;&amp; systemctl restart docker
+</code></pre>
+<p id ="jenkins">
+<h2>Jenkins</h2>
+<p>1、获取镜像</p>
+<pre><code>docker pull jenkinsci/blueocean
+</code></pre>
+<p>2、运行镜像</p>
+<pre><code>docker run \
+-u root \
+-d  \
+-p 80:8080 \
+-p 50000:50000 \
+--privileged=true \
+--name=jenkins \
+-v /opt/jenkins/jenkins-data:/var/jenkins_home  \
+-v /opt/jenkins/run/docker.sock:/var/run/docker.sock  \
+jenkinsci/blueocean 
+</code></pre>
+<h2>安装高版本Gcc</h2>
+<p>1、下载高版本gcc，这里使用的是8.3.0</p>
+<p><a href="http://ftp.gnu.org/gnu/gcc/">http://ftp.gnu.org/gnu/gcc/</a></p>
+<p>编译后的gcc包，可解压后可直接从第5步开始：<a href="https://pan.baidu.com/s/159KLVjbaYALx6lrgibU-SQ">https://pan.baidu.com/s/159KLVjbaYALx6lrgibU-SQ</a></p>
+<p>2、解压缩</p>
+<pre><code class="language-shell">tar -zxvf gcc-8.3.0.tar.gz -C /usr/local
+yum install -y bzip2 glibc-headers gcc-c++ 
+yum install -y glibc-headers
+yum install -y gcc-c++ 
+</code></pre>
+<p>3、下载依赖包</p>
+<pre><code class="language-shell">cd /usr/local/gcc-8.3.0/
+./contrib/download_prerequisites
+</code></pre>
+<p>4、编译+安装</p>
+<pre><code class="language-shell">mkdir ../gcc8.3.0build &amp;&amp; cd ../gcc8.3.0build
+
+../gcc-8.3.0/configure --prefix=/usr/local/gcc8.3.0build --enable-checking=release --enable-languages=c,c++ --disable-multilib
+make &amp;&amp; make install
+</code></pre>
+<p>5、之间已有低版本的gcc存在，先删除已建的软连接</p>
+<pre><code class="language-shell">rm -rf /usr/bin/gcc
+rm -rf /usr/bin/g++
+ln -s /usr/local/gcc8.3.0build/bin/gcc /usr/bin/gcc
+ln -s /usr/local/gcc8.3.0build/bin/g++ /usr/bin/g++
+</code></pre>
+<p>6、查看新版本</p>
+<pre><code class="language-shell">gcc --version
+</code></pre>
+<p>7、运行程序时可能会出现/lib64/libstdc++.so.6: version  `GLIBCXX_3.4.20' not found，是因为升级安装了gcc，生成的动态库没有替换老版本的gcc动态库导致的。</p>
+<p>查看包含最新的动态链接库的位置</p>
+<pre><code class="language-shell">find / -name "libstdc++.so*"
+</code></pre>
+<p>找到在/usr/local/gcc5/lib64/文件夹下</p>
+<pre><code class="language-shell">cp /usr/local/gcc8.3.0build/lib64/libstdc++.so.6.0.25  /usr/lib64/libstdc++.so.6.0.25
+rm -f /usr/lib64/libstdc++.so.6
+ln /usr/lib64/libstdc++.so.6.0.25 /usr/lib64/libstdc++.so.6
+
+</code></pre>
+<p>8、查看libstdc++.so.6链接包含的动态库</p>
+<pre><code class="language-shell">strings /usr/lib64/libstdc++.so.6|grep GLIBC
+</code></pre>
+<p>9、error 排除</p>
+<ul>
+<li>C++ preprocessor &quot;/lib/cpp&quot; fails sanity check</li>
+</ul>
+<pre><code class="language-shell">yum install -y glibc-headers
+yum install -y gcc-c++ 
+</code></pre>
+<h2>LDAP</h2>
+<p>1、安装LDAP</p>
+<pre><code class="language-shell">yum install -y openldap-servers openldap-clients
+<span class="hljs-meta">#</span><span class="bash">拷贝数据库配置文件,DB_CONIFG中主要是关于Berkeley DB的相关的一些配置</span>
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+
+systemctl start slapd
+systemctl enable slapd
+systemctl status slapd
+</code></pre>
+<p>2、<strong>配置ldap服务</strong></p>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">生成管理员密码</span>
+slappasswd
+New password:
+Re-enter new password:
+{SSHA}krOGXDmiCdSXuXocOf10F96LJO5ijdXo  #记住这个,下面会用到
+</code></pre>
+<p>3、新建一个rootpwd.ldif(名称是自定义的)的文件:</p>
+<pre><code class="language-shell">vi rootpwd.ldif
+
+dn: olcDatabase={0}config,cn=config
+changetype: modify
+add: olcRootPW
+olcRootPW: {SSHA}krOGXDmiCdSXuXocOf10F96LJO5ijdXo
+<span class="hljs-meta">
+#</span><span class="bash">ldif即LDAP Data Interchange Format，是LDAP中数据交换的一种文件格式。文件内容采用的是key-value形式，注意value后面不能有空格。</span>
+<span class="hljs-meta">#</span><span class="bash">上面内容中dn即distingush name</span>
+<span class="hljs-meta">#</span><span class="bash">olc即Online Configuration，表示写入LDAP后不需要重启即可生效</span>
+<span class="hljs-meta">#</span><span class="bash">changetype: modify表示修改一个entry，changetype的值可以是add,delete, modify等。</span>
+<span class="hljs-meta">#</span><span class="bash">add: olcRootPW表示对这个entry新增了一个olcRootPW的属性</span>
+<span class="hljs-meta">#</span><span class="bash">olcRootPW: {SSHA}krOGXDmiCdSXuXocOf10F96LJO5ijdXo指定了属性值</span>
+</code></pre>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">下面使用ldapadd命令将上面的rootpwd.ldif文件写入LDAP:</span>
+ldapadd -Y EXTERNAL -H ldapi:/// -f rootpwd.ldif
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+modifying entry "olcDatabase={0}config,cn=config"
+</code></pre>
+<p>4、<strong>导入schema</strong></p>
+<p>导入schema，schema包含为了支持特殊场景相关的属性，可根据选择导入，这里先全部导入:</p>
+<pre><code class="language-shell">ls /etc/openldap/schema/*.ldif | while read f; do ldapadd -Y EXTERNAL -H ldapi:/// -f $f; done
+</code></pre>
+<p>5、<strong>设定默认域</strong></p>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> 先使用slappasswd生成一个密码:</span>
+slappasswd
+New password:
+Re-enter new password:
+{SSHA}OpMcf0c+pEqFLZm3i+YiI2qhId1G/yM3
+</code></pre>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">新建一个domain.ldif的文件:</span>
+
+vi domain.ldif
+
+dn: olcDatabase={1}monitor,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth"
+  read by dn.base="cn=Manager,dc=jiac,dc=cn" read by * none
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=jiac,dc=cn
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=Manager,dc=jiac,dc=cn
+
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcRootPW
+olcRootPW: {SSHA}OpMcf0c+pEqFLZm3i+YiI2qhId1G/yM3 #替换上面生成的密码
+
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by
+  dn="cn=Manager,dc=jiac,dc=cn" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=jiac,dc=cn" write by * read
+</code></pre>
+<ul>
+<li><code>olcAccess</code>即access，该key用于指定目录的ACL即谁有什么权限可以存取什么</li>
+<li><code>olcRootDN</code>设定管理员root用户的distingush name</li>
+<li>注意替换上面文件内容中cn为具体的域信息</li>
+<li>olcRootPW用上面新生成的密码替换</li>
+</ul>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">写入</span>
+ldapmodify -Y EXTERNAL -H ldapi:/// -f domain.ldif
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+modifying entry "olcDatabase={1}monitor,cn=config"
+
+modifying entry "olcDatabase={2}hdb,cn=config"
+
+modifying entry "olcDatabase={2}hdb,cn=config"
+
+modifying entry "olcDatabase={2}hdb,cn=config"
+
+modifying entry "olcDatabase={2}hdb,cn=config"
+</code></pre>
+<p>6、<strong>添加基本目录</strong></p>
+<pre><code class="language-shell">dn: dc=jiac,dc=cn
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: jiac cn
+dc: jiac
+
+dn: cn=Manager,dc=jiac,dc=cn
+objectClass: organizationalRole
+cn: Manager
+description: Directory Manager
+
+dn: ou=People,dc=jiac,dc=cn
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc=jiac,dc=cn
+objectClass: organizationalUnit
+ou: Group
+</code></pre>
+<ul>
+<li>注意替换上面文件内容中dn为具体的域信息</li>
+<li>理解dn,cn,dc
+<ul>
+<li>DC即Domain Component，LDAP目录类似文件系统目录<code>dc=jiac,dc=cn</code>相当于<code>/cn/jiac</code></li>
+<li>CN即Common Name，CN有可能代表一个用户名，例如<code>cn=Manager,dc=jiac,dc=cn</code>表示在<code>/cn/jiac</code>域下的管理员用户Manager</li>
+<li>OU即Organizational Unit，例如<code>ou=People,dc=jiac,dc=cn</code>表示在<code>/cn/jiac</code>域下的一个组织单元<code>People</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">写入:</span>
+ldapadd -x -D cn=Manager,dc=jiac,dc=cn -W -f basedomain.ldif
+Enter LDAP Password:
+adding new entry "dc=jiac,dc=cn"
+
+adding new entry "cn=Manager,dc=jiac,dc=cn"
+
+adding new entry "ou=People,dc=jiac,dc=cn"
+
+adding new entry "ou=Group,dc=jiac,dc=cn"
+</code></pre>
+<p>7、测试</p>
+<pre><code class="language-shell">ldapsearch -LLL -W -x -D "cn=Manager,dc=jiac,dc=cn" -H ldap://localhost -b "dc=jiac,dc=cn"
+Enter LDAP Password:
+dn: dc=jiac,dc=cn
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: jiac cn
+dc: jiac
+
+dn: cn=Manager,dc=jiac,dc=cn
+objectClass: organizationalRole
+cn: Manager
+description: Directory Manager
+
+dn: ou=People,dc=jiac,dc=cn
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc=jiac,dc=cn
+objectClass: organizationalUnit
+ou: Group
+</code></pre>
+<p>8、可以在局域网内的windows电脑上下载<a href="http://www.ldapadmin.org/download/ldapadmin.html">ldapadmin</a>作为管理工具</p>
+<p><a href="https://github.com/jiachao23/jcohy-study-sample/tree/master/jcohy-study-linux/bash/basedomain.ldif">basedomain.ldif</a></p>
+<p><a href="https://github.com/jiachao23/jcohy-study-sample/tree/master/jcohy-study-linux/bash/domain.ldif">domain.ldif</a></p>
+<p><a href="https://github.com/jiachao23/jcohy-study-sample/tree/master/jcohy-study-linux/bash/rootpwd.ldif">rootpwd.ldif</a></p>
+<h2>Confluence</h2>
+<p>参考文档：</p>
+<p><a href="https://www.cnblogs.com/ios9/p/9045035.html#_label0">https://www.cnblogs.com/ios9/p/9045035.html#_label0</a></p>
+<p><a href="https://blog.csdn.net/LuckySuger/article/details/85121715">https://blog.csdn.net/LuckySuger/article/details/85121715</a></p>
+<p><a href="https://confluence.atlassian.com/confkb/known-issues-for-mysql-13138.html">https://confluence.atlassian.com/confkb/known-issues-for-mysql-13138.html</a></p>
+<p><a href="https://www.cwiki.us/display/CONFLUENCEWIKI/Connecting+to+an+LDAP+Directory">https://www.cwiki.us/display/CONFLUENCEWIKI/Connecting+to+an+LDAP+Directory</a></p>
+<p>1、下载，不同的版本</p>
+<pre><code class="language-shell">wget https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-6.12.1-x64.bin
+wget https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-6.7.1-x64.bin
+wget https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-6.9.1-x64.bin
+wget https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-6.13.0-x64.bin
+</code></pre>
+<p>2、下载破解器</p>
+<p><a href="http://software.jcohy.com/windows/confluence%E7%A0%B4%E8%A7%A3%E5%B7%A5%E5%85%B7.zip">http://software.jcohy.com/windows/confluence破解工具.zip</a></p>
+<p>3、安装confluence</p>
+<pre><code class="language-shell">cd /opt
+chmod +x atlassian-confluence-6.12.1-x64.bin
+./atlassian-confluence-6.12.1-x64.bin
+</code></pre>
+<p>4、破解jar包</p>
+<p>下载破解和mysql驱动</p>
+<p><a href="https://software.jcohy.com/windows/confluence%E7%A0%B4%E8%A7%A3%E5%B7%A5%E5%85%B7.zip">https://software.jcohy.com/windows/confluence破解工具.zip</a></p>
+<ul>
+<li>
+<p>1、备份jar包</p>
+<pre><code class="language-shell">mv /opt/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.4.1.jar /opt/atlassian-extras-2.4.jar
+</code></pre>
+</li>
+<li>
+<p>2、通过FTP将atlassian-extras-2.4.jar传到本地</p>
+</li>
+<li>
+<p>3、运行破解器confluence_keygen.jar</p>
+<p>java -jar confluence_keygen.jar</p>
+</li>
+</ul>
+<p><img src="D:%5CDocument%5Cpicture%5Cconfluence_keygen1.png" alt=""></p>
+<ul>
+<li>
+<p>4、点击.patch，选择atlassian-extras-2.4.jar文件，点击打开，jar文件破解成功</p>
+</li>
+<li>
+<p>5、上传破解后jar包到/opt/atlassian/confluence/confluence/WEB-INF/lib，并重命名atlassian-extras-decoder-v2-3.4.1.jar</p>
+</li>
+<li>
+<p>6、上传mysql驱动/opt/atlassian/confluence/confluence/WEB-INF/lib</p>
+</li>
+</ul>
+<p>5、重启服务</p>
+<pre><code class="language-shell">chmod 777 atlassian-extras-decoder-v2-3.4.1.jar
+service confluence stop；
+service confluence start；
+</code></pre>
+<p>6、访问confluence</p>
+<p><a href="http://localhost:8090">http://localhost:8090</a></p>
+<p>7、点击产品安装</p>
+<p>8、拷贝服务ID通过破解器获取key</p>
+<p>9、设置外部数据库</p>
+<p>mysql设置问题：</p>
+<ul>
+<li>
+<p>数据库字符编码</p>
+<p>＆characterEncoding = utf8</p>
+<pre><code class="language-none">utf8_bin
+</code></pre>
+</li>
+<li>
+<p>事务隔离级别</p>
+<p>?sessionVariables=tx_isolation='READ-COMMITTED'</p>
+<pre><code class="language-none">e.g. jdbc:mysql://127.0.0.1:3306/confdb?sessionVariables=tx_isolation='READ-COMMITTED'
+</code></pre>
+</li>
+<li>
+<p>MySQL存储引擎</p>
+<p>修改启动配置文件：default-storage-engine=INNODB</p>
+</li>
+</ul>
+<p>10、配置邮箱服务器</p>
+<p><img src="D:%5CDocument%5Cpicture%5Cconfluence_keygen2.png" alt="1565061967220"></p>
+<p>11、Confluence修改数据库配置文件</p>
+<p>第一步：是找到confluence的安装目录，我的安装目录在 /opt/atlassian/；</p>
+<p>第二步：由于confluence把tomcat给改造了，所以confluence的应用并没有在workapps下，而是在confluence下面；</p>
+<p>我们的工程的配置文件在classes文件夹，于是我找到了/opt/atlassian/confluence/confluence/WEB-INF/classes这个目录，</p>
+<p>查看这个目录下面有一个confluence-init.properties文件，感觉像是大概的配置文件，打开这个文件，发现最后面有一行代码：confluence.home = /var/atlassian/application-data/confluence</p>
+<p>第三步、进入confluence.home配置的文件夹，打开这个文件夹看到 有一个confluence.cfg.xml文件，打开这个文件，发现配置的数据库连接池一类的东西，真正的算是找到了，修改hibernate.connection.url的value为新的数据库地址 重新启动服务；</p>
+<p>/var/atlassian/application-data/confluence下confluence.cfg.xml文件：</p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/jcohy.png"/><div class="cols-container"><div class="col col-12"><p>jia_chao23@126.com</p><p>https://www.github.com/jiachao23</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/springframework" target="_self">Spring Framework</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/zh-cn/blog/index.html" target="_self">Blog</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">Community</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018 www.jcohy.com</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js"></script>
+</body>
+</html>

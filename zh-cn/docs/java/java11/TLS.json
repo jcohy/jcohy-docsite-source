@@ -1,0 +1,10 @@
+{
+  "filename": "TLS.md",
+  "__html": "<h2>支持 TLS 1.3 协议</h2>\n<p>Java 11 中包含了传输层安全性（TLS）1.3 规范（RFC 8446）的实现，替换了之前版本中包含的 TLS，包括 TLS 1.2，同时还改进了其他 TLS 功能，例如 OCSP 装订扩展（RFC 6066，RFC 6961），以及会话散列和扩展主密钥扩展（RFC 7627），在安全性和性能方面也做了很多提升。</p>\n<p>新版本中包含了 Java 安全套接字扩展（JSSE）提供 SSL，TLS 和 DTLS 协议的框架和 Java 实现。目前，JSSE API 和 JDK 实现支持 SSL 3.0，TLS 1.0，TLS 1.1，TLS 1.2，DTLS 1.0 和 DTLS 1.2。</p>\n<p>同时 Java 11 版本中实现的 TLS 1.3，重新定义了以下新标准算法名称：</p>\n<ol>\n<li>\n<p>TLS 协议版本名称：TLSv1.3</p>\n</li>\n<li>\n<p>SSLContext 算法名称：TLSv1.3</p>\n</li>\n<li>\n<p>TLS 1.3 的 TLS 密码套件名称：TLS_AES_128_GCM_SHA256，TLS_AES_256_GCM_SHA384</p>\n</li>\n<li>\n<p>用于 X509KeyManager 的 keyType：RSASSA-PSS</p>\n</li>\n<li>\n<p>用于 X509TrustManager 的 authType：RSASSA-PSS</p>\n</li>\n</ol>\n<p>还为 TLS 1.3 添加了一个新的安全属性 jdk.tls.keyLimits。当处理了特定算法的指定数据量时，触发握手后，密钥和 IV 更新以导出新密钥。还添加了一个新的系统属性 jdk.tls.server.protocols，用于在 SunJSSE 提供程序的服务器端配置默认启用的协议套件。</p>\n<p>之前版本中使用的 KRB5密码套件实现已从 Java 11 中删除，因为该算法已不再安全。同时注意，TLS 1.3 与以前的版本不直接兼容。</p>\n<p>升级到 TLS 1.3 之前，需要考虑如下几个兼容性问题：</p>\n<ol>\n<li>TLS 1.3 使用半关闭策略，而 TLS 1.2 以及之前版本使用双工关闭策略，对于依赖于双工关闭策略的应用程序，升级到 TLS 1.3 时可能存在兼容性问题。</li>\n<li>TLS 1.3 使用预定义的签名算法进行证书身份验证，但实际场景中应用程序可能会使用不被支持的签名算法。</li>\n<li>TLS 1.3 再支持 DSA 签名算法，如果在服务器端配置为仅使用 DSA 证书，则无法升级到 TLS 1.3。</li>\n<li>TLS 1.3 支持的加密套件与 TLS 1.2 和早期版本不同，若应用程序硬编码了加密算法单元，则在升级的过程中需要修改相应代码才能升级使用 TLS 1.3。</li>\n<li>TLS 1.3 版本的 session 用行为及秘钥更新行为与 1.2 及之前的版本不同，若应用依赖于 TLS 协议的握手过程细节，则需要注意。</li>\n</ol>\n",
+  "link": "\\zh-cn\\docs\\java\\java11\\TLS.html",
+  "meta": {
+    "title": "支持 TLS 1.3 协议",
+    "keywords": "docs,jcohy-docs,TLS,java11",
+    "description": "支持 TLS 1.3 协议"
+  }
+}
