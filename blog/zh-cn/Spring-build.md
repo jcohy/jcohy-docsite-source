@@ -272,7 +272,7 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
   windowns:C:\Users\PC\.m2
   ```
 
-## 一、如何构建Sagan源码
+## 二、如何构建Sagan源码
 
 #### 1、下载源码
 
@@ -324,3 +324,7 @@ https://github.com/spring-io/sagan
     ./gradlew :sagan-site:bootRun
 
 ```
+
+#### 5、 参考地址
+
+https://github.com/spring-io/sagan/wiki
