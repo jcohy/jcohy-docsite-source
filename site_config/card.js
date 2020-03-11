@@ -10,7 +10,7 @@ export default {
                     description: 'Provides core support for dependency injection, transaction management, web apps, data access, messaging and more.',
                     img: {
                         alt: 'Spring Framework',
-                        src: 'https://spring.io/img/homepage/icon-spring-framework.svg',
+                        src: '/img/projects/spring-framework.svg',
                     },
                     buttons: [
                         {
@@ -42,7 +42,7 @@ export default {
                     img: {
                         alt: 'Spring Boot',
                         width: '50%',
-                        src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
+                        src: '/img/projects/spring-boot.svg',
                     },
                     buttons: [
                         {
@@ -73,7 +73,7 @@ export default {
                     description: 'Protects your application with comprehensive and extensible authentication and authorization support.',
                     img: {
                         alt: 'Spring Security',
-                        src: 'http://www.springcloud.cc/images/spring-cloud-security.png',
+                        src: '/img/projects/spring-security.svg',
                     },
                     buttons: [
                         {
@@ -105,7 +105,7 @@ export default {
                     img: {
                         alt: 'Spring Data',
                         width: '50%',
-                        src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                        src: '/img/projects/spring-data.svg',
                     },
                     buttons: [
                         {
@@ -136,7 +136,7 @@ export default {
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
                     img: {
                         alt: 'Spring Cloud',
-                        src: 'https://spring.io/img/homepage/icon-spring-cloud.svg',
+                        src: '/img/projects/spring-cloud.svg',
                     },
                     buttons: [
                         {
@@ -174,7 +174,7 @@ export default {
                     img: {
                         alt: 'Spring Framework',
                         width: '50%',
-                        src: 'https://spring.io/img/homepage/icon-spring-framework.svg',
+                        src: '/img/projects/spring-framework.svg',
                     },
                     buttons: [
                         {
@@ -206,7 +206,7 @@ export default {
                     img: {
                         alt: 'Spring Boot',
                         width: '50%',
-                        src: 'https://spring.io/img/homepage/icon-spring-boot.svg',
+                        src: '/img/projects/spring-boot.svg',
                     },
                     buttons: [
                         {
@@ -238,7 +238,7 @@ export default {
                     img: {
                         alt: 'Spring Security',
                         width: '100%',
-                        src: 'http://www.springcloud.cc/images/spring-cloud-security.png',
+                        src: '/img/projects/spring-security.svg',
                     },
                     buttons: [
                         {
@@ -270,7 +270,7 @@ export default {
                     img: {
                         alt: 'Spring Data',
                         width: '50%',
-                        src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+                        src: '/img/projects/spring-data.svg',
                     },
                     buttons: [
                         {
@@ -302,7 +302,7 @@ export default {
                     img: {
                         alt: 'Spring Cloud',
                         width: '50%',
-                        src: 'http://spring.io/img/homepage/icon-spring-cloud.svg',
+                        src: '/img/projects/spring-cloud.svg',
                     },
                     buttons: [
                         {
