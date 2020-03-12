@@ -1,7 +1,7 @@
 ---
 title: 如何构建Spring系列源码
-keywords: spring, 构建,Spring Boot 2.2.3.RELEASE
-description: 如何构建SpringBoot源码
+keywords: spring, 构建,Spring 源码
+description: 如何构建Spring源码
 ---
 
 ## 一、如何构建SpringBoot源码
@@ -45,6 +45,11 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
   
     ```xml
       <repository>
+          <id>aliyun</id>
+          <name>aliyunmaven</name>
+          <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+      </repository>
+      <repository>
           <id>spring-release</id>
           <name>Spring Release</name>
           <url>https://repo.spring.io/release</url>
@@ -65,7 +70,12 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
     <repositories>
       <!-- Repositories to allow snapshot and milestone BOM imports during development.
      This section is stripped by the flatten plugin during install/deploy. -->
-    
+      <repository>
+          <id>aliyun</id>
+          <name>aliyunmaven</name>
+          <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+      </repository>
+      
       <repository>
           <id>spring-release</id>
           <name>Spring Release</name>
@@ -229,7 +239,7 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
   }
   ```
 
-   #### 5、源码构建
+#### 5、源码构建
 
 - 构建
 
@@ -258,7 +268,7 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
   $ ./mvnw clean prepare-package -pl spring-boot-project/spring-boot-docs -Pdefault,full
   ```
   
-  #### 6、更快
+#### 6、更快
   
   由于SpringBoot引入的依赖比较多，所有在执行第一步的时候还是比较耗时，为了更快的构建，我已经将 SpringBoot 2.2.3.RELEASE 构建需要的 Jar 包打包。共享到百度云盘，大家只需要下载，解压到maven本地存储库中，即可。
   
@@ -328,3 +338,6 @@ https://github.com/spring-io/sagan
 #### 5、 参考地址
 
 https://github.com/spring-io/sagan/wiki
+
+## 如何构建Spring源码
+

@@ -14,7 +14,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/',
+                            href: 'https://docs.spring.io/spring/docs/5.2.4.RELEASE/spring-framework-reference/',
                             icon: 'link',
                         },
                         {
@@ -28,8 +28,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Framework 5.2.3 Reference Documentation',
-                            link: 'https://docs.spring.io/spring/docs/5.2.3.RELEASE/spring-framework-reference/',
+                            title: 'Spring Framework 5.2.4 Reference Documentation',
+                            link: 'https://docs.spring.io/spring/docs/5.2.4.RELEASE/spring-framework-reference/',
                             target: '_blank',
                             description: '',
                         },
@@ -45,7 +45,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'https://docs.spring.io/spring-boot/docs/2.2.3.RELEASE/reference/html/',
+                            href: 'https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/html/',
                             icon: 'link',
                         },
                         {
@@ -59,8 +59,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Boot 2.2.3  Reference Documentation',
-                            link: 'https://docs.spring.io/spring-boot/docs/2.2.3.RELEASE/reference/html/',
+                            title: 'Spring Boot 2.2.5  Reference Documentation',
+                            link: 'https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/html/',
                             target: '_blank',
                             description: '',
                         },
@@ -76,7 +76,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/',
+                            href: 'https://docs.spring.io/spring-security/site/docs/5.3.0.RELEASE/reference/htmlsingle/',
                             icon: 'link',
                         },
                         {
@@ -90,8 +90,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Security 5.2.1 Reference Documentation',
-                            link: 'https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/',
+                            title: 'Spring Security 5.3.0 Reference Documentation',
+                            link: 'https://docs.spring.io/spring-security/site/docs/5.3.0.RELEASE/reference/htmlsingle/',
                             target: '_blank',
                             description: '',
                         },
@@ -99,7 +99,7 @@ export default {
                 },
 
                 {
-                    title: 'Spring Data Moore-SR4',
+                    title: 'Spring Data Moore-SR5',
                     description: 'Provides a consistent approach to data access – relational, non-relational, map-reduce, and beyond.',
                     img: {
                         alt: 'Spring Data',
@@ -121,8 +121,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Date Jpa 2.2.4 Reference Documentation',
-                            link: 'https://docs.spring.io/spring-data/jpa/docs/2.2.4.RELEASE/reference/html/',
+                            title: 'Spring Date Jpa 2.2.5 Reference Documentation',
+                            link: 'https://docs.spring.io/spring-data/jpa/docs/2.2.5.RELEASE/reference/html/',
                             description: '',
                             target: '_blank',
                         }
@@ -175,7 +175,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.4.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -189,8 +189,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Framework 5.2.3 中文参考文档',
-                            link: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.3.RELEASE/index.html',
+                            title: 'Spring Framework 5.2.4 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.4.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
@@ -206,7 +206,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.3.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.5.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -220,8 +220,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Boot 2.2.3 中文参考文档',
-                            link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.3.RELEASE/index.html',
+                            title: 'Spring Boot 2.2.5 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.5.RELEASE/index.html',
                             target: '_blank',
                             description: '',
                         },
@@ -237,7 +237,7 @@ export default {
                     },
                     buttons: [
                         {
-                            href: 'http://docs.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            href: 'http://docs.jcohy.com/zh-cn/spring-security/5.3.0.RELEASE/index.html',
                             icon: 'link',
                         },
                         {
@@ -251,8 +251,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Security 5.2.1 中文参考文档',
-                            link: 'http://docs.jcohy.com/zh-cn/spring-security/5.2.1.RELEASE/index.html',
+                            title: 'Spring Security 5.3.0 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-security/5.3.0.RELEASE/index.html',
                             target: '_blank',
                             description: 'sss',
                         },
@@ -260,7 +260,7 @@ export default {
                 },
 
                 {
-                    title: 'Spring Data Moore-SR4',
+                    title: 'Spring Data Moore-SR5',
                     description: '提供一致的数据访问方法-关系型，非关系型，map-reduce等。',
                     img: {
                         alt: 'Spring Data',
@@ -282,8 +282,8 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Date Jpa 2.2.4 中文参考文档',
-                            link: 'http://docs.jcohy.com/zh-cn/spring-data-jpa/2.2.4.RELEASE/index.html',
+                            title: 'Spring Date Jpa 2.2.5 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-data-jpa/2.2.5.RELEASE/index.html',
                             description: '',
                             target: '_blank',
                         }

@@ -24,10 +24,10 @@ export default {
                 link: '/zh-cn/blog/install.html',
             },
             {
-                title: '如何构建SpringBoot源码',
+                title: '如何构建Spring系列源码',
                 author: 'jiac',
                 dateStr: '01 19，2020',
-                desc: '如何构建SpringBoot源码',
+                desc: '如何构建Spring系列源码',
                 link: '/zh-cn/blog/Spring-build.html',
             },
         ],
