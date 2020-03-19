@@ -661,16 +661,6 @@ docker pull twang2218/gitlab-ce-zh
 2、运行
 
 ```shell
-docker run --detach \
-  --hostname 192.168.11.238 \
-  --publish 443:443 --publish 80:80 --publish 222:22 \
-  --name gitlab \
-  --restart always \
-  --volume /opt/gitlab/config:/etc/gitlab  \
-  --volume /opt/gitlab/logs:/var/log/gitlab \
-  --volume /opt/gitlab/data:/var/opt/gitlab \
-  twang2218/gitlab-ce-zh
-  
   docker run -d \
     --hostname 192.168.11.238 \
     -p 80:80 \
@@ -691,7 +681,7 @@ docker run --detach \
 | ------------------ | --------------- | ---------------------- |
 | /opt/gitlab/config | /etc/gitlab     | 用于存储应用数据       |
 | /opt/gitlab/logs   | /var/log/gitlab | 用于存储日志           |
-| /srv/gitlab/config | /var/opt/gitlab | 用于存储GitLab配置文件 |
+| /opt/gitlab/config | /var/opt/gitlab | 用于存储GitLab配置文件 |
 
 4、配置GitLab
 
@@ -724,8 +714,13 @@ gitlab_rails['gitlab_email_from'] = 'jia_chao23@126.com'
 gitlab_rails['smtp_domain'] = "exmail.qq.com"
 
 ```
+7、进入登录页
 
-7、常用操作
+浏览器访问 192.168.11.231:9090。然后添加密码
+
+登录名默认为 root
+
+8、常用操作
 
 ```
 //外部操作
