@@ -399,8 +399,8 @@ export default {
             title: 'Java',
             children: [
                 {
-                    title: 'Java新特性',
-                    description: 'Java新特性',
+                    title: 'Java 新特性',
+                    description: 'Java 新特性',
                     img: {
                         alt: 'Java',
                         src: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
