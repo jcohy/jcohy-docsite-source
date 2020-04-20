@@ -14,7 +14,7 @@ import 'antd/dist/antd.css';
 const { SubMenu } = Menu;
 class SpringFramework extends Language {
   rootSubmenuKeys=[]
-  rootSubOpenKeys = ['Java 8 新特性', 'Java 9 新特性', 'Java 10 新特性', 'Java 11 新特性', 'Java 12 新特性', 'Java 13 新特性'];
+  rootSubOpenKeys = ['Java 8 新特性', 'Java 9 新特性', 'Java 10 新特性', 'Java 11 新特性', 'Java 12 新特性', 'Java 13 新特性','Java 14 新特性'];
   constructor(props) {
     super(props);
     this.state = {
