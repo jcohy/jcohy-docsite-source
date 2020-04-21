@@ -355,8 +355,21 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'Spring Date Jpa 2.2.5 中文参考文档',
+                            title: 'Spring Data Jpa 2.2.5 中文参考文档',
                             link: 'http://docs.jcohy.com/zh-cn/spring-data-jpa/2.2.5.RELEASE/index.html',
+                            description: '',
+                            target: '_blank',
+                        }
+                        ,
+                        {
+                            title: 'Spring Data Redis 3.2.5 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-data-redis/3.2.5.RELEASE/index.html',
+                            description: '',
+                            target: '_blank',
+                        },
+                        {
+                            title: 'Spring Data Rest 3.2.5 中文参考文档',
+                            link: 'http://docs.jcohy.com/zh-cn/spring-data-rest/3.2.5.RELEASE/index.html',
                             description: '',
                             target: '_blank',
                         }
