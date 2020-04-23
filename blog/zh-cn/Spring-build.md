@@ -320,7 +320,7 @@ https://github.com/spring-io/sagan
 
 #### 3、添加阿里云镜像，加速构建
 
-在 sagan-common,sagan-renderer,sagan-site 模块中找到 repositories 标签添加阿里云仓库
+在 sagan-renderer,sagan-site 模块中找到 repositories 标签添加阿里云仓库
 
 	maven {url 'http://maven.aliyun.com/nexus/content/groups/public/' }
 	
@@ -335,7 +335,220 @@ https://github.com/spring-io/sagan
 
 ```
 
-#### 5、 参考地址
+#### 5、删除 git 信息
+
+如果你下载的是 源码zip 包。则需要删除 git 信息。在 sagan-site 目录下的 build.gradle 删除 com.gorylenko.gradle-git-properties 插件
+
+```shell
+plugins {
+	id 'java'
+	id "org.asciidoctor.convert" version "1.5.3"
+	//注释或者删除
+//	id "com.gorylenko.gradle-git-properties" version "1.5.2"
+}
+```
+
+#### 6、数据源
+
+此项目默认使用 h2 数据库并默认开启了 h2 控制台。项目运行起来后。可以访问 http://localhost:8080/h2-console 
+
+在默认的情况下，Spring Boot 将会配置 H2 数据库使用 sa 为用户名，用户名密码为空。数据库 url 为 **jdbc:h2:mem:testdb**
+
+当然你可以可以通过修改 application.properties  文件中配置文件来为你的 H2 数据库指定登录的用户名和密码。
+
+
+```properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+```
+
+当然我们也可以切换数据源。比如切换到 mysql
+
+首先需要删除 h2 相关依赖，并添加 mysql 依赖
+
+```build.gradle
+compile "mysql:mysql-connector-java:8.0.19"
+// datasource and connection pool dependencies
+runtime 'org.postgresql:postgresql:9.4.1212'
+//	runtime 'com.h2database:h2'
+```
+
+修改 application.properties 。添加 mysql 配置
+
+```yaml
+spring:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring-sagan?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: 输入自己的密码
+```
+
+修改 sql 脚本
+
+V1__initialize.sql:
+
+```sql
+CREATE TABLE member_profile (
+  id                   SERIAL                 NOT NULL PRIMARY KEY,
+  avatar_url           CHARACTER VARYING(255),
+  bio                  VARCHAR(255),
+  latitude             double,
+  longitude            double,
+  github_id            BIGINT(11),
+  github_username      CHARACTER VARYING(255),
+  gravatar_email       CHARACTER VARYING(255),
+  hidden               BOOLEAN,
+  lanyrd_username      CHARACTER VARYING(255),
+  location             CHARACTER VARYING(255),
+  name                 CHARACTER VARYING(255),
+  speakerdeck_username CHARACTER VARYING(255),
+  twitter_username     CHARACTER VARYING(255),
+  username             CHARACTER VARYING(255) NOT NULL,
+  video_embeds         VARCHAR(255),
+  job_title            CHARACTER VARYING(255)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+CREATE TABLE post (
+  id               SERIAL                 NOT NULL PRIMARY KEY,
+  broadcast        BOOLEAN                NOT NULL,
+  category         CHARACTER VARYING(255) NOT NULL,
+  created_at       TIMESTAMP              NOT NULL,
+  draft            BOOLEAN                NOT NULL,
+  format           CHARACTER VARYING(255),
+  public_slug      CHARACTER VARYING(255) UNIQUE,
+  publish_at       TIMESTAMP,
+  raw_content      VARCHAR(255)                NOT NULL,
+  rendered_content VARCHAR(255)                NOT NULL,
+  rendered_summary VARCHAR(255)                NOT NULL,
+  title            CHARACTER VARYING(255) NOT NULL,
+  author_id        INTEGER                NOT NULL REFERENCES member_profile (id)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+CREATE TABLE post_public_slug_aliases (
+  post_id             INT                    NOT NULL,
+  public_slug_aliases CHARACTER VARYING(255) NOT NULL UNIQUE,
+  PRIMARY KEY (post_id, public_slug_aliases)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+CREATE INDEX idx_category
+  ON POST (category);
+CREATE INDEX idx_draft
+  ON POST (draft);
+CREATE INDEX idx_publish_at
+  ON POST (publish_at);
+
+CREATE TABLE project (
+  id                  CHARACTER VARYING(255) NOT NULL PRIMARY KEY,
+  name                CHARACTER VARYING(255),
+  repo_url            CHARACTER VARYING(255),
+  category            CHARACTER VARYING(255),
+  site_url            CHARACTER VARYING(255),
+  is_aggregator       BOOLEAN,
+  stack_overflow_tags CHARACTER VARYING(255)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+CREATE TABLE project_release_list (
+  project_id     CHARACTER VARYING(255) NOT NULL,
+  repository_id  CHARACTER VARYING(255),
+  api_doc_url    CHARACTER VARYING(255),
+  artifact_id    CHARACTER VARYING(255),
+  group_id       CHARACTER VARYING(255),
+  is_current     BOOLEAN,
+  ref_doc_url    CHARACTER VARYING(255),
+  release_status INT,
+  version_name   CHARACTER VARYING(255),
+  PRIMARY KEY (project_id, version_name)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+CREATE TABLE project_repository (
+  id                CHARACTER VARYING(255) NOT NULL PRIMARY KEY,
+  name              CHARACTER VARYING(255),
+  url               CHARACTER VARYING(255),
+  snapshots_enabled BOOLEAN
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+```
+
+V2__projectpages.sql
+
+```sql
+ALTER TABLE project ADD raw_boot_config VARCHAR(255);
+ALTER TABLE project ADD rendered_boot_config VARCHAR(255);
+
+ALTER TABLE project ADD raw_overview VARCHAR(255) DEFAULT '';
+ALTER TABLE project ADD rendered_overview VARCHAR(255) DEFAULT '';
+
+ALTER TABLE project DROP COLUMN is_aggregator;
+ALTER TABLE project ADD parent_project_id CHARACTER VARYING(255) DEFAULT NULL;
+
+ALTER TABLE project ADD display_order INT NOT NULL DEFAULT 255;
+
+CREATE TABLE project_sample_list (
+  title          VARCHAR(255),
+  description    VARCHAR(255),
+  url            VARCHAR(255),
+  display_order  INT NOT NULL,
+  project_id     CHARACTER VARYING(255) NOT NULL,
+  PRIMARY KEY (project_id, display_order)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+```
+
+V3__springtools.sql
+
+```sql
+CREATE TABLE spring_tools_platform
+(
+  id   CHARACTER VARYING(255) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE spring_tools_platform_downloads
+(
+  spring_tools_platform_id CHARACTER VARYING(255) NOT NULL,
+  download_url             CHARACTER VARYING(255) NOT NULL,
+  variant                  CHARACTER VARYING(255) NOT NULL,
+  label                    CHARACTER VARYING(255) NOT NULL,
+  PRIMARY KEY (spring_tools_platform_id, variant)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+```
+
+V4__projects.sql
+
+```sql
+ALTER TABLE project ADD tag_line CHARACTER VARYING(255) DEFAULT '';
+ALTER TABLE project ADD featured BOOLEAN;
+ALTER TABLE project ADD image_path CHARACTER VARYING(255) DEFAULT '';
+
+UPDATE project SET featured = FALSE WHERE featured IS NULL;
+
+-- create a new groups reference table
+CREATE TABLE project_groups
+(
+    id   SERIAL NOT NULL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE,
+    label VARCHAR(255)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- relation table between project and project_groups tables
+create table project_groups_rel
+(
+    project_id VARCHAR(255) REFERENCES project (id),
+    group_id   INT REFERENCES project_groups (id),
+    CONSTRAINT id PRIMARY KEY (project_id, group_id)
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+```
+
+V99__fixtures.sql 不用变
+
+创建 spring-sagan 数据库。项目运行的时候会根据脚本自动创建表结构。
+
+
+#### 7、 参考地址
 
 https://github.com/spring-io/sagan/wiki
 
