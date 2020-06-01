@@ -268,10 +268,11 @@ SpringBoot 是使用 Maven 构建的，并提供了 maven-wrapper ，这样我�
   $ ./mvnw clean prepare-package -pl spring-boot-project/spring-boot-docs -Pdefault,full
   ```
   
+  
 #### 6、更快
-  
+
   由于SpringBoot引入的依赖比较多，所有在执行第一步的时候还是比较耗时，为了更快的构建，我已经将 SpringBoot 2.2.3.RELEASE 构建需要的 Jar 包打包。共享到百度云盘，大家只需要下载，解压到maven本地存储库中，即可。
-  
+
   ``` shell
   百度云链接：
   链接：https://pan.baidu.com/s/1a9NGtgxzvdVtpnetQACudQ 
@@ -323,7 +324,9 @@ https://github.com/spring-io/sagan
 在 sagan-renderer,sagan-site 模块中找到 repositories 标签添加阿里云仓库
 
 	maven {url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-	
+
+
+​	
 #### 4、构建
 
 ```shell
@@ -547,10 +550,89 @@ V99__fixtures.sql 不用变
 
 创建 spring-sagan 数据库。项目运行的时候会根据脚本自动创建表结构。
 
-
 #### 7、 参考地址
 
 https://github.com/spring-io/sagan/wiki
 
 ## 如何构建Spring源码
+
+### 下载源码
+
+```shell
+git clone git@github.com:spring-projects/spring-framework.git
+cd spring-framework
+```
+
+
+
+### 修改仓库地址
+
+* 修改 根目录下的 settings.gradle 文件,找到 pluginManagement 元素，修改为以下内容
+
+```pom
+pluginManagement {
+	repositories {
+		maven {
+			url 'https://maven.aliyun.com/repository/gradle-plugin'
+		}
+		maven {
+			url 'https://maven.aliyun.com/repository/gradle-plugin'
+		}
+		gradlePluginPortal()
+		maven { url 'https://repo.spring.io/plugins-release' }
+	}
+}
+```
+
+* 修改根目录下的 build.gradle 文件，找到 repositories 元素，修改里面内容为以下内容
+
+```pom
+repositories {
+	maven {
+		url 'http://maven.aliyun.com/nexus/content/groups/public/'
+	}
+	mavenCentral()
+	maven { url "https://repo.spring.io/libs-spring-framework-build" }
+}
+```
+
+* 进入到 buildSrc 目录下的 build.gradle 文件中，找到  repositories 元素，修改里面内容为以下内容
+
+```pom
+repositories {
+	maven {
+		url 'http://maven.aliyun.com/nexus/content/groups/public/'
+	}
+	mavenCentral()
+	gradlePluginPortal()
+}
+```
+
+### 构建
+
+```shell
+./gradlew build
+```
+
+首次运行构建时，可能需要一段时间才能下载 Gradle 和所有构建依赖项，以及运行所有测试。 一旦启动了Gradle 发行版并下载了依赖项，它们就会被缓存在 $HOME/.gradle 目录中。
+
+Gradle具有良好的增量构建支持，因此请运行时保持整洁，以免发生问题。 您也可以使用 -a 标志和 :project 前缀来构建测试其他模块。 例如，如果要遍历 spring-webmvc 中的更改，请使用以下命令运行测试构建该模块：
+
+```shell
+./gradlew -a :spring-webmvc:test
+```
+
+要在本地 Maven 存储库中安装所有 Spring Framework jar，请使用以下命令。
+
+请注意，**-x...** 参数跳过文档的生成。
+
+```shell
+./gradlew publishToMavenLocal -x javadoc -x dokka -x asciidoctor
+```
+
+如果要构建框架的早期版本（例如，Spring Framework 5.1.x），请使用：
+
+```shell
+./gradlew install -x javadoc
+```
 
