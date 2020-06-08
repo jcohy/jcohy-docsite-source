@@ -103,12 +103,12 @@ export default {
                 },
                 {
                     text: 'Spring Boot 中文参考文档',
-                    link: 'http://docs.jcohy.com/zh-cn/spring-boot/2.2.5.RELEASE/index.html',
+                    link: 'http://121.36.198.246/docs/spring-boot/2.2.5.RELEASE/html5/zh-cn/',
                     target: '_blank',
                 },
                 {
                     text: 'Spring Security 中文参考文档',
-                    link: 'http://docs.jcohy.com/zh-cn/spring-security/5.3.0.RELEASE/index.html',
+                    link: 'http://121.36.198.246/docs/spring-security/5.3.0.RELEASE/html5/zh-cn/',
                     target: '_blank',
                 },
             ],
