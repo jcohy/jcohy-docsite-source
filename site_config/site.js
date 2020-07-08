@@ -42,7 +42,15 @@ export default {
             list: [
                 {
                     text: 'Spring Framework',
-                    link: '/en-us/springframework',
+                    link: 'https://docs.spring.io/spring/docs/5.2.7.RELEASE/spring-framework-reference/',
+                },
+                {
+                    text: 'Spring Boot',
+                    link: 'https://docs.spring.io/spring-boot/docs/2.2.8.RELEASE/reference/html/',
+                },
+                {
+                    text: 'Spring Security',
+                    link: 'https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/',
                 },
             ],
         },
@@ -98,17 +106,17 @@ export default {
             list: [
                 {
                     text: 'Spring Framework 中文参考文档',
-                    link: 'http://docs.jcohy.com/zh-cn/spring-framework/5.2.4.RELEASE/index.html',
+                    link: 'http://docs.jcohy.com/docs/spring-framework/5.2.7.RELEASE/html5/zh-cn/',
                     target: '_blank',
                 },
                 {
                     text: 'Spring Boot 中文参考文档',
-                    link: 'http://121.36.198.246/docs/spring-boot/2.2.5.RELEASE/html5/zh-cn/',
+                    link: 'http://docs.jcohy.com/docs/spring-boot/2.2.8.RELEASE/html5/zh-cn/',
                     target: '_blank',
                 },
                 {
                     text: 'Spring Security 中文参考文档',
-                    link: 'http://121.36.198.246/docs/spring-security/5.3.0.RELEASE/html5/zh-cn/',
+                    link: 'http://docs.jcohy.com/docs/spring-security/5.3.2.RELEASE/html5/zh-cn/',
                     target: '_blank',
                 },
             ],
@@ -126,6 +134,6 @@ export default {
                 },
             ],
         },
-        copyright: 'Copyright © 2019 www.jcohy.com',
+        copyright: 'Copyright © 2020 www.jcohy.com',
     },
 };
