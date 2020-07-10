@@ -23,11 +23,11 @@ const Item = (props) => {
                                     }
                                     actions={[
                                         <Button type="link" size="small" icon={itemList.buttons[0].icon}
-                                                href={itemList.buttons[0].href}/>,
+                                                href={itemList.buttons[0].href}> API Doc </Button>,
                                         <Button type="link" size="small" icon={itemList.buttons[1].icon}
-                                                href={itemList.buttons[1].href}/>,
+                                                href={itemList.buttons[1].href}> 个人主页 </Button>,
                                         <Button type="link" size="small" icon={itemList.buttons[2].icon}
-                                                href={itemList.buttons[2].href}/>,
+                                                href={itemList.buttons[2].href}> ISSUE </Button>,
                                     ]}
                                 >
                                     <Divider>{itemList.title}</Divider>
