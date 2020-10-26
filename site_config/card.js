@@ -543,6 +543,37 @@ export default {
                 },
 
                 {
+                    title: 'Reactor',
+                    description: 'Reactor 是一个用于 JVM 的完全非阻塞的响应式编程框架，具备高效的需求管理(即对 背压("`backpressure`") 的控制)能力。它与 Java 8 函数式 API 直接集成，比如 CompletableFuture， Stream， 以及 Duration 它提供了异步序列 API Flux(用于[N]个元素)和 Mono(用于 [0|1]个元素)，并完全遵循和实现了 Reactive Streams 规范',
+                    img: {
+                        alt: 'Jcohy Study',
+                        src: '/img/jcohy_colorful.png',
+                    },
+                    buttons: [
+                        {
+                            href: 'http://study.jcohy.com/index.html',
+                            icon: 'link',
+                        },
+                        {
+                            href: 'https://github.com/jcohy/jcohy-issues',
+                            icon: 'edit',
+                        },
+                        {
+                            href: 'https://github.com/jiachao23',
+                            icon: 'star',
+                        },
+                    ],
+                    categories: [
+                        {
+                            title: 'Reactor 中文参考指南',
+                            link: 'http://docs.jcohy.com/docs/docs/reactor/3.3.1.RELEASE/html5/zh-cn',
+                            target: '_blank',
+                            description: '',
+                        },
+                    ],
+                },
+
+                {
                     title: 'Jcohy Study',
                     description: '我的学习笔记,记录学习过程中的笔记以及遇到的问题,以及我的一些经验总结。',
                     img: {
@@ -565,7 +596,7 @@ export default {
                     ],
                     categories: [
                         {
-                            title: 'java 基础,Java 8,9,10,11,12,13,14新特性',
+                            title: 'java 基础,Java 8,9,10,11,12,13,14,15 新特性',
                             link: 'http://study.jcohy.com/java.html',
                             target: '_blank',
                             description: '',
